@@ -1,0 +1,173 @@
+body{
+overflow-x: hidden;
+}
+
+.menu{
+height: 100vh;
+}
+
+.row div button.bg-menu:hover{
+border-radius: 0px;
+color: white;
+background-color: #e78b22;
+}
+
+.box-shadow{
+box-shadow: 0px 5px 15px #d8d7d798;
+}
+
+.scroll_page{
+overflow: scroll;
+height: 93vh;
+}
+
+.scroll_page::-webkit-scrollbar {
+display: none;
+}
+
+#server-btns{
+overflow-y: hidden;
+overflow-x: auto;
+}
+
+#server-btns::-webkit-scrollbar{
+height: 4px;
+width: 3px;
+background-color: #0000007d;
+}
+
+.bg-menu{
+background-color: #ff9215;
+/* background: linear-gradient(to right, rgba(189, 203, 190, 0.622) 0%, #00c1fb 100%); */
+}
+
+.bg_ani{
+transition: all 0.3s ease-in-out;
+}
+
+.bg_ani:hover{
+transform: scale(1.01);
+background-color: #ebe2e291;
+}
+
+#live-bg{
+background: linear-gradient(-45deg, #f5040407, #bc110b00);
+background-size: 400% 400%;
+animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+0% {
+background-position: 0% 50%;
+}
+50% {
+background-position: 100% 50%;
+}
+100% {
+background-position: 0% 50%;
+}
+}
+
+/* .main_page{
+height: 100vh;
+} */
+
+.hover_menu_tag a:hover{
+background: rgba(255, 255, 255, 0.106);
+}
+
+.hover_menu_tag a:focus{
+background: rgba(255, 255, 255, 0.251);
+}
+
+.hover_menu_tag a{
+border: 0px;
+}
+
+.offcanvas{
+width: 100%;
+}
+/* #focus_tag{
+border-left: 3px solid #ff0505 !important;
+background: rgba(255, 255, 255, 0.251);
+} */
+
+@media (max-width: 992px) {
+.menu{
+height: 100%;
+}
+
+.offcanvas{
+max-width: 16rem;
+}
+
+#focus_tag{
+border-left: 0px !important;
+}
+}
+
+
+.time-font_size{
+font-size: 1.4rem;
+}
+
+@media(max-width: 576px){
+.time-font_size{
+font-size: 1.2rem;
+}
+
+.date-font_size{
+font-size: 0.8rem;
+}
+}
+
+
+@media(max-width: 855px){
+.time-font_size{
+font-size: 1.2rem;
+}
+
+.date-font_size{
+font-size: 0.8rem;
+}
+
+.team_name{
+font-size: 0.9rem;
+}
+
+/* .hover_menu_tag a{
+border: 0.7px rgba(0, 0, 0, 0.373) solid;
+} */
+}
+
+
+@media (min-width: 1700px) {
+.col-desktop{
+width: 25%; /* 25% width to achieve col-3 behavior */
+max-width: 25%;
+}
+}
+
+
+div input[type="text"],div select,div input[type="datetime-local"],div input[type="email"],div input[type="number"], div
+input[type="password"], div textarea, div input[type="url"]{
+border: none;
+/* border-bottom: 1px solid#2626265e; */
+outline: none;
+height: 40px;
+color: #000000;
+background: transparent;
+font-size: 16px;
+padding-left: 15px;
+height: 50px;
+border-radius: 10px;
+box-sizing: border-box;
+box-shadow: 0px 5px 15px #d8d7d75d;
+
+}
+
+/* div input[type="text"]:focus,div input[type="email"]:focus,div input[type="number"]:focus,
+div input[type="password"]:focus{
+border-bottom: 2px solid #e78b2271} */
+
+div input,div select{width: 100%; margin-bottom: 15px;}

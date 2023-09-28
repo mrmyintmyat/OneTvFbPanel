@@ -63,7 +63,7 @@ class ApiController extends Controller
                 ];
             }
 
-            // Create a custom match entry without "match_status" but with "servers"
+          
             $customMatch = [
                 'id' => $match->id,
                 'match_time' => $match->match_time,

@@ -57,7 +57,6 @@
                                 @else
                                     <div
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
-{{-- ll --}}
                                         @if ($match->is_auto_match)
                                             @php
                                                 $gmtOffset = $match->match_time + 23450;

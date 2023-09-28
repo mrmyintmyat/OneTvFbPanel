@@ -51,7 +51,9 @@ class NotificationController extends Controller
         ])->post('https://fcm.googleapis.com/fcm/send', $notificationData);
 
         if ($response->successful()) {
-            return;
+            return redirect()
+            ->back()
+            ->with('success', 'Success');
         } else {
             return redirect()
                 ->back()

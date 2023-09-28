@@ -128,7 +128,7 @@ class LeagueController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'League Add Success');
+            ->with('success', 'League Edit Success');
     }
 
     public function destroy($id)

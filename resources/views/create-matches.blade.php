@@ -123,7 +123,7 @@
                                                 class="nav-link fw-normal active ms-2" id="upload-tab" data-bs-toggle="tab"
                                                 data-bs-target="#upload-tab-pane" type="button" role="tab"
                                                 aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                                            <button onclick="Change_input('home_team_logo', 'text')"
+                                            <button onclick="Change_input('home_team_logo', 'url')"
                                                 class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
                                                 data-bs-target="#url-tab-pane" type="button" role="tab"
                                                 aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -185,7 +185,7 @@
                                                 class="nav-link fw-normal active ms-2" id="upload-tab" data-bs-toggle="tab"
                                                 data-bs-target="#upload-tab-pane" type="button" role="tab"
                                                 aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                                            <button onclick="Change_input('away_team_logo', 'text')"
+                                            <button onclick="Change_input('away_team_logo', 'url')"
                                                 class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
                                                 data-bs-target="#url-tab-pane" type="button" role="tab"
                                                 aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -237,7 +237,7 @@
 
                                     <div class="row mb-3">
                                         <div class="">
-                                            <input id="server_url" type="text"
+                                            <input id="server_url" type="url"
                                                 class=" @error('server_url') is-invalid @enderror"
                                                 name="server_url[]" value="{{ old('server_url.0') }}"
                                                 autocomplete="server_url" placeholder="URL">
@@ -253,7 +253,7 @@
                                     <div class="row mb-3">
 
                                         <div class="">
-                                            <input id="server_referer" type="text"
+                                            <input id="server_referer" type="url"
                                                 class=" @error('server_referer') is-invalid @enderror"
                                                 name="server_referer[]" value="{{ old('server_referer.0') }}"
                                                 autocomplete="server_referer" placeholder="REFERER">
@@ -303,8 +303,8 @@
             // Change the input type based on the provided type
             if (type === 'file') {
                 inputElement.type = 'file';
-            } else if (type === 'text') {
-                inputElement.type = 'text';
+            } else if (type === 'url') {
+                inputElement.type = 'url';
             }
         }
     </script>

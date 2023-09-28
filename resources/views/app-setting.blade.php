@@ -186,38 +186,6 @@
 
                         <div class="col-lg-5 shadow-sm p-3">
                             <div>
-                                <h4 class="d-flex">sponsorBanner
-                                    <div class="form-check form-switch ms-3">
-                                        <input class="form-check-input" name="sponsorBanner_status" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ ($sponsorBanner['status']) ? 'checked' : '' ; }}>
-                                    </div>
-                                </h4>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="banner_adImage" class="form-label ">
-                                    Ad Image
-                                </label>
-
-                                <div class="">
-                                    <input id="banner_adImage" type="text" class="form-control  rounded-0" name="banner_adImage"
-                                        value="{{ $sponsorBanner['adImage'] }}" required="" autocomplete="banner_adImage"
-                                        autofocus="">
-
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="banner_adUrl" class="form-label  d-flex align-items-center">
-                                    Ad URL
-                                </label>
-                                <div>
-                                    <input id="banner_adUrl" type="text" class="form-control  rounded-0" name="banner_adUrl"
-                                        value="{{ $sponsorBanner['adUrl'] }}" autocomplete="banner_adUrl">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-11 shadow-sm p-3">
-                            <div>
                                 <h4 class="d-flex">sponsorInter
                                     <div class="form-check form-switch ms-3">
                                         <input class="form-check-input" name="sponsorInter_status" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ ($sponsorInter['status']) ? 'checked' : '' ; }}>
@@ -244,6 +212,63 @@
                                 <div>
                                     <input id="inter_adUrl" type="text" class="form-control  rounded-0" name="inter_adUrl"
                                         value="{{ $sponsorInter['adUrl'] }}" autocomplete="inter_adUrl">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-11 shadow-sm p-3">
+                            <div>
+                                <h4 class="d-flex">sponsorBanner
+                                    <div class="form-check form-switch ms-3">
+                                        <input class="form-check-input" name="sponsorBanner_status" type="checkbox" role="switch" id="flexSwitchCheckChecked" {{ ($sponsorBanner['status']) ? 'checked' : '' ; }}>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="banner_smallAd" class="form-label ">
+                                    smallAd
+                                </label>
+
+                                <div class="">
+                                    <input id="banner_smallAd" type="text" class="form-control  rounded-0" name="banner_smallAd"
+                                        value="{{ $sponsorBanner['smallAd'] }}" required="" autocomplete="banner_smallAd"
+                                        autofocus="">
+
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="banner_smallAdUrl" class="form-label  d-flex align-items-center">
+                                    smallAdUrl
+                                </label>
+                                <div>
+                                    <input id="banner_smallAdUrl" type="text" class="form-control  rounded-0" name="banner_smallAdUrl"
+                                        value="{{ $sponsorBanner['smallAdUrl'] }}" autocomplete="banner_smallAdUrl">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="banner_mediumAd" class="form-label ">
+                                    mediumAd
+                                </label>
+
+                                <div class="">
+                                    <input id="banner_mediumAd" type="text" class="form-control  rounded-0" name="banner_mediumAd"
+                                        value="{{ $sponsorBanner['mediumAd'] }}" required="" autocomplete="banner_mediumAd"
+                                        autofocus="">
+
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="banner_mediumAdUrl" class="form-label ">
+                                    mediumAdUrl
+                                </label>
+
+                                <div class="">
+                                    <input id="banner_mediumAdUrl" type="text" class="form-control  rounded-0" name="banner_mediumAdUrl"
+                                        value="{{ $sponsorBanner['mediumAdUrl'] }}" required="" autocomplete="banner_mediumAdUrl"
+                                        autofocus="">
                                 </div>
                             </div>
                         </div>

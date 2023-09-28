@@ -24,7 +24,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            {{-- <div class="row mb-3">
                                 <label for="league_logo" class="form-label fw-semibold d-flex align-items-center">
                                     LEAGUE LOGO
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -52,11 +52,11 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row mb-0 col-12 mt-3 ms-1 p-0">
                                 <div class="w-100 p-0">
                                     <button type="submit" class="btn py-2 bg-menu  w-100 text-white">
-                                        {{ __('ADD') }}
+                                        {{ __('EDIT') }}
                                     </button>
                                 </div>
                             </div>

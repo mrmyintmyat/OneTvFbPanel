@@ -9,7 +9,7 @@ height: 100vh;
 .row div button.bg-menu:hover{
 border-radius: 0px;
 color: white;
-background-color: #e78b22;
+background-color: #003a04f1;
 }
 
 .box-shadow{
@@ -37,7 +37,7 @@ background-color: #0000007d;
 }
 
 .bg-menu{
-background-color: #ff9215;
+background-color: #003a04;
 /* background: linear-gradient(to right, rgba(189, 203, 190, 0.622) 0%, #00c1fb 100%); */
 }
 

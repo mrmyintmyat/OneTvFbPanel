@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\AutoMatch;
 use App\Models\FootballMatch;
-use App\Http\AutoMatches\Controllers\AutoMatchesController;
+use App\Http\Controllers\AutoMatches\AutoMatchesController;
 
 class AutoMatches extends Command
 {

@@ -34,14 +34,14 @@
                             <thead>
                                 <tr>
                                     <th scope="col">NAME</th>
-                                    {{-- <th scope="col">LOGO</th> --}}
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 @foreach ($leagues as $league)
                                     <tr id="{{ $league->id }}">
-                                        <td class="d-flex align-items-center">{{ $league->name }}</td>
+                                        <td>{{ $league->name }}</td>
                                         {{-- <td>
                                             <img style="width: 2rem;" src="{{ $league->logo }}" alt="">
                                         </td> --}}

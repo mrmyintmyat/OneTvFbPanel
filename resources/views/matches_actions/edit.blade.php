@@ -2,14 +2,31 @@
     use Carbon\Carbon;
 @endphp
 @extends('layouts.home')
+@section('style')
+ <style>
+    /* #match_time {
+  position: relative;
+}
+
+#match_time input[type="datetime-local"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+} */
+ </style>
+@endsection
 @section('page')
-@if (!session('error'))
-    <div class="card text-start mt-lg-2  px-lg-0 px-2 mb-3">
-        <div class="card-body pe-0">
-            <div class="border-bottom border-2 d-flex justify-content-between py-2 pe-5 align-items-center">
-                <h5 class="">EDIT MATCH</h5>
-                <button onclick="Delete_match({{$match->id}})" class="btn btn-sm btn-danger ">DELETE MATCH</button>
-            </div>
+    @if (!session('error'))
+        <div class="card text-start mt-lg-2  px-lg-0 px-2 mb-3">
+            <div class="card-body pe-0">
+                <div class="border-bottom border-2 d-flex justify-content-between py-2 pe-5 align-items-center">
+                    <h5 class="">EDIT MATCH</h5>
+                    <button onclick="Delete_match({{ $match->id }})" class="btn btn-sm btn-danger ">DELETE MATCH</button>
+                </div>
                 <div class="d-flex mt-3 w-100">
                     <form method="post" action="/matches/{{ $match->id }}"
                         class="w-100 row d-flex justify-content-between px-2 g-3" enctype="multipart/form-data">
@@ -27,9 +44,8 @@
                                 @endphp
                                 <div class="">
                                     <input id="match_time" type="datetime-local"
-                                        class="@error('match_time') is-invalid @enderror "
-                                        name="match_time" value="{{ $match_time }}" required
-                                        autocomplete="match_time">
+                                        class="@error('match_time') is-invalid @enderror " name="match_time"
+                                        value="{{ $match_time }}" required autocomplete="match_time">
 
 
                                     @error('match_time')
@@ -72,8 +88,7 @@
                                         aria-label="Default select example" autocomplete="match_status">
                                         <option value="" disabled selected>Select Match Status</option>
                                         <optgroup class="ms-3 collapse show" id="collapseExample">
-                                            <option value="Match"
-                                                {{ $match->match_status == 'Match' ? 'selected' : '' }}>
+                                            <option value="Match" {{ $match->match_status == 'Match' ? 'selected' : '' }}>
                                                 Match
                                             </option>
                                             <option value="Live" {{ $match->match_status == 'Live' ? 'selected' : '' }}>
@@ -95,9 +110,9 @@
 
                                 <div class="">
                                     <input id="home_team_name" type="text"
-                                        class=" @error('home_team_name') is-invalid @enderror "
-                                        name="home_team_name" value="{{ $match->home_team_name }}" required
-                                        autocomplete="home_team_name" placeholder="HOME TEAM NAME" autofocus>
+                                        class=" @error('home_team_name') is-invalid @enderror " name="home_team_name"
+                                        value="{{ $match->home_team_name }}" required autocomplete="home_team_name"
+                                        placeholder="HOME TEAM NAME" autofocus>
 
                                     @error('home_team_name')
                                         <span class="invalid-feedback" role="alert">
@@ -115,7 +130,7 @@
                                                 class="nav-link fw-normal ms-2" id="upload-tab" data-bs-toggle="tab"
                                                 data-bs-target="#upload-tab-pane" type="button" role="tab"
                                                 aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                                            <button onclick="Change_input('home_team_logo', 'text')"
+                                            <button onclick="Change_input('home_team_logo', 'url')"
                                                 class="nav-link fw-normal active" id="url-tab" data-bs-toggle="tab"
                                                 data-bs-target="#url-tab-pane" type="button" role="tab"
                                                 aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -141,10 +156,9 @@
                             <div class="row mb-3">
                                 <div class="">
                                     <input id="away_team_name" type="text"
-                                        class=" @error('away_team_name') is-invalid @enderror "
-                                        name="away_team_name"
-                                        value="{{ $match->away_team_name }}"
-                                        required autocomplete="away_team_name" placeholder="AWAY TEAM NAME">
+                                        class=" @error('away_team_name') is-invalid @enderror " name="away_team_name"
+                                        value="{{ $match->away_team_name }}" required autocomplete="away_team_name"
+                                        placeholder="AWAY TEAM NAME">
 
                                     @error('away_team_name')
                                         <span class="invalid-feedback" role="alert">
@@ -163,7 +177,7 @@
                                                 class="nav-link fw-normal ms-2" id="upload-tab" data-bs-toggle="tab"
                                                 data-bs-target="#upload-tab-pane" type="button" role="tab"
                                                 aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                                            <button onclick="Change_input('away_team_logo', 'text')"
+                                            <button onclick="Change_input('away_team_logo', 'url')"
                                                 class="nav-link fw-normal active" id="url-tab" data-bs-toggle="tab"
                                                 data-bs-target="#url-tab-pane" type="button" role="tab"
                                                 aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -173,7 +187,7 @@
                                 <div class="">
                                     <input id="away_team_logo" type="text"
                                         class="form-control @error('away_team_logo') is-invalid @enderror "
-                                        name="away_team_logo" value="{{$match->away_team_logo}}" required
+                                        name="away_team_logo" value="{{ $match->away_team_logo }}" required
                                         autocomplete="away_team_logo" accept="image/*">
 
                                     @error('away_team_logo')
@@ -212,7 +226,7 @@
                                         aria-labelledby="server-{{ $index + 1 }}-tab" tabindex="0">
                                         <div class="row mb-3">
                                             <div class="">
-                                                <input id="server_url" type="text"
+                                                <input id="server_url" type="url"
                                                     class=" @error('server_url') is-invalid @enderror "
                                                     name="server_url[]" value="{{ $server['url'] }}"
                                                     autocomplete="server_url" placeholder="URL">
@@ -225,7 +239,7 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="">
-                                                <input id="server_referer" type="text"
+                                                <input id="server_referer" type="url"
                                                     class=" @error('server_referer') is-invalid @enderror "
                                                     name="server_referer[]" value="{{ $server['referer'] }}"
                                                     autocomplete="server_referer" placeholder="REFERER">
@@ -251,11 +265,11 @@
                             </div>
                     </form>
                 </div>
+            </div>
         </div>
-    </div>
     @else
-    <h3 class="mt-3">Match Not found</h3>
-@endif
+        <h3 class="mt-3">Match Not found</h3>
+    @endif
 @endsection
 @section('script')
     <script src="/js/plus_server.js"></script>
@@ -275,10 +289,15 @@
             // Change the input type based on the provided type
             if (type === 'file') {
                 inputElement.type = 'file';
-            } else if (type === 'text') {
-                inputElement.type = 'text';
+            } else if (type === 'url') {
+                inputElement.type = 'url';
             }
         }
+
+        $('#match_time').on('click', function() {
+            // Trigger a click event on the input to show the date and time picker
+            $(this).prev('input[type="datetime-local"]').click();
+        });
 
         function Delete_match(id) {
             if (confirm("Are you sure?")) {

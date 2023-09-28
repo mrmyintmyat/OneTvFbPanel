@@ -47,7 +47,7 @@
                                 <img class="w-100 h-100" src="{{ $match->home_team_logo }}"
                                     alt="{{ $match->home_team_name }} Logo">
                                 <span id="home_team_name_{{ $match->id }}"
-                                    class="text-center fw-semibold text-nowrap team_name mt-1">{{ $match->home_team_name }}</span>
+                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">{{ $match->home_team_name }}</span>
                             </div>
                             <div
                                 class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
@@ -70,7 +70,7 @@
                                 <img class="w-100 h-100" src="{{ $match->away_team_logo }}"
                                     alt="{{ $match->away_team_name }} Logo">
                                 <span id="away_team_name_{{ $match->id }}"
-                                    class="text-center fw-semibold text-nowrap team_name mt-1">{{ $match->away_team_name }}</span>
+                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">{{ $match->away_team_name }}</span>
                             </div>
                         </div>
                     </div>

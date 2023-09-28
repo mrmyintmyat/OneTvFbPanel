@@ -11,23 +11,30 @@ use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
-
-
     private function encryptAES($data, $encryptionKey) {
         try {
+            $key = "ht3tMyatauNg1288";
             $iv = openssl_random_pseudo_bytes(16);
+            $dataAsString = json_encode($data);
+            // $data = json_decode($data, true);
+            $padded_data = openssl_encrypt(
+                $dataAsString,
+                "aes-128-cbc",
+                $key,
+                OPENSSL_RAW_DATA,
+                $iv
+            );
 
-            // Serialize the data array to a string
-            $dataString = json_encode($data);
-
-            $cipherText = openssl_encrypt($dataString, 'AES-256-CBC', $encryptionKey, 0, $iv);
-            if ($cipherText === false) {
-                return null; // Encryption failed
+            if ($padded_data === false) {
+                throw new Exception('Encryption failed');
             }
 
-            $encryptedData = base64_encode($iv . $cipherText);
+            $iv_base64 = base64_encode($iv);
+            $encrypted_data_base64 = base64_encode($padded_data);
 
-            return json_encode(array("data" => $encryptedData));
+            return json_encode([
+                $iv_base64 => $encrypted_data_base64
+            ]);
         } catch (Exception $e) {
             echo $e->getMessage();
             return null;
@@ -40,6 +47,7 @@ class ApiController extends Controller
         $matches = FootballMatch::orderBy('match_time')
             ->take($count)
             ->get();
+        // return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {
@@ -61,10 +69,10 @@ class ApiController extends Controller
                 'match_time' => $match->match_time,
                 'home_team_name' => $match->home_team_name,
                 'home_team_logo' => $match->home_team_logo,
-                'home_team_score' => $match->home_team_score,
+                'home_team_score' => $match->home_team_score !== null ? (string)$match->home_team_score : "",
                 'away_team_name' => $match->away_team_name,
                 'away_team_logo' => $match->away_team_logo,
-                'away_team_score' => $match->away_team_score,
+                'away_team_score' => $match->away_team_score !== null ? (string)$match->away_team_score : "",
                 'league_name' => $match->league_name,
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,
@@ -73,15 +81,14 @@ class ApiController extends Controller
             // Add the custom match entry to the response array
             $customResponse[] = $customMatch;
         }
-
         $datas = $this->encryptAES($customResponse, 'GG');
         return $datas;
     }
 
     public function app_setting()
     {
-        $settings = AppSetting::all();
-        $datas = $this->encryptAES($settings, 'GG');
+        $setting = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')>
+        $datas = $this->encryptAES($setting, 'ht3tMyatauNg1288');
         return $datas;
     }
 
@@ -112,10 +119,10 @@ class ApiController extends Controller
                 'match_time' => $match->match_time,
                 'home_team_name' => $match->home_team_name,
                 'home_team_logo' => $match->home_team_logo,
-                'home_team_score' => $match->home_team_score,
+                'home_team_score' => $match->home_team_score !== null ? (string)$match->home_team_score : "",
                 'away_team_name' => $match->away_team_name,
                 'away_team_logo' => $match->away_team_logo,
-                'away_team_score' => $match->away_team_score,
+                'away_team_score' => $match->away_team_score !== null ? (string)$match->away_team_score : "",
                 'league_name' => $match->league_name,
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,

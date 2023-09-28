@@ -36,7 +36,7 @@
                 <div class="team-pair d-flex justify-content-around">
                     <div style="width: 4rem;" class="home d-flex flex-column align-items-center">
                         <img class="w-100" src="{{ $match->home_team_logo }}" alt="{{ $match->home_team_name }} Logo">
-                        <span class="text-center fw-semibold text-nowrap team_name mt-1">
+                        <span class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">
                             {{ $match->home_team_name }}
                         </span>
                     </div>
@@ -50,7 +50,7 @@
 
                     <div style="width: 4rem;" class="away d-flex flex-column align-items-center">
                         <img class="w-100" src="{{ $match->away_team_logo }}" alt="{{ $match->away_team_name }} Logo">
-                        <span class="text-center fw-semibold text-nowrap team_name mt-1">
+                        <span class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">
                             {{ $match->away_team_name }}
                         </span>
                     </div>

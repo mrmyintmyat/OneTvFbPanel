@@ -10,7 +10,7 @@ $("#add-server-btn").click(function () {
 
     <div class="row mb-3">
         <div class="">
-            <input id="server_url" type="text"
+            <input id="server_url" type="url"
                 class=""
                 name="server_url[]" value="" autocomplete="server_url" placeholder="URL">
         </div>
@@ -18,7 +18,7 @@ $("#add-server-btn").click(function () {
 
     <div class="row mb-3">
         <div class="">
-            <input id="server_referer" type="text"
+            <input id="server_referer" type="url"
                 class=""
                 name="server_referer[]" placeholder="REFERER" value="" autocomplete="server_referer">
         </div>

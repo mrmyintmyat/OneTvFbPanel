@@ -46,6 +46,7 @@ class HomeController extends Controller
         //         'league_logo' => null,
         //         'match_status' => 'Match',
         //         'servers' => [],
+        //         'is_auto_match' => true,
         //     ],
         //     [
         //         'match_time' => '1695393050000',
@@ -57,6 +58,7 @@ class HomeController extends Controller
         //         'league_logo' => null,
         //         'match_status' => 'Match',
         //         'servers' => [],
+        //         'is_auto_match' => true,
         //     ],
         // ];
         // return 'success';

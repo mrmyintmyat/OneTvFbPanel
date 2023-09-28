@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\AutoMatches\Controllers;
+namespace App\Http\Controllers\AutoMatches;
 
 use Illuminate\Http\Request;
 use voku\helper\HtmlDomParser;
+use App\Http\Controllers\Controller;
 
 class AutoMatchesController extends Controller
 {

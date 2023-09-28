@@ -10,25 +10,28 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $appsetting = AppSetting::find(4);
+        $appsetting = AppSetting::find(2);
         $key = $appsetting->serverDetails['key'];
         return view('notification.notification', compact('key'));
     }
 
-    public function UpdateKey(Request $request){
-        $appsetting = AppSetting::find(4);
+    public function UpdateKey(Request $request)
+    {
+        $appsetting = AppSetting::find(2);
         $appsetting->serverDetails = [
             'key' => $request->key,
         ];
 
         $appsetting->save();
 
-        return redirect()->back()->with('success', 'Success Edit');
+        return redirect()
+            ->back()
+            ->with('success', 'Success Edit');
     }
 
     public function sendNotification(Request $request)
     {
-        $appsetting = AppSetting::find(4);
+        $appsetting = AppSetting::find(2);
         $key = $appsetting->serverDetails['key'];
         $notificationData = [
             'to' => '/topics/all_users',
@@ -48,9 +51,11 @@ class NotificationController extends Controller
         ])->post('https://fcm.googleapis.com/fcm/send', $notificationData);
 
         if ($response->successful()) {
-            return ;
+            return;
         } else {
-            return redirect()->back()->with('error', 'Error');
+            return redirect()
+                ->back()
+                ->with('error', 'Error');
         }
     }
 }

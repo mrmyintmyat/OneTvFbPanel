@@ -3,21 +3,21 @@
 @endphp
 @extends('layouts.home')
 @section('style')
- <style>
-    /* #match_time {
-  position: relative;
-}
+    <style>
+        /* #match_time {
+      position: relative;
+    }
 
-#match_time input[type="datetime-local"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-} */
- </style>
+    #match_time input[type="datetime-local"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    } */
+    </style>
 @endsection
 @section('page')
     @if (!session('error'))
@@ -35,9 +35,18 @@
                         <div class="shadow-sm p-3">
                             <div class="row mb-3">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
+                                @if ($match->is_auto_match)
+                                    @php
+                                        $gmtOffset = $match->match_time + 23450;
+                                        $match_time = $gmtOffset * 1000;
+                                    @endphp
+                                @else
+                                    @php
+                                        $match_time = $match->match_time;
+                                    @endphp
+                                @endif
                                 @php
-                                    $timestampMillis = $match->match_time;
-                                    $timestampSeconds = $timestampMillis / 1000;
+                                    $timestampSeconds = $match_time / 1000;
 
                                     $dateTime = Carbon::createFromTimestamp($timestampSeconds);
                                     $match_time = $dateTime->format('Y-m-d H:i:s');

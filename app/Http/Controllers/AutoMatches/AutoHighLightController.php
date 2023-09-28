@@ -54,13 +54,13 @@ class AutoHighLightController extends Controller
                         $matchTime = "0";
                     }
 
-                    $gmtOffset = $matchTime + 23450;
-                    $adjustedTimestampMillis = $gmtOffset * 1000;
+                    // $gmtOffset = $matchTime + 23450;
+                    // $adjustedTimestampMillis = $gmtOffset * 1000;
 
                     $leagueName = $anchorTag->find('div.league-name', 0)->plaintext;
 
                     $matchDetails = [
-                        "match_time" => $adjustedTimestampMillis,
+                        "match_time" => $matchTime,
                         "home_team_name" => trim($homeTeamName),
                         "home_team_logo" => $homeTeamLogo,
                         "home_team_score" => $home_team_score,

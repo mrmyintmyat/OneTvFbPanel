@@ -15,9 +15,10 @@ use App\Http\Services\DataService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use App\Console\Commands\AutoMatches;
 use App\Console\Commands\MyCustomTask;
 use Illuminate\Support\Facades\Validator;
-use App\Http\AutoMatches\Controllers\AutoMatchesController;
+use App\Http\Controllers\AutoMatches\AutoMatchesController;
 
 class HomeController extends Controller
 {
@@ -28,11 +29,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        // $gg = new MyCustomTask();
+        // $gg = new AutoMatches();
         // $gg->handle();
-        //         set_time_limit(300);
-        //         $gg = new AutoMatchesController();
-        //         $matches = $gg->get_live_sports('https://bingsport.com/live-stream-football.html');
         // return $matches;
 
         // $matches = [

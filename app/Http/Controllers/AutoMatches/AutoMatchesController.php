@@ -106,13 +106,13 @@ class AutoMatchesController extends Controller
         $home_team_name = str_replace("\n", '', $home_team_name);
         $away_team_name = str_replace("\n", '', $away_team_name);
 
-        $gmtOffset = $time_in_seconds + 23450;
+        // $gmtOffset = $time_in_seconds + 23450;
 
-        $adjustedTimestampMillis = $gmtOffset * 1000;
+        // $adjustedTimestampMillis = $gmtOffset * 1000;
         // $timestampSeconds = $adjustedTimestampMillis / 1000;
 
         $data = array(
-            "match_time" => strval($adjustedTimestampMillis),
+            "match_time" => strval($time_in_seconds),
             "home_team_name" => $home_team_name,
             "home_team_logo" => $this->checkLogo($home_team_logo),
             "away_team_name" => $away_team_name,

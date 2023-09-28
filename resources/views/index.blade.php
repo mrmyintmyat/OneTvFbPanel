@@ -47,20 +47,31 @@
                                 <img class="w-100 h-100" src="{{ $match->home_team_logo }}"
                                     alt="{{ $match->home_team_name }} Logo">
                                 <span id="home_team_name_{{ $match->id }}"
-                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">{{ $match->home_team_name }}</span>
+                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate"
+                                    style="max-width: 150px;">{{ $match->home_team_name }}</span>
                             </div>
                             <div
                                 class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
                                 @if ($match->match_status == 'Live')
-                                  <div class="btn btn-success px-3 py-1">Live</div>
+                                    <div class="btn btn-success px-3 py-1">Live</div>
                                 @else
                                     <div
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
+                                        @if ($match->is_auto_match)
+                                            @php
+                                                $gmtOffset = $match->match_time + 23450;
+                                                $match_time = $gmtOffset * 1000;
+                                            @endphp
+                                        @else
+                                           @php
+                                               $match_time = $match->match_time;
+                                           @endphp
+                                        @endif
                                         <span class="time-font_size">
-                                            {{ date('H:i', $match->match_time / 1000) }}
+                                            {{ date('H:i', $match_time / 1000) }}
                                         </span>
                                         <span class="date-font_size">
-                                            {{ date('Y-m-d', $match->match_time / 1000) }}
+                                            {{ date('Y-m-d', $match_time / 1000) }}
                                         </span>
                                     </div>
                                 @endif
@@ -70,7 +81,8 @@
                                 <img class="w-100 h-100" src="{{ $match->away_team_logo }}"
                                     alt="{{ $match->away_team_name }} Logo">
                                 <span id="away_team_name_{{ $match->id }}"
-                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate" style="max-width: 150px;">{{ $match->away_team_name }}</span>
+                                    class="text-center fw-semibold text-nowrap team_name mt-1 d-inline-block text-truncate"
+                                    style="max-width: 150px;">{{ $match->away_team_name }}</span>
                             </div>
                         </div>
                     </div>
@@ -88,13 +100,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     {{-- <h1 class="modal-title fs-5" id="notiModelLabel">Modal title</h1> --}}
-                    <button type="button" id="closebtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id="closebtn" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mt-3 w-100 tab-pane fade show active" id="list-sdnoti-tab-pane" role="tabpanel"
                         aria-labelledby="list-sdnoti-tab" tabindex="0">
-                        <form id="notiform" method="post" action="/notification" class="w-100 row d-flex justify-content-around px-2 g-3"
-                            enctype="multipart/form-data">
+                        <form id="notiform" method="post" action="/notification"
+                            class="w-100 row d-flex justify-content-around px-2 g-3" enctype="multipart/form-data">
                             @csrf
                             <div class="shadow-sm m-0 p-3">
                                 <div class="row mb-3">

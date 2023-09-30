@@ -5,18 +5,18 @@
 @section('style')
     <style>
         /* #match_time {
-      position: relative;
-    }
+          position: relative;
+        }
 
-    #match_time input[type="datetime-local"] {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: pointer;
-    } */
+        #match_time input[type="datetime-local"] {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        } */
     </style>
 @endsection
 @section('page')
@@ -36,8 +36,8 @@
                             <div class="row mb-3">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
                                 @php
-                                $time = $match->match_time;
-                                $match_time = $time * 1000;
+                                    $time = $match->match_time;
+                                    $match_time = $time * 1000;
                                 @endphp
                                 @php
                                     $timestampSeconds = $match_time / 1000;
@@ -213,9 +213,9 @@
                                             class="server-btns nav-link  {{ $index === 0 ? 'active' : '' }} text-nowrap"
                                             id="server-{{ $index + 1 }}-tab" data-bs-toggle="tab"
                                             data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
-                                            aria-controls="server-{{ $index + 1 }}-tab-pane"
+                                            aria-controls="server-{{ $index + 1 }}"
                                             aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
-                                            Server {{ $index + 1 }}
+                                            Server {{ $index + 1 }}<span class="delete-server-btn">&times;</span>
                                         </button>
                                     @endforeach
 
@@ -319,5 +319,12 @@
                     });
             }
         }
+
+        $(".delete-server-btn").click(function(event) {
+            const tabId = $(event.target).parent().attr("aria-controls");
+            console.log(tabId)
+            $(event.target).parent().remove();
+            $(`#${tabId}`).remove();
+        });
     </script>
 @endsection

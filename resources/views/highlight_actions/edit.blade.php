@@ -228,9 +228,9 @@
                                             class="server-btns nav-link rounded-0 {{ $index === 0 ? 'active' : '' }} text-nowrap"
                                             id="server-{{ $index + 1 }}-tab" data-bs-toggle="tab"
                                             data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
-                                            aria-controls="server-{{ $index + 1 }}-tab-pane"
+                                            aria-controls="server-{{ $index + 1 }}"
                                             aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
-                                            Server {{ $index + 1 }}
+                                            Server {{ $index + 1 }}<span class="delete-server-btn">&times;</span>
                                         </button>
                                     @endforeach
 
@@ -325,5 +325,12 @@
                     });
             }
         }
+
+        $(".delete-server-btn").click(function(event) {
+            const tabId = $(event.target).parent().attr("aria-controls");
+            console.log(tabId)
+            $(event.target).parent().remove();
+            $(`#${tabId}`).remove();
+        });
     </script>
 @endsection

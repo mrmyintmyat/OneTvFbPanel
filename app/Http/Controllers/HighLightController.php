@@ -8,6 +8,7 @@ use App\Models\HighLight;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use App\Console\Commands\AutoHighLights;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AutoMatches\AutoHighLightController;
 
@@ -20,6 +21,8 @@ class HighLightController extends Controller
 
     public function index()
     {
+        // $gg = new AutoHighLights();
+        // $gg->handle();
         $matches = HighLight::orderBy('match_time')->paginate(18);
         return view('highlight_actions.highlights', compact('matches'));
     }
@@ -143,7 +146,7 @@ class HighLightController extends Controller
 
         $dateTimeString = $request->match_time;
         $dateTime = Carbon::parse($dateTimeString);
-        $match_time = $dateTime->timestamp * 1000;
+        $match_time = $dateTime->timestamp;
 
         $homeTeamLogoUrl = $match->home_team_logo;
         $awayTeamLogoUrl = $match->away_team_logo;

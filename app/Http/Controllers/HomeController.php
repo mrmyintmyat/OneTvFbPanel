@@ -157,7 +157,7 @@ class HomeController extends Controller
 
         $dateTimeString = $request->match_time;
         $dateTime = Carbon::parse($dateTimeString);
-        $match_time = $dateTime->timestamp * 1000;
+        $match_time = $dateTime->timestamp;
 
         if ($request->match_status === 'Match' || $request->match_status === 'Live') {
             $match = FootballMatch::create([
@@ -355,8 +355,7 @@ class HomeController extends Controller
 
         $dateTimeString = $request->match_time;
         $dateTime = Carbon::parse($dateTimeString);
-        $match_time = $dateTime->timestamp * 1000;
-
+        $match_time = $dateTime->timestamp;
         $homeTeamLogoUrl = $match->home_team_logo;
         $awayTeamLogoUrl = $match->away_team_logo;
 

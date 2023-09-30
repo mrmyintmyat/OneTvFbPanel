@@ -57,16 +57,10 @@
                                 @else
                                     <div
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
-                                        @if ($match->is_auto_match)
-                                            @php
-                                                $gmtOffset = $match->match_time + 23450;
-                                                $match_time = $gmtOffset * 1000;
-                                            @endphp
-                                        @else
-                                           @php
-                                               $match_time = $match->match_time;
-                                           @endphp
-                                        @endif
+                                        @php
+                                        $time = $match->match_time;
+                                        $match_time = $time * 1000;
+                                       @endphp
                                         <span class="time-font_size">
                                             {{ date('H:i', $match_time / 1000) }}
                                         </span>

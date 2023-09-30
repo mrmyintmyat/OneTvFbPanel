@@ -18,16 +18,10 @@
                         <div class="shadow-sm p-3">
                             <div class="row mb-3">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
-                                @if ($match->is_auto_match)
-                                    @php
-                                        $gmtOffset = $match->match_time + 23450;
-                                        $match_time = $gmtOffset * 1000;
-                                    @endphp
-                                @else
-                                    @php
-                                        $match_time = $match->match_time;
-                                    @endphp
-                                @endif
+                                @php
+                                $time = $match->match_time;
+                                $match_time = $time * 1000;
+                                @endphp
                                 @php
                                     $timestampSeconds = $match_time / 1000;
 

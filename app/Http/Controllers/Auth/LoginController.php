@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function setTimezone(Request $request)
+    {
+        $timezone = $request->input('timezone');
+
+        // Store the timezone in the session
+        Session::put('timezone', $timezone);
+
+        return response()->json(['message' => 'Timezone set successfully']);
     }
 }

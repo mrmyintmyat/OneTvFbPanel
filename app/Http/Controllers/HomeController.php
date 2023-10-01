@@ -19,6 +19,7 @@ use App\Console\Commands\AutoMatches;
 use App\Console\Commands\MyCustomTask;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AutoMatches\AutoMatchesController;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -156,7 +157,8 @@ class HomeController extends Controller
         }
 
         $dateTimeString = $request->match_time;
-        $dateTime = Carbon::parse($dateTimeString);
+        $timezone = Session::get('timezone');
+        $dateTime = Carbon::parse($dateTimeString, $timezone);
         $match_time = $dateTime->timestamp;
 
         if ($request->match_status === 'Match' || $request->match_status === 'Live') {
@@ -354,8 +356,10 @@ class HomeController extends Controller
         }
 
         $dateTimeString = $request->match_time;
-        $dateTime = Carbon::parse($dateTimeString);
+        $timezone = Session::get('timezone');
+        $dateTime = Carbon::parse($dateTimeString, $timezone);
         $match_time = $dateTime->timestamp;
+
         $homeTeamLogoUrl = $match->home_team_logo;
         $awayTeamLogoUrl = $match->away_team_logo;
 

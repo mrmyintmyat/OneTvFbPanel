@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+    use Illuminate\Support\Facades\Session;
+@endphp
 @extends('layouts.home')
 @section('style')
     <style>
@@ -58,14 +62,13 @@
                                     <div
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
                                         @php
-                                        $time = $match->match_time;
-                                        $match_time = $time * 1000;
-                                       @endphp
+                                            $match_time = Carbon::createFromTimestamp($match->match_time, Session::get('timezone'));
+                                        @endphp
                                         <span class="time-font_size">
-                                            {{ date('H:i', $match_time / 1000) }}
+                                            {{ $match_time->format('H:i') }}
                                         </span>
                                         <span class="date-font_size">
-                                            {{ date('Y-m-d', $match_time / 1000) }}
+                                            {{ $match_time->format('Y-m-d') }}
                                         </span>
                                     </div>
                                 @endif
@@ -160,6 +163,7 @@
 @endsection
 @section('script')
     <script>
+
         function NotiModal(id) {
             let home_name = $("#home_team_name_" + id).text();
             let away_name = $("#away_team_name_" + id).text();

@@ -1,22 +1,23 @@
 @php
     use Carbon\Carbon;
+    use Illuminate\Support\Facades\Session;
 @endphp
 @extends('layouts.home')
 @section('style')
     <style>
         /* #match_time {
-          position: relative;
-        }
+              position: relative;
+            }
 
-        #match_time input[type="datetime-local"] {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          cursor: pointer;
-        } */
+            #match_time input[type="datetime-local"] {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              cursor: pointer;
+            } */
     </style>
 @endsection
 @section('page')
@@ -36,20 +37,13 @@
                             <div class="row mb-3">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
                                 @php
-                                    $time = $match->match_time;
-                                    $match_time = $time * 1000;
-                                @endphp
-                                @php
-                                    $timestampSeconds = $match_time / 1000;
-
-                                    $dateTime = Carbon::createFromTimestamp($timestampSeconds);
+                                    $dateTime = Carbon::createFromTimestamp($match->match_time, Session::get('timezone'));
                                     $match_time = $dateTime->format('Y-m-d H:i:s');
                                 @endphp
                                 <div class="">
                                     <input id="match_time" type="datetime-local"
                                         class="@error('match_time') is-invalid @enderror " name="match_time"
                                         value="{{ $match_time }}" required autocomplete="match_time">
-
 
                                     @error('match_time')
                                         <span class="invalid-feedback" role="alert">

@@ -103,7 +103,7 @@ class AutoHighLightController extends Controller
         } else {
             $serverDetails = [
                 'name' => "Server" . ($i + 1),
-                'url' => $serverUrl,
+                'url' => $this->getStreamUrl($serverUrl),
                 'referer' => 'https://live-streamfootball.com/',
                 'new' => false,
             ];
@@ -113,6 +113,63 @@ class AutoHighLightController extends Controller
     }
 
     return $serverList;
+}
+
+private function getToken() {
+    $client = new Client();
+
+    $headers = [
+        'Host' => 'bingsport.com',
+        'Origin' => 'https://bingsport.com',
+        'Sec-Fetch-Site' => 'same-origin',
+        'Referer' => 'https://bingsport.com/en/profile/2255ceb9d3c1745a0f92a7a187ff8945',
+        'Content-Type' => 'text/plain',
+    ];
+
+    $data = [
+        'referrer_link' => 'https://bingsport.com/',
+        'first_link' => 'https://bingsport.com/',
+    ];
+
+    $response = $client->post('https://bingsport.com/en/me', [
+        'headers' => $headers,
+        'form_params' => $data,
+    ]);
+
+    $json_data = json_decode($response->getBody(), true);
+    $token_livestream = $json_data['token_livestream'];
+
+    return $token_livestream;
+}
+
+private function getStreamUrl($url) {
+    $client = new Client();
+
+    $headers = [
+        'Referer' => 'https://bingsport.com/',
+    ];
+
+    $params = [
+        'm3u8' => $url,
+        'token' => $this->getToken(),
+        'is_vip' => 'true',
+    ];
+
+    $response = $client->get('https://live-streamfootball.com/index.php', [
+        'headers' => $headers,
+        'query' => $params,
+    ]);
+
+    $pattern = "/var\s+m3u8\s+=\s+'(https:\/\/[^']+)';/";
+
+    preg_match($pattern, $response->getBody(), $matches);
+
+    if (isset($matches[1])) {
+        $m3u8_url = $matches[1];
+        return $m3u8_url;
+    } else {
+        return "M3U8 URL not found in the script tag.";
+    }
 }
 
 private function extractMp4Urls($htmlContent)

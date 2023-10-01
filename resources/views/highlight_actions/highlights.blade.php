@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+    use Illuminate\Support\Facades\Session;
+@endphp
 @extends('layouts.home')
 @section('style')
     <style>
@@ -27,18 +31,11 @@
                                 </span>
                             </div>
                         </div>
-                        @if ($match->is_auto_match)
-                            @php
-                                $gmtOffset = $match->match_time + 23450;
-                                $match_time = $gmtOffset * 1000;
-                            @endphp
-                        @else
-                            @php
-                                $match_time = $match->match_time;
-                            @endphp
-                        @endif
+                        @php
+                            $match_time = Carbon::createFromTimestamp($match->match_time, Session::get('timezone'));
+                        @endphp
                         <span class="py-1 px-2">
-                            {{ date('Y-m-d', $match_time / 1000) }}
+                            {{ $match_time->format('Y-m-d') }}
                         </span>
 
                     </div>

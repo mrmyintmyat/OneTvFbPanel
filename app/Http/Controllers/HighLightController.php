@@ -145,7 +145,8 @@ class HighLightController extends Controller
         }
 
         $dateTimeString = $request->match_time;
-        $dateTime = Carbon::parse($dateTimeString);
+        $timezone = Session::get('timezone');
+        $dateTime = Carbon::parse($dateTimeString, $timezone);
         $match_time = $dateTime->timestamp;
 
         $homeTeamLogoUrl = $match->home_team_logo;

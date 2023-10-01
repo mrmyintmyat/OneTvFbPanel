@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\HighLightController;
 use App\Http\Controllers\AppSettingController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\NotificationController;
 
 /*
@@ -34,6 +35,9 @@ Route::post('/password-change', [HomeController::class, 'pw_change'])->name('pas
 Route::resource('/matches', HomeController::class)->except(['show']);
 Route::resource('/highlights', HighLightController::class)->except(['show', 'store']);
 
+Route::post('/set-timezone', [LoginController::class, 'setTimezone']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

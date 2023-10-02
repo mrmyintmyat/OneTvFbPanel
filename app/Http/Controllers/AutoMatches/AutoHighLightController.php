@@ -17,7 +17,7 @@ class AutoHighLightController extends Controller
     {
         $today = now();
         $allLiveMatches = [];
-
+// l;
         for ($i = 0; $i < 3; $i++) {
             $date = $today->subDays($i);
             $dateStr = $date->format("Y-m-d");

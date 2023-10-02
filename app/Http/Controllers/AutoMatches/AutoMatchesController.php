@@ -9,12 +9,13 @@ use GuzzleHttp\Client;
 
 class AutoMatchesController extends Controller
 {
-    public function get_live_sports($url) {
+    public function get_live_sports($url)
+    {
         $html_content = $this->fetch_html($url);
         $dom = HtmlDomParser::str_get_html($html_content);
-        $live_matches = array();
+        $live_matches = [];
 
-        foreach ($dom->find('div.list-match-sport-live-stream') as $match_element) {
+        foreach ($dom->find('div.match-league-container') as $match_element) {
             foreach ($match_element->find('a') as $anchor_tag) {
                 $match_url = $anchor_tag->href;
                 try {
@@ -22,32 +23,29 @@ class AutoMatchesController extends Controller
                     // return $league_name;
                     $match_details = $this->getDataFromMatches($match_url, $league_name);
                 } catch (Exception $e) {
-                    $league_name = '';
+                    $league_name = 'Sports899 TV';
                     $match_details = $this->getDataFromMatches($match_url, $league_name);
                 }
 
-                if (
-                    empty($match_details['home_team_name']) ||
-                    empty($match_details['home_team_logo']) ||
-                    empty($match_details['away_team_name']) ||
-                    empty($match_details['away_team_logo'])
-                ) {
+                if (empty($match_details['home_team_name']) || empty($match_details['home_team_logo']) || empty($match_details['away_team_name']) || empty($match_details['away_team_logo'])) {
                     continue;
                 }
-               $live_matches[] = $match_details;
+                $live_matches[] = $match_details;
+                // break;
             }
         }
 
         return $live_matches;
     }
 
-    private function getDataFromMatches($match_url, $league_name) {
+    private function getDataFromMatches($match_url, $league_name)
+    {
         $html_source = $this->fetch_html($match_url);
         $dom = HtmlDomParser::str_get_html($html_source);
 
         $current_time_seconds = time();
         $ten_minutes_before = $current_time_seconds + 600;
-        $match_status = "";
+        $match_status = '';
 
         // Extracting team info and time
         // $og_name_tag = $dom->find('meta[property="og:title"]', 0);
@@ -69,14 +67,14 @@ class AutoMatchesController extends Controller
         }
 
         if ($current_time_seconds >= $time_in_seconds || $ten_minutes_before > $time_in_seconds) {
-            $match_status = "Live";
+            $match_status = 'Live';
         } else {
-            $match_status = "Match";
+            $match_status = 'Match';
         }
 
         // Extracting server list
         $item_servers = $dom->find('div.item-server');
-        $server_list = array();
+        $server_list = [];
 
         foreach ($item_servers as $i => $item_server) {
             $data_link = $item_server->getAttribute('data-link');
@@ -85,20 +83,20 @@ class AutoMatchesController extends Controller
             $m3u8_value = $query_params['m3u8'];
             $server_url = $m3u8_value;
 
-            if ($server_url == "" || $server_url == null) {
-                $server_details = array(
+            if ($server_url == '' || $server_url == null) {
+                $server_details = [
                     'name' => 'Default Server',
                     'url' => 'https://static.videezy.com/system/resources/previews/000/047/490/original/200511-ComingSoon.mp4',
                     'referer' => 'https://fotliv.com/',
                     'new' => false,
-                );
+                ];
             } else {
-                $server_details = array(
+                $server_details = [
                     'name' => 'Server ' . ($i + 1),
                     'url' => $this->getStreamUrl($server_url),
                     'referer' => 'https://live-streamfootball.com/',
                     'new' => false,
-                );
+                ];
             }
 
             $server_list[] = $server_details;
@@ -111,40 +109,44 @@ class AutoMatchesController extends Controller
 
         // $adjustedTimestampMillis = $gmtOffset * 1000;
         // $timestampSeconds = $adjustedTimestampMillis / 1000;
+        if ($league_name == '' || $league_name == null) {
+            $league_name = 'Sports899 TV';
+        }
 
-        $data = array(
-            "match_time" => strval($time_in_seconds),
-            "home_team_name" => $home_team_name,
-            "home_team_logo" => $this->checkLogo($home_team_logo),
-            "away_team_name" => $away_team_name,
-            "away_team_logo" => $this->checkLogo($away_team_logo),
-            "league_name" => $league_name,
-            "league_logo" => null,
-            "match_status" => $match_status,
-            "servers" => $server_list,
-            "is_auto_match" => true
-        );
+        $data = [
+            'match_time' => strval($time_in_seconds),
+            'home_team_name' => $home_team_name,
+            'home_team_logo' => $this->checkLogo($home_team_logo),
+            'away_team_name' => $away_team_name,
+            'away_team_logo' => $this->checkLogo($away_team_logo),
+            'league_name' => $league_name,
+            'league_logo' => null,
+            'match_status' => $match_status,
+            'servers' => $server_list,
+            'is_auto_match' => true,
+        ];
 
         return $data;
     }
 
-    private function getToken() {
+    private function getToken()
+    {
         $client = new Client();
 
         $headers = [
-            'Host' => 'bingsport.com',
-            'Origin' => 'https://bingsport.com',
+            'Host' => 'bscore.tv',
+            'Origin' => 'https://bscore.tv/',
             'Sec-Fetch-Site' => 'same-origin',
-            'Referer' => 'https://bingsport.com/en/profile/2255ceb9d3c1745a0f92a7a187ff8945',
+            'Referer' => 'https://bscore.tv/',
             'Content-Type' => 'text/plain',
         ];
 
         $data = [
-            'referrer_link' => 'https://bingsport.com/',
-            'first_link' => 'https://bingsport.com/',
+            'referrer_link' => 'https://bscore.tv/',
+            'first_link' => 'https://bscore.tv/',
         ];
 
-        $response = $client->post('https://bingsport.com/en/me', [
+        $response = $client->post('https://bscore.tv/', [
             'headers' => $headers,
             'form_params' => $data,
         ]);
@@ -155,11 +157,12 @@ class AutoMatchesController extends Controller
         return $token_livestream;
     }
 
-    private function getStreamUrl($url) {
+    private function getStreamUrl($url)
+    {
         $client = new Client();
 
         $headers = [
-            'Referer' => 'https://bingsport.com/',
+            'Referer' => 'https://bscore.tv/',
         ];
 
         $params = [
@@ -181,17 +184,19 @@ class AutoMatchesController extends Controller
             $m3u8_url = $matches[1];
             return $m3u8_url;
         } else {
-            return "M3U8 URL not found in the script tag.";
+            return 'M3U8 URL not found in the script tag.';
         }
     }
 
-    private function fetch_html($url) {
+    private function fetch_html($url)
+    {
         $response = file_get_contents($url);
         return $response;
     }
 
-    private function checkLogo($url) {
-        if ($url != "") {
+    private function checkLogo($url)
+    {
+        if ($url != '') {
             $response = get_headers($url);
             if (strpos($response[0], '200 OK') !== false) {
                 return $url;
@@ -199,7 +204,7 @@ class AutoMatchesController extends Controller
                 return 'https://origin-media.wedodemos.com/upload/images/nologo.png';
             }
         } else {
-            return "";
+            return '';
         }
     }
 }

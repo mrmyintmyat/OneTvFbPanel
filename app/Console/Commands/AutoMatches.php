@@ -30,7 +30,8 @@ class AutoMatches extends Command
     {
         set_time_limit(300);
         $gg = new AutoMatchesController();
-        $matches = $gg->get_live_sports('https://bingsport.com/live-stream-football.html');
+        $matches = $gg->get_live_sports('https://bscore.tv/match-football');
+        // return $matches;
         $existingMatches = FootballMatch::where('is_auto_match', true)->get();
 
         $this->deleteMatches($existingMatches, $matches);
@@ -67,7 +68,7 @@ class AutoMatches extends Command
                 }
 
                 $existingMatch->servers = json_encode($newServers);
-                $existingMatch->save();
+                $existingMatch->update();
             }
         }
 

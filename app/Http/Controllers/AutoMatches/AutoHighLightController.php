@@ -2,136 +2,154 @@
 
 namespace App\Http\Controllers\AutoMatches;
 
+use GuzzleHttp\Client as GuzzleClient;
+use Goutte\Client;
 use Illuminate\Http\Request;
 use voku\helper\HtmlDomParser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpClient\HttpClient;
 
 class AutoHighLightController extends Controller
 {
-    public function getLiveMatches()
+   public function getLiveMatches()
     {
-        $htmlContent = $this->fetchHtml('https://bingsport.com/high-light');
-        $liveMatches = $this->parseHtml($htmlContent);
+        $today = now();
+        $allLiveMatches = [];
 
-        return $liveMatches;
-    }
+        for ($i = 0; $i < 3; $i++) {
+            $date = $today->subDays($i);
+            $dateStr = $date->format("Y-m-d");
+            $baseUrl = "https://bscore.tv/highlight-data?is_hot=-1&timestamp=";
+            $timestamp = strtotime($dateStr);
+            $url = "{$baseUrl}{$timestamp}";
+            $htmlContent = $this->fetchHtml($url);
+            $crawler = new Crawler($htmlContent);
+            $liveMatches = [];
 
-    private function parseHtml($htmlContent)
-    {
-        $liveMatches = [];
-
-        $dom = HtmlDomParser::str_get_html($htmlContent);
-
-        foreach ($dom->find('div.list-match-sport-live-stream') as $matchElement) {
-            foreach ($matchElement->find('a') as $anchorTag) {
-                $matchUrl = $anchorTag->href;
+            $crawler->filter('div.match-league-container')->each(function ($matchElement) use (&$liveMatches) {
+                $anchorTag = $matchElement->filter('a');
+                $matchUrl = $anchorTag->attr('href');
 
                 try {
-                    // Details for home team
-                    $homeTeamName = $anchorTag->find('div.left-team div.txt-team-name', 0)->plaintext;
-                    $homeTeamLogo = $anchorTag->find('div.left-team img', 0)->getAttribute('data-src');
+                    $homeTeamName = trim($anchorTag->filter('div.left-team div.txt-team-name')->text());
+                    $homeTeamLogo = $anchorTag->filter('div.left-team img')->attr('data-src');
 
-                    // Details for away team
-                    $awayTeamName = $anchorTag->find('div.right-team div.txt-team-name', 0)->plaintext;
-                    $awayTeamLogo = $anchorTag->find('div.right-team img', 0)->getAttribute('data-src');
+                    $awayTeamName = trim($anchorTag->filter('div.right-team div.txt-team-name')->text());
+                    $awayTeamLogo = $anchorTag->filter('div.right-team img')->attr('data-src');
 
-                    // Other info
-                    $matchTimeElement = $anchorTag->find('div.time-match', 0);
+                    $matchTimeElement = $anchorTag->filter('div.time-match');
+                    $isLive = $anchorTag->filter('div.txt-vs')->text();
 
-                    $scores = $anchorTag->find('div.txt-vs', 0)->plaintext;
-                    $scoresArray = explode('-', $scores);
-
-                    $home_team_score = trim($scoresArray[0]);
-                    $away_team_score = trim($scoresArray[1]);
-
-                    $matchTime = $matchTimeElement->getAttribute('data-timestamp');
-                    if ($matchTime === null) {
-                        $matchTime = $matchTimeElement->find('span.txt_time', 0)->getAttribute('data-timestamp');
+                    if (strpos($isLive, 'isLive') !== false) {
+                        $matchStatus = "Live";
+                    } else {
+                        $matchStatus = str_replace("\n", '', $isLive);
                     }
 
-                    if ($matchTime === null) {
-                        $matchTime = "0";
+                    $teamScores = explode('-', $matchStatus);
+
+                    if (count($teamScores) === 2) {
+                        $home_team_score = trim($teamScores[0]);
+                        $away_team_score = trim($teamScores[1]);
+                    } else {
+                        $home_team_score = 0;
+                        $away_team_score = 0;
                     }
 
-                    // $gmtOffset = $matchTime + 23450;
-                    // $adjustedTimestampMillis = $gmtOffset * 1000;
+                    $matchTime = $matchTimeElement->attr('data-timestamp');
+                    if (!$matchTime) {
+                        $matchTime = $matchTimeElement->filter('span.txt_time')->attr('data-timestamp');
+                    }
 
-                    $leagueName = $anchorTag->find('div.league-name', 0)->plaintext;
+                    $matchTime = $matchTime ?: "0";
+
+                    $leagueName = trim($matchElement->filter('h4.league-name')->text());
 
                     $matchDetails = [
                         "match_time" => $matchTime,
-                        "home_team_name" => trim($homeTeamName),
+                        "home_team_name" => $homeTeamName,
                         "home_team_logo" => $homeTeamLogo,
                         "home_team_score" => $home_team_score,
-                        "away_team_name" => trim($awayTeamName),
-                        "away_team_score" => $away_team_score,
+                        "away_team_name" => $awayTeamName,
                         "away_team_logo" => $awayTeamLogo,
+                        "away_team_score" => $away_team_score,
                         "league_name" => $leagueName,
-                        "match_status" => "HighLight",
+                        "match_status" => 'Highlight',
                         "servers" => $this->getVideoDetails($matchUrl),
-                        "is_auto_match" => true
+                        "is_auto_match" => true,
                     ];
 
                     $liveMatches[] = $matchDetails;
-                } catch (\Exception $e) {
-                    // Handle any exceptions
+                } catch (Exception $e) {
+                    // Handle exceptions if needed
                 }
-            }
+            });
+
+            $allLiveMatches = array_merge($allLiveMatches, $liveMatches);
         }
 
-        return $liveMatches;
+        usort($allLiveMatches, function ($a, $b) {
+            return strcmp($b['match_time'], $a['match_time']);
+        });
+
+        return $allLiveMatches;
     }
 
-    private function getVideoDetails($matchUrl)
-{
-    $htmlSource = $this->fetchHtml($matchUrl);
-    $itemServers = $this->extractMp4Urls($htmlSource);
+    function checkImage($url)
+    {
+        $client = HttpClient::create();
+        $response = $client->request('GET', $url);
 
-    $serverList = [];
-
-    foreach ($itemServers as $i => $itemServer) {
-        $serverUrl = $itemServer;
-
-        if (empty($serverUrl)) {
-            $serverDetails = [
-                'name' => "Default Server",
-                'url' => 'https://static.videezy.com/system/resources/previews/000/047/490/original/200511-ComingSoon.mp4',
-                'referer' => 'https://fotliv.com/',
-                'new' => false,
-            ];
+        if ($response->getStatusCode() == 200) {
+            return $url;
+        } elseif ($response->getStatusCode() == 404) {
+            return 'https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500-300x300.jpg';
         } else {
-            $serverDetails = [
-                'name' => "Server" . ($i + 1),
-                'url' => $this->getStreamUrl($serverUrl),
-                'referer' => 'https://live-streamfootball.com/',
-                'new' => false,
-            ];
+            return 'https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500-300x300.jpg';
         }
-
-        $serverList[] = $serverDetails;
     }
 
-    return $serverList;
-}
+    function getVideoDetails($matchUrl)
+    {
+        $htmlSource = $this->fetchHtml($matchUrl);
+        $itemServers = $this->extractMp4Urls($htmlSource);
+        $serverList = [];
 
-private function getToken() {
-    $client = new Client();
+        foreach ($itemServers as $i => $itemServer) {
+            $serverUrl = $itemServer ?: 'https://static.videezy.com/system/resources/previews/000/047/490/original/200511-ComingSoon.mp4';
+
+            $serverDetails = [
+                'name' => "Server " . ($i + 1),
+                'url' => $serverUrl,
+                'referer' => 'https://live-streamfootball.com/',
+            ];
+
+            $serverList[] = $serverDetails;
+        }
+
+        return $serverList;
+    }
+
+private function getToken()
+{
+    $client = new GuzzleClient();
 
     $headers = [
-        'Host' => 'bingsport.com',
-        'Origin' => 'https://bingsport.com',
+        'Host' => 'bscore.tv',
+        'Origin' => 'https://bscore.tv/',
         'Sec-Fetch-Site' => 'same-origin',
-        'Referer' => 'https://bingsport.com/en/profile/2255ceb9d3c1745a0f92a7a187ff8945',
+        'Referer' => 'https://bscore.tv/',
         'Content-Type' => 'text/plain',
     ];
 
     $data = [
-        'referrer_link' => 'https://bingsport.com/',
-        'first_link' => 'https://bingsport.com/',
+        'referrer_link' => 'https://bscore.tv/',
+        'first_link' => 'https://bscore.tv/',
     ];
 
-    $response = $client->post('https://bingsport.com/en/me', [
+    $response = $client->post('https://bscore.tv/', [
         'headers' => $headers,
         'form_params' => $data,
     ]);
@@ -142,11 +160,12 @@ private function getToken() {
     return $token_livestream;
 }
 
-private function getStreamUrl($url) {
+private function getStreamUrl($url)
+{
     $client = new Client();
 
     $headers = [
-        'Referer' => 'https://bingsport.com/',
+        'Referer' => 'https://bscore.tv/',
     ];
 
     $params = [
@@ -168,23 +187,26 @@ private function getStreamUrl($url) {
         $m3u8_url = $matches[1];
         return $m3u8_url;
     } else {
-        return "M3U8 URL not found in the script tag.";
+        return 'M3U8 URL not found in the script tag.';
     }
 }
 
-private function extractMp4Urls($htmlContent)
-{
-    $pattern = '/(https?:\/\/[^\s"\'<>]+\.mp4)/';
-    preg_match_all($pattern, $htmlContent, $matches);
+  private function extractMp4Urls($htmlContent)
+    {
+        $pattern = '/(https?:\/\/[^\s"\'<>]+\.mp4)/';
+        preg_match_all($pattern, $htmlContent, $mp4Urls);
 
-    return $matches[0];
-}
+        return $mp4Urls[0];
+    }
 
-private function fetchHtml($url)
-{
-    $response = Http::get($url);
+    private function fetchHtml($url)
+    {
+        // $client = new Client();
+        // $crawler = $client->request('GET', $url);
 
-    return $response->body();
-}
+        // return $crawler->html();
 
+        $response = file_get_contents($url);
+        return $response;
+    }
 }

@@ -31,8 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         // $gg = new AutoMatches();
-        // $gg->handle();
-        // return $matches;
+        // $matches = $gg->handle();
 
         // $matches = [
         //     [

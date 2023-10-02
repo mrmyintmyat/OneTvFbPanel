@@ -146,7 +146,7 @@ class AutoMatchesController extends Controller
             'first_link' => 'https://bscore.tv/',
         ];
 
-        $response = $client->post('https://bscore.tv/', [
+        $response = $client->post('https://bscore.tv/me', [
             'headers' => $headers,
             'form_params' => $data,
         ]);

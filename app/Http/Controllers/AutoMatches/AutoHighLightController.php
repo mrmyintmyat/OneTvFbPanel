@@ -124,6 +124,7 @@ class AutoHighLightController extends Controller
                 'name' => "Server " . ($i + 1),
                 'url' => $serverUrl,
                 'referer' => 'https://live-streamfootball.com/',
+                'new' => false,
             ];
 
             $serverList[] = $serverDetails;
@@ -149,7 +150,7 @@ private function getToken()
         'first_link' => 'https://bscore.tv/',
     ];
 
-    $response = $client->post('https://bscore.tv/', [
+    $response = $client->post('https://bscore.tv/me', [
         'headers' => $headers,
         'form_params' => $data,
     ]);

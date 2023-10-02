@@ -21,8 +21,8 @@ class HighLightController extends Controller
 
     public function index()
     {
-        // $gg = new AutoHighLights();
-        // $matches = $gg->handle();
+        $gg = new AutoHighLights();
+        $matches = $gg->handle();
         $matches = HighLight::orderBy('match_time')->paginate(18);
         return view('highlight_actions.highlights', compact('matches'));
     }

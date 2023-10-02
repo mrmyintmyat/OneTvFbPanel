@@ -32,52 +32,7 @@ class HomeController extends Controller
     {
         // $gg = new AutoMatches();
         // $matches = $gg->handle();
-
-        // $matches = [
-        //     [
-        //         'match_time' => '1695429050000',
-        //         'home_team_name' => 'Al Nassr',
-        //         'home_team_logo' => 'https://img.bingsport.com/static/common/img/soccer/teams/10/2506.png',
-        //         'away_team_name' => 'Al Ahli Jeddah',
-        //         'away_team_logo' => 'https://img.bingsport.com/static/common/img/soccer/teams/20/9908.png',
-        //         'league_name' => 'Pro League',
-        //         'league_logo' => null,
-        //         'match_status' => 'Match',
-        //         'servers' => [],
-        //         'is_auto_match' => true,
-        //     ],
-        //     [
-        //         'match_time' => '1695393050000',
-        //         'home_team_name' => 'RANS Nusantara',
-        //         'home_team_logo' => 'https://img.bingsport.com/static/common/img/soccer/teams/27/27611.png',
-        //         'away_team_name' => 'Persis Solo',
-        //         'away_team_logo' => 'https://img.bingsport.com/static/common/img/soccer/teams/6/27622.png',
-        //         'league_name' => 'Liga 1',
-        //         'league_logo' => null,
-        //         'match_status' => 'Match',
-        //         'servers' => [],
-        //         'is_auto_match' => true,
-        //     ],
-        // ];
-        // return 'success';
-
-        // $Automatches = AutoMatch::orderBy('match_time')->paginate(18);
-        // $matches = FootballMatch::orderBy('match_time')->paginate(18);
-
-        // $matches = [];
-
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
-        // $matches2 = AutoMatch::orderBy('match_time');
-
-        // $matches = $matches1->union($matches2)->paginate(18);
-        // $matches = $matches1->concat($matches2);
-        // foreach ($matches1 as $match) {
-        //     $matches[] = $match;
-        // }
-
-        // foreach ($matches2 as $match) {
-        //     $matches[] = $match;
-        // }
         return view('index', compact('matches'));
     }
 

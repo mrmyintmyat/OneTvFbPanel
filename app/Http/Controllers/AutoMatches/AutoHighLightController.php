@@ -18,7 +18,7 @@ class AutoHighLightController extends Controller
         $today = now();
         $allLiveMatches = [];
 // l;
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $date = $today->subDays($i);
             $dateStr = $date->format("Y-m-d");
             $baseUrl = "https://bscore.tv/highlight-data?is_hot=-1&timestamp=";

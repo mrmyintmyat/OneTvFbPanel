@@ -15,7 +15,7 @@ class AutoMatchesController extends Controller
         $dom = HtmlDomParser::str_get_html($html_content);
         $live_matches = [];
 
-        foreach ($dom->find('div.match-league-container') as $match_element) {
+        foreach ($dom->find('div.list-match-sport-live-stream') as $match_element) {
             foreach ($match_element->find('a') as $anchor_tag) {
                 $match_url = $anchor_tag->href;
                 try {

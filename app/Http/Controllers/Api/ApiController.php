@@ -63,7 +63,6 @@ class ApiController extends Controller
                 ];
             }
 
-          
             $customMatch = [
                 'id' => $match->id,
                 'match_time' => $match->match_time,
@@ -87,7 +86,7 @@ class ApiController extends Controller
 
     public function app_setting()
     {
-        $setting = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')>
+        $setting = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
         $datas = $this->encryptAES($setting, 'ht3tMyatauNg1288');
         return $datas;
     }
@@ -127,7 +126,7 @@ class ApiController extends Controller
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,
             ];
-
+            
             // Add the custom match entry to the response array
             $customResponse[] = $customMatch;
         }

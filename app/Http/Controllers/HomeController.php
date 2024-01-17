@@ -30,8 +30,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        // $gg = new AutoMatches();
-        // $matches = $gg->handle();
+        // set_time_limit(300);
+        // $gg = new AutoMatchesController();
+        // $matches = $gg->get_live_sports('https://bingsport.com/live-stream-football.html');
+        // return $matches;
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
         return view('index', compact('matches'));
     }
@@ -161,6 +163,7 @@ class HomeController extends Controller
                 'league_logo' => $leagueLogo,
                 'match_status' => $request->match_status,
                 'servers' => json_encode($servers),
+                'is_auto_match' => false,
             ]);
 
             if ($highlight && $request->file('home_team_logo')) {

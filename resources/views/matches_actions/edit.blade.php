@@ -59,9 +59,11 @@
                                     <select id="league" name="league" class="form-select "
                                         aria-label="Default select example">
                                         <div class="ms-3 collapse show" id="collapseExample" style="">
+                                            <option value="{{ $match->league_name }},{{ $match->league_logo }}" selected>
+                                                <span class="ms-2 text-truncate">{{ $match->league_name }}</span>
+                                            </option>
                                             @foreach ($leagues as $league)
-                                                <option value="{{ $league->name }},{{ $league->logo }}"
-                                                    {{ $match->league_name == $league->name ? 'selected' : '' }}>
+                                                <option value="{{ $league->name }},{{ $league->logo }}">
                                                     <span class="ms-2 text-truncate">
                                                         {{ $league->name }}</span>
                                                 </option>

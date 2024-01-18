@@ -17,23 +17,46 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Console\Commands\AutoMatches;
 use App\Console\Commands\MyCustomTask;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AutoMatches\AutoMatchesController;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\AutoMatches\AutoVnMatchesController;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function index()
     {
+        $ch = curl_init();
+        $url = "https://vebotv.ca/";
+        $headers = array(
+            'User-Agent: My User Agent',
+        );
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+
+        if ($response === false) {
+            echo 'Curl error: ' . curl_error($ch);
+        } else {
+           return $response;
+        }
+
+        curl_close($ch);
+        return $response;
+
         // set_time_limit(300);
         // $gg = new AutoMatchesController();
-        // $matches = $gg->get_live_sports('https://bingsport.com/live-stream-football.html');
-        // return $matches;
+        $gg = new AutoVnMatchesController();
+        $matches = $gg->get_live_sports();
+        return $matches;
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
         return view('index', compact('matches'));
     }

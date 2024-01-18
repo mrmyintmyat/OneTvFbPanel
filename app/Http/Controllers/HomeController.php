@@ -31,27 +31,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $ch = curl_init();
-        $url = "https://vebotv.ca/";
-        $headers = array(
-            'User-Agent: My User Agent',
-        );
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $response = curl_exec($ch);
-
-        if ($response === false) {
-            echo 'Curl error: ' . curl_error($ch);
-        } else {
-           return $response;
-        }
-
-        curl_close($ch);
-        return $response;
-
         // set_time_limit(300);
         // $gg = new AutoMatchesController();
         $gg = new AutoVnMatchesController();

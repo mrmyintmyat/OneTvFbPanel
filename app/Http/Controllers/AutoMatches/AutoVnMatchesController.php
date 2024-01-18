@@ -18,9 +18,19 @@ class AutoVnMatchesController extends Controller
     {
         $user_agent = $this->getRandomUserAgent();
         $url = 'https://vebotv.ca/';
-        $response = Http::withHeaders(['referer' => 'https://www.channelemea.com/', 'User-Agent' => $user_agent])->get($url);
+        $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($url);
         $htmlContent = $response->body();
-        return $htmlContent;
+        $liveMatches = $this->scrapeMatchesFromHtml($htmlContent);
+        $jsonContent = json_encode($liveMatches, JSON_PRETTY_PRINT);
+
+        $encryptedJson = $this->encryptAES($jsonContent);
+        return $jsonContent;
+
+        // Specify the path where you want to save the encrypted JSON file
+        // $outputFilePath = storage_path('app/vntvmatches.json');
+        // file_put_contents($outputFilePath, $encryptedJson);
+
+        // Log::info('Matches scraped and encrypted. JSON file saved to ' . $outputFilePath);
     }
 
     private function getRandomUserAgent()
@@ -41,7 +51,7 @@ class AutoVnMatchesController extends Controller
             try {
                 // Extract competition name
                 $competitionName = $matchItem->find('.competition-label-option div[itemprop="name"]', 0)->plaintext;
-return $matchItem;
+// return $matchItem;
                 // Extract match details
                 $matchLink = $matchItem->find('a.match-link', 0);
                 $matchUrl = $matchLink->find('meta[itemprop="url"]', 0)->content;

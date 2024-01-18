@@ -34,7 +34,7 @@ class HomeController extends Controller
         // set_time_limit(300);
         // $gg = new AutoMatchesController();
         $gg = new AutoVnMatchesController();
-        $matches = $gg->get_live_sports();
+        $matches = $gg->scrapeMatches();
         return $matches;
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
         return view('index', compact('matches'));

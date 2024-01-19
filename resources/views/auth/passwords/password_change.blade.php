@@ -1,7 +1,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child(7) {
+        .hover_menu_tag a:nth-child(8) {
             border-left: 3px solid #ff0505 !important;
             background: rgba(255, 255, 255, 0.251);
         }

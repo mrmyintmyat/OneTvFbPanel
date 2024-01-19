@@ -97,7 +97,7 @@
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
                             <div class="d-flex align-items-center">
-                                <i class="fas fa-home"></i>
+                                <i class="fa-solid fa-baseball"></i>
                                 <span class="ms-2">VN MATCHES</span>
                             </div>
                         </a>

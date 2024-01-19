@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
+use App\Models\VnMatch;
 use App\Models\HighLight;
 use App\Models\AppSetting;
 use Illuminate\Http\Request;
@@ -84,6 +85,49 @@ class ApiController extends Controller
         return $datas;
     }
 
+    public function vn_matches(Request $request)
+    {
+        $count = $request->input('count', 10);
+        $matches = VnMatch::orderBy('match_time')
+            ->take($count)
+            ->get();
+        // return $matches;
+        // Iterate through matches and build a custom response
+        $customResponse = [];
+        foreach ($matches as $match) {
+            $servers = json_decode($match->servers, true); // Decode the JSON "servers" attribute
+            $serverDetails = [];
+
+            // Iterate through servers and extract relevant details
+            foreach ($servers as $server) {
+                $serverDetails[] = [
+                    'name' => $server['name'],
+                    'url' => $server['url'],
+                    'referer' => $server['referer'],
+                ];
+            }
+
+            $customMatch = [
+                'id' => $match->id,
+                'match_time' => $match->match_time,
+                'home_team_name' => $match->home_team_name,
+                'home_team_logo' => $match->home_team_logo,
+                'home_team_score' => $match->home_team_score !== null ? (string)$match->home_team_score : "",
+                'away_team_name' => $match->away_team_name,
+                'away_team_logo' => $match->away_team_logo,
+                'away_team_score' => $match->away_team_score !== null ? (string)$match->away_team_score : "",
+                'league_name' => $match->league_name,
+                'league_logo' => $match->league_logo,
+                'servers' => $serverDetails,
+            ];
+
+            // Add the custom match entry to the response array
+            $customResponse[] = $customMatch;
+        }
+        $datas = $this->encryptAES($customResponse, 'GG');
+        return $datas;
+    }
+
     public function app_setting()
     {
         $setting = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
@@ -126,7 +170,7 @@ class ApiController extends Controller
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,
             ];
-            
+
             // Add the custom match entry to the response array
             $customResponse[] = $customMatch;
         }

@@ -19,6 +19,7 @@ use App\Http\Controllers\NotificationController;
 |
 */
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/vn_matches', [HomeController::class, 'vn_matches']);
 
 Route::resource('/league', LeagueController::class);
 

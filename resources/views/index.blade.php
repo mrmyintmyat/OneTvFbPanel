@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div>
-                            <a class="btn btn-light rounded-0 p-1 shadow" href="/matches/{{ $match->id }}/edit">
+                            <a class="btn btn-light rounded-0 p-1 shadow" href="/matches/{{ $match->id }}/edit?match={{$route_match}}">
                                 <span class="py-1 px-3">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </span>

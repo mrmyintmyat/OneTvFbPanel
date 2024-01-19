@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 
 class AutoVnMatchesController extends Controller
 {
-    private $encryptionKey = "ht3tMyatauNg1288";
     private $referer = "https://www.channelemea.com/";
 
     public function scrapeMatches()
@@ -22,9 +21,7 @@ class AutoVnMatchesController extends Controller
         $htmlContent = $response->body();
         $liveMatches = $this->scrapeMatchesFromHtml($htmlContent);
         $jsonContent = json_encode($liveMatches, JSON_PRETTY_PRINT);
-
-        $encryptedJson = $this->encryptAES($jsonContent);
-        return $jsonContent;
+        return $liveMatches;
 
         // Specify the path where you want to save the encrypted JSON file
         // $outputFilePath = storage_path('app/vntvmatches.json');
@@ -69,7 +66,7 @@ class AutoVnMatchesController extends Controller
 
                 $matchStatus = $currentDateTime >= $matchStartDateTime || $currentDateTime->addMinutes(10) >= $matchStartDateTime
                     ? 'Live'
-                    : 'vs';
+                    : 'Match';
 
                 // Extract home and away teams
                 $homeTeamName = $matchItem->find('.home-name.match-team div[itemprop="name"]', 0)->plaintext;
@@ -98,7 +95,7 @@ class AutoVnMatchesController extends Controller
                         $serverDetails = [
                             'name' => "Server $i",
                             'url' => $finalServerUrl,
-                            'header' => ['referer' => $this->referer, 'User-Agent' => ''],
+                            'referer' => $this->referer,
                         ];
                         $serverList[] = $serverDetails;
                     }
@@ -108,17 +105,16 @@ class AutoVnMatchesController extends Controller
                     'match_time' => strval($matchStartDateTime->timestamp),
                     'home_team_name' => $homeTeamName,
                     'home_team_logo' => $this->checkLogo($homeTeamLogo),
-                    'homeTeamScore' => $homeTeamScore,
                     'away_team_name' => $awayTeamName,
                     'away_team_logo' => $this->checkLogo($awayTeamLogo),
-                    'awayTeamScore' => $awayTeamScore,
-                    'cover_image' => '',
                     'league_name' => $competitionName,
+                    'league_logo' => null,
                     'match_status' => $matchStatus,
                     'servers' => $serverList,
+                    'is_auto_match' => true,
                 ];
 
-                if (count($serverList) > 0 || $matchStatus == 'vs') {
+                if (count($serverList) > 0 || $matchStatus == 'Match') {
                     $allMatches[] = $matchData;
                 } else {
                     Log::info('Bad');
@@ -132,25 +128,6 @@ class AutoVnMatchesController extends Controller
         $dom->clear();
 
         return $allMatches;
-    }
-
-    private function encryptAES($data)
-    {
-        try {
-            $key = $this->encryptionKey;
-            $iv = random_bytes(16);
-
-            $cipher = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
-            $encryptedData = base64_encode($cipher);
-
-            return json_encode([
-                'iv' => base64_encode($iv),
-                'encrypted_data' => $encryptedData,
-            ]);
-        } catch (\Exception $e) {
-            // Handle encryption error
-            return null;
-        }
     }
 
     private function checkLogo($url)

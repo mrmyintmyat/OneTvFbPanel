@@ -29,7 +29,7 @@
                     <button onclick="Delete_match({{ $match->id }})" class="btn btn-sm btn-danger ">DELETE MATCH</button>
                 </div>
                 <div class="d-flex mt-3 w-100">
-                    <form method="post" action="/matches/{{ $match->id }}"
+                    <form method="post" action="/matches/{{ $match->id }}?match={{$route_match}}"
                         class="w-100 row d-flex justify-content-between px-2 g-3" enctype="multipart/form-data">
                         @csrf @method('PUT')
 

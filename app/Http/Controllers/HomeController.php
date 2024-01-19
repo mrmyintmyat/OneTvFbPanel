@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DOMDocument;
 use Carbon\Carbon;
 use App\Models\League;
+use App\Models\VnMatch;
 use App\Models\AutoMatch;
 use App\Models\HighLight;
 use App\Models\AppSetting;
@@ -24,20 +25,28 @@ use App\Http\Controllers\AutoMatches\AutoVnMatchesController;
 
 class HomeController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {
         // set_time_limit(300);
         // $gg = new AutoMatchesController();
-        $gg = new AutoVnMatchesController();
-        $matches = $gg->scrapeMatches();
-        return $matches;
+        // $gg = new AutoVnMatchesController();
+        // $matches = $gg->scrapeMatches();
+        // return $matches;
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
-        return view('index', compact('matches'));
+        $route_match = 'match';
+        return view('index', compact('matches', 'route_match'));
+    }
+
+    public function vn_matches()
+    {
+        $matches = VnMatch::orderBy('match_time')->paginate(18);
+        $route_match = 'vn_match';
+        return view('index', compact('matches', 'route_match'));
     }
 
     // Show the form for creating a new resource.
@@ -199,18 +208,30 @@ class HomeController extends Controller
     public function edit($id)
     {
         $leagues = League::all();
-        $match = FootballMatch::find($id);
+        $selectedMatch = request()->query('match');
+        if ($selectedMatch === 'vn_match') {
+            $match = VnMatch::find($id);
+            $route_match = 'vn_match';
+        }else{
+            $match = FootballMatch::find($id);
+            $route_match = 'match';
+        }
+
         if (!$match) {
             session()->flash('error', 'Match not found.');
         }
-        return view('matches_actions.edit', compact('match', 'leagues'));
+        return view('matches_actions.edit', compact('match', 'leagues', 'route_match'));
     }
 
     // Update the specified resource in storage.
     public function update(Request $request, $id)
     {
-        $match = FootballMatch::find($id);
-
+        $selectedMatch = request()->query('match');
+        if ($selectedMatch === 'vn_match') {
+            $match = VnMatch::find($id);
+        }else{
+            $match = FootballMatch::find($id);
+        }
         if (!$match) {
             session()->flash('error', 'Match not found.');
             return redirect()->back();
@@ -383,7 +404,12 @@ class HomeController extends Controller
 
     public function destroy($id)
     {
-        $match = FootballMatch::find($id);
+        $selectedMatch = request()->query('match');
+        if ($selectedMatch === 'vn_match') {
+            $match = VnMatch::find($id);
+        }else{
+            $match = FootballMatch::find($id);
+        }
 
         $homeTeamLogoUrl = $match->home_team_logo;
         $awayTeamLogoUrl = $match->away_team_logo;

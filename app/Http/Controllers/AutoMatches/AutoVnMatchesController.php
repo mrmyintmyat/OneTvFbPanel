@@ -45,7 +45,7 @@ class AutoVnMatchesController extends Controller
         $allMatches = [];
 
         foreach ($dom->find('.match-main-option') as $matchItem) {
-            try {
+            // try {
                 // Extract competition name
                 $competitionName = $matchItem->find('.competition-label-option div[itemprop="name"]', 0)->plaintext;
                 // return $matchItem;
@@ -119,9 +119,9 @@ class AutoVnMatchesController extends Controller
                 } else {
                     Log::info('Bad');
                 }
-            } catch (\Exception $exception) {
-                Log::error('Error processing match item: ' . $exception->getMessage());
-            }
+            // } catch (\Exception $exception) {
+            //     Log::error('Error processing match item: ' . $exception->getMessage());
+            // }
         }
 
         // Clear memory after parsing

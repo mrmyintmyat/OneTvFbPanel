@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Http;
 
 class AutoVnMatchesController extends Controller
 {
-    private $referer = "https://www.channelemea.com/";
+    private $referer = 'https://www.channelemea.com/';
 
     public function scrapeMatches()
     {
@@ -48,7 +48,7 @@ class AutoVnMatchesController extends Controller
             try {
                 // Extract competition name
                 $competitionName = $matchItem->find('.competition-label-option div[itemprop="name"]', 0)->plaintext;
-// return $matchItem;
+                // return $matchItem;
                 // Extract match details
                 $matchLink = $matchItem->find('a.match-link', 0);
                 $matchUrl = $matchLink->find('meta[itemprop="url"]', 0)->content;
@@ -59,14 +59,12 @@ class AutoVnMatchesController extends Controller
 
                 try {
                     $scoreOpt = $matchItem->find('.match-score-option.match-score-live.owards', 0);
-                    list($homeTeamScore, $awayTeamScore) = explode(' - ', $scoreOpt->plaintext);
+                    [$homeTeamScore, $awayTeamScore] = explode(' - ', $scoreOpt->plaintext);
                 } catch (\Exception $e) {
                     // Handle score extraction exception
                 }
 
-                $matchStatus = $currentDateTime >= $matchStartDateTime || $currentDateTime->addMinutes(10) >= $matchStartDateTime
-                    ? 'Live'
-                    : 'Match';
+                $matchStatus = $currentDateTime >= $matchStartDateTime || $currentDateTime->addMinutes(10) >= $matchStartDateTime ? 'Live' : 'Match';
 
                 // Extract home and away teams
                 $homeTeamName = $matchItem->find('.home-name.match-team div[itemprop="name"]', 0)->plaintext;
@@ -80,7 +78,8 @@ class AutoVnMatchesController extends Controller
                     $user_agent = $this->getRandomUserAgent();
                     $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($matchUrl);
                     $htmlContent = $response->body();
-                    $linksItem = (new HtmlDomParser())->str_get_html($htmlContent)->find('.author-list a');
+                    $dom = HtmlDomParser::file_get_html($htmlContent);
+                    $linksItem = $dom->find('.author-list a');
                     $serverUrlList = [];
 
                     foreach ($linksItem as $link) {
@@ -133,7 +132,7 @@ class AutoVnMatchesController extends Controller
 
     private function checkLogo($url)
     {
-        if ($url != "") {
+        if ($url != '') {
             $response = Http::get($url);
 
             if ($response->successful()) {

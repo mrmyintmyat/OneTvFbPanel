@@ -78,8 +78,8 @@ class AutoVnMatchesController extends Controller
                     $user_agent = $this->getRandomUserAgent();
                     $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($matchUrl);
                     $htmlContent = $response->body();
-                    $dom_server = HtmlDomParser::file_get_html($htmlContent);
-                    $linksItem = $dom_server->find('.author-list a');
+                    // $dom_server = HtmlDomParser::file_get_html($htmlContent);
+                    $linksItem = $htmlContent->find('.author-list a');
                     $serverUrlList = [];
 
                     foreach ($linksItem as $link) {

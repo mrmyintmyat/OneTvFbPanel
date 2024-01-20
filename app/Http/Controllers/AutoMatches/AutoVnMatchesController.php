@@ -51,7 +51,7 @@ class AutoVnMatchesController extends Controller
             // return $matchItem;
             // Extract match details
             $matchLink = $matchItem->find('a.match-link', 0);
-            $matchUrl = $matchLink->find('meta[itemprop="url"]', 0)->content;
+            $matchUrl = $matchLink->href;
             $matchStartDate = $matchLink->find('meta[itemprop="startDate"]', 0)->content;
             $matchStartDateTime = Carbon::parse($matchStartDate);
 
@@ -83,7 +83,7 @@ class AutoVnMatchesController extends Controller
                 $dom_server = HtmlDomParser::str_get_html($htmlContent);
 
                 // Check if parsing was successful
-                if ($dom_server) {
+                // if ($dom_server) {
                     // Find all "a" tags with class "author-list"
                     $linksItem = $dom_server->find('.author-list a');
                     $serverUrlList = [];
@@ -107,7 +107,7 @@ class AutoVnMatchesController extends Controller
                         ];
                         $serverList[] = $serverDetails;
                     }
-                }
+                // }
             }
 
             $matchData = [

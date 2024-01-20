@@ -46,59 +46,51 @@ class AutoVnMatchesController extends Controller
 
         foreach ($dom->find('.match-main-option') as $matchItem) {
             // try {
-            // Extract competition name
-            $competitionName = $matchItem->find('.competition-label-option div[itemprop="name"]', 0)->plaintext;
-            // return $matchItem;
-            // Extract match details
-            $matchLink = $matchItem->find('a.match-link', 0);
-            $matchUrl = $matchLink->href;
-            $matchStartDate = $matchLink->find('meta[itemprop="startDate"]', 0)->content;
-            $matchStartDateTime = Carbon::parse($matchStartDate);
+                // Extract competition name
+                $competitionName = $matchItem->find('.competition-label-option div[itemprop="name"]', 0)->plaintext;
+                // return $matchItem;
+                // Extract match details
+                $matchLink = $matchItem->find('a.match-link', 0);
+                $matchUrl = $matchLink->find('meta[itemprop="url"]', 0)->content;
+                $matchStartDate = $matchLink->find('meta[itemprop="startDate"]', 0)->content;
+                $matchStartDateTime = Carbon::parse($matchStartDate);
 
-            $homeTeamScore = $awayTeamScore = '';
+                $homeTeamScore = $awayTeamScore = '';
 
-            try {
-                $scoreOpt = $matchItem->find('.match-score-option.match-score-live.owards', 0);
-                [$homeTeamScore, $awayTeamScore] = explode(' - ', $scoreOpt->plaintext);
-            } catch (\Exception $e) {
-                // Handle score extraction exception
-            }
+                try {
+                    $scoreOpt = $matchItem->find('.match-score-option.match-score-live.owards', 0);
+                    [$homeTeamScore, $awayTeamScore] = explode(' - ', $scoreOpt->plaintext);
+                } catch (\Exception $e) {
+                    // Handle score extraction exception
+                }
 
-            $matchStatus = $currentDateTime >= $matchStartDateTime || $currentDateTime->addMinutes(10) >= $matchStartDateTime ? 'Live' : 'Match';
+                $matchStatus = $currentDateTime >= $matchStartDateTime || $currentDateTime->addMinutes(10) >= $matchStartDateTime ? 'Live' : 'Match';
 
-            // Extract home and away teams
-            $homeTeamName = $matchItem->find('.home-name.match-team div[itemprop="name"]', 0)->plaintext;
-            $awayTeamName = $matchItem->find('.away-name.match-team div[itemprop="name"]', 0)->plaintext;
-            $homeTeamLogo = $matchLink->find('.home-name img', 0)->src;
-            $awayTeamLogo = $matchLink->find('.away-name img', 0)->src;
+                // Extract home and away teams
+                $homeTeamName = $matchItem->find('.home-name.match-team div[itemprop="name"]', 0)->plaintext;
+                $awayTeamName = $matchItem->find('.away-name.match-team div[itemprop="name"]', 0)->plaintext;
+                $homeTeamLogo = $matchLink->find('.home-name img', 0)->src;
+                $awayTeamLogo = $matchLink->find('.away-name img', 0)->src;
 
-            $serverList = [];
+                $serverList = [];
 
-            if ($matchStatus == 'Live') {
-                $user_agent = $this->getRandomUserAgent();
-                $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($matchUrl);
-                $htmlContent = $response->body();
-
-                // Use HtmlDomParser to parse the HTML content
-                $dom_server = HtmlDomParser::str_get_html($htmlContent);
-
-                // Check if parsing was successful
-                // if ($dom_server) {
-                    // Find all "a" tags with class "author-list"
+                if ($matchStatus == 'Live') {
+                    $user_agent = $this->getRandomUserAgent();
+                    $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($matchUrl);
+                    $htmlContent = $response->body();
+                    $dom_server = HtmlDomParser::str_get_html($htmlContent);
                     $linksItem = $dom_server->find('.author-list a');
                     $serverUrlList = [];
 
                     foreach ($linksItem as $link) {
-                        $href = $link->href;
-                        // Assuming you have a method like getM3u8Url to process the link
-                        $serverUrl = $this->getM3u8Url($href);
+                        $link = $link->href;
+                        $serverUrl = $this->getM3u8Url($link);
 
                         if ($serverUrl && $this->checkUrl($serverUrl, $this->referer)) {
                             $serverUrlList[] = $serverUrl;
                         }
                     }
 
-                    $serverList = [];
                     foreach ($serverUrlList as $i => $finalServerUrl) {
                         $serverDetails = [
                             'name' => "Server $i",
@@ -107,27 +99,26 @@ class AutoVnMatchesController extends Controller
                         ];
                         $serverList[] = $serverDetails;
                     }
-                // }
-            }
+                }
 
-            $matchData = [
-                'match_time' => strval($matchStartDateTime->timestamp),
-                'home_team_name' => $homeTeamName,
-                'home_team_logo' => $this->checkLogo($homeTeamLogo),
-                'away_team_name' => $awayTeamName,
-                'away_team_logo' => $this->checkLogo($awayTeamLogo),
-                'league_name' => $competitionName,
-                'league_logo' => null,
-                'match_status' => $matchStatus,
-                'servers' => $serverList,
-                'is_auto_match' => true,
-            ];
+                $matchData = [
+                    'match_time' => strval($matchStartDateTime->timestamp),
+                    'home_team_name' => $homeTeamName,
+                    'home_team_logo' => $this->checkLogo($homeTeamLogo),
+                    'away_team_name' => $awayTeamName,
+                    'away_team_logo' => $this->checkLogo($awayTeamLogo),
+                    'league_name' => $competitionName,
+                    'league_logo' => null,
+                    'match_status' => $matchStatus,
+                    'servers' => $serverList,
+                    'is_auto_match' => true,
+                ];
 
-            if (count($serverList) > 0 || $matchStatus == 'Match') {
-                $allMatches[] = $matchData;
-            } else {
-                Log::info('Bad');
-            }
+                if (count($serverList) > 0 || $matchStatus == 'Match') {
+                    $allMatches[] = $matchData;
+                } else {
+                    Log::info('Bad');
+                }
             // } catch (\Exception $exception) {
             //     Log::error('Error processing match item: ' . $exception->getMessage());
             // }

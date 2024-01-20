@@ -32,11 +32,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        set_time_limit(900);
-        // $gg = new AutoMatchesController();
-        $gg = new AutoVnMatchesController();
-        $matches = $gg->scrapeMatches();
-        return $matches;
+        // set_time_limit(900);
+        // // $gg = new AutoMatchesController();
+        // $gg = new AutoVnMatchesController();
+        // $matches = $gg->scrapeMatches();
+        // return $matches;
         $matches = FootballMatch::orderBy('match_time')->paginate(18);
         $route_match = 'match';
         return view('index', compact('matches', 'route_match'));

@@ -32,7 +32,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        set_time_limit(500);
+        set_time_limit(900);
         // $gg = new AutoMatchesController();
         $gg = new AutoVnMatchesController();
         $matches = $gg->scrapeMatches();

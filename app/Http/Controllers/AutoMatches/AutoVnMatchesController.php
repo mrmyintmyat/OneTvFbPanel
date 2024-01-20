@@ -77,7 +77,8 @@ class AutoVnMatchesController extends Controller
                 $serverList = [];
 
                 if ($matchStatus == 'Live') {
-                    $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => ''])->get($matchUrl);
+                    $user_agent = $this->getRandomUserAgent();
+                    $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($matchUrl);
                     $htmlContent = $response->body();
                     $linksItem = (new HtmlDomParser())->str_get_html($htmlContent)->find('.author-list a');
                     $serverUrlList = [];

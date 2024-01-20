@@ -147,7 +147,8 @@ class AutoVnMatchesController extends Controller
 
     private function getM3u8Url($url)
     {
-        $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => ''])->get($url);
+        $user_agent = $this->getRandomUserAgent();
+        $response = Http::withHeaders(['referer' => $this->referer, 'User-Agent' => $user_agent])->get($url);
         $pattern = '/var\s+stream_link\s+=\s+"(https:\/\/[^"]+)"/';
         preg_match($pattern, $response->body(), $matches);
 
@@ -157,7 +158,8 @@ class AutoVnMatchesController extends Controller
     private function checkUrl($url, $referer)
     {
         try {
-            $headers = $referer ? ['referer' => $referer, 'User-Agent' => ''] : [];
+            $user_agent = $this->getRandomUserAgent();
+            $headers = $referer ? ['referer' => $referer, 'User-Agent' => $user_agent] : [];
             $response = Http::withHeaders($headers)->get($url, ['timeout' => 5]);
 
             if ($response->successful()) {

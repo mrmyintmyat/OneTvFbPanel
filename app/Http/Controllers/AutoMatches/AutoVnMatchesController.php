@@ -86,7 +86,7 @@ class AutoVnMatchesController extends Controller
                         $link = $link->href;
                         $serverUrl = $this->getM3u8Url($link);
 
-                        if ($serverUrl && $this->checkUrl($serverUrl, $this->referer)) {
+                        if ($serverUrl) {
                             $serverUrlList[] = $serverUrl;
                         }
                     }

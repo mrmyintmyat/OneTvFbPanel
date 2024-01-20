@@ -114,11 +114,11 @@ class AutoVnMatchesController extends Controller
                     'is_auto_match' => true,
                 ];
 
-                if (count($serverList) > 0 || $matchStatus == 'Match') {
-                    $allMatches[] = $matchData;
-                } else {
-                    Log::info('Bad');
-                }
+                // if (count($serverList) > 0 || $matchStatus == 'Match') {
+                //     $allMatches[] = $matchData;
+                // } else {
+                //     Log::info('Bad');
+                // }
             // } catch (\Exception $exception) {
             //     Log::error('Error processing match item: ' . $exception->getMessage());
             // }

@@ -115,7 +115,7 @@ class AutoVnMatchesController extends Controller
                 ];
 
                 // if (count($serverList) > 0 || $matchStatus == 'Match') {
-                //     $allMatches[] = $matchData;
+                    $allMatches[] = $matchData;
                 // } else {
                 //     Log::info('Bad');
                 // }

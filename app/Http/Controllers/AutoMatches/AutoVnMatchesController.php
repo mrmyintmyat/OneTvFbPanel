@@ -21,13 +21,19 @@ class AutoVnMatchesController extends Controller
         $matchData = [];
         foreach ($matches as $match) {
             $serverList = [];
-            foreach ($match['servers'] as $i => $finalServerUrl) {
-                $serverDetails = [
-                    'name' => "Server $i",
-                    'url' => $finalServerUrl['link'],
-                    'referer' => 'https://fotliv.com/',
-                ];
-                $serverList[] = $serverDetails;
+            if ($match['match_status'] === 'Live') {
+                if (!empty($match['servers'])) {
+                    foreach ($match['servers'] as $i => $finalServerUrl) {
+                        $serverDetails = [
+                            'name' => "Server $i",
+                            'url' => $finalServerUrl['link'],
+                            'referer' => 'https://fotliv.com/',
+                        ];
+                        $serverList[] = $serverDetails;
+                    }
+                } else{
+                    $match['match_status'] = 'vs';
+                }
             }
 
             $matchData[] = [
@@ -45,7 +51,6 @@ class AutoVnMatchesController extends Controller
         }
 
         return $matchData;
-
     }
 
     private function decryptAES($encryptedData)

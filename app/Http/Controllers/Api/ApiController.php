@@ -138,8 +138,7 @@ class ApiController extends Controller
     public function highlights(Request $request)
     {
         $count = $request->input('count', 10);
-        $matches = HighLight::orderBy('match_time')
-            ->take($count)
+        $matches = HighLight::take($count)
             ->get();
         // Iterate through matches and build a custom response
         $customResponse = [];

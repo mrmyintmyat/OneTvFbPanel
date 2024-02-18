@@ -31,7 +31,7 @@ class AutoVnMatchesController extends Controller
                         ];
                         $serverList[] = $serverDetails;
                     }
-                } else{
+                } else {
                     $match['match_status'] = 'vs';
                 }
             }
@@ -50,8 +50,12 @@ class AutoVnMatchesController extends Controller
             ];
         }
 
-        return $matchData;
+        // Convert the match data array to JSON format
+        $jsonMatches = json_encode($matchData);
+
+        return $jsonMatches;
     }
+
 
     private function decryptAES($encryptedData)
     {

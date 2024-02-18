@@ -129,7 +129,7 @@ class ApiController extends Controller
         $jsonResponse = $customResponse;
 
         $datas = $this->encryptAES($jsonResponse, 'GG');
-        return $jsonResponse;
+        return $datas;
     }
 
     public function app_setting()

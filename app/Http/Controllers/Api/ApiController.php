@@ -15,7 +15,7 @@ class ApiController extends Controller
 {
     private function encryptAES($data, $encryptionKey) {
         try {
-            $key = env('ENCRYPTION_KEY');
+            $key = 'ht3tMyatauNg1288';
             $iv = openssl_random_pseudo_bytes(16);
             $dataAsString = json_encode($data);
             // $data = json_decode($data, true);

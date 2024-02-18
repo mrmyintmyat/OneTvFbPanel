@@ -91,7 +91,7 @@ class ApiController extends Controller
         set_time_limit(300);
         $gg = new AutoVnMatchesController();
         $matches = json_decode($gg->scrapeMatches(), true);
-
+// return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {
@@ -117,6 +117,7 @@ class ApiController extends Controller
                 'away_team_score' => isset($match['away_team_score']) ? (string)$match['away_team_score'] : "",
                 'league_name' => $match['league_name'],
                 'league_logo' => $match['league_logo'],
+                "match_status" => $match['match_status'],
                 'servers' => $serverDetails,
             ];
 
@@ -125,10 +126,10 @@ class ApiController extends Controller
         }
 
         // Encode the custom response array as JSON
-        $jsonResponse = json_encode($customResponse);
+        $jsonResponse = $customResponse;
 
         $datas = $this->encryptAES($jsonResponse, 'GG');
-        return $datas;
+        return $jsonResponse;
     }
 
     public function app_setting()

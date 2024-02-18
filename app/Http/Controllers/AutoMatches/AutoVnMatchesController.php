@@ -17,7 +17,7 @@ class AutoVnMatchesController extends Controller
         $response = Http::get($url);
         $htmlContent = $response->body();
         $matches = $this->decryptAES($htmlContent);
-
+        // return $matches;
         $matchData = [];
         foreach ($matches as $match) {
             $serverList = [];
@@ -39,9 +39,9 @@ class AutoVnMatchesController extends Controller
             $matchData[] = [
                 'match_time' => strval($match['match_time']),
                 'home_team_name' => $match['home_team_name'],
-                'home_team_logo' => $this->checkLogo($match['home_team_logo']),
+                'home_team_logo' => $match['home_team_logo'],
                 'away_team_name' => $match['away_team_name'],
-                'away_team_logo' => $this->checkLogo($match['away_team_logo']),
+                'away_team_logo' => $match['away_team_logo'],
                 'league_name' => $match['league_name'],
                 'league_logo' => null,
                 'match_status' => $match['match_status'],

@@ -58,6 +58,24 @@
 
                                 </div>
                             </div>
+
+                            <div class="row mb-3">
+                                <label for="password" class="form-label">PASSWORD</label>
+                                <div class="">
+                                    <input id="password" type="text" class="form-control rounded-0" name="password"
+                                           value="{{ isset($serverDetails['password']) ? $serverDetails['password'] : '' }}"
+                                           autocomplete="password">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="password_image" class="form-label">PASSWORD IMAGE</label>
+                                <div class="">
+                                    <input id="password_image" type="text" class="form-control rounded-0" name="password_image"
+                                           value="{{ isset($serverDetails['password_image']) ? $serverDetails['password_image'] : '' }}"
+                                           autocomplete="password_image">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-lg-5 shadow-sm p-3">

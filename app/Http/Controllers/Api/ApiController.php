@@ -14,19 +14,14 @@ use App\Http\Controllers\AutoMatches\AutoVnMatchesController;
 
 class ApiController extends Controller
 {
-    private function encryptAES($data, $encryptionKey) {
+    private function encryptAES($data, $encryptionKey)
+    {
         try {
             $key = 'ht3tMyatauNg1288';
             $iv = openssl_random_pseudo_bytes(16);
             $dataAsString = json_encode($data);
             // $data = json_decode($data, true);
-            $padded_data = openssl_encrypt(
-                $dataAsString,
-                "aes-128-cbc",
-                $key,
-                OPENSSL_RAW_DATA,
-                $iv
-            );
+            $padded_data = openssl_encrypt($dataAsString, 'aes-128-cbc', $key, OPENSSL_RAW_DATA, $iv);
 
             if ($padded_data === false) {
                 throw new Exception('Encryption failed');
@@ -36,20 +31,18 @@ class ApiController extends Controller
             $encrypted_data_base64 = base64_encode($padded_data);
 
             return json_encode([
-                $iv_base64 => $encrypted_data_base64
+                $iv_base64 => $encrypted_data_base64,
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();
             return null;
         }
-}
+    }
 
     public function matches(Request $request)
     {
         $count = $request->input('count', 10);
-        $matches = FootballMatch::orderBy('match_time')
-            ->take($count)
-            ->get();
+        $matches = FootballMatch::orderBy('match_time')->take($count)->get();
         // return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];
@@ -71,10 +64,10 @@ class ApiController extends Controller
                 'match_time' => $match->match_time,
                 'home_team_name' => $match->home_team_name,
                 'home_team_logo' => $match->home_team_logo,
-                'home_team_score' => $match->home_team_score !== null ? (string)$match->home_team_score : "",
+                'home_team_score' => $match->home_team_score !== null ? (string) $match->home_team_score : '',
                 'away_team_name' => $match->away_team_name,
                 'away_team_logo' => $match->away_team_logo,
-                'away_team_score' => $match->away_team_score !== null ? (string)$match->away_team_score : "",
+                'away_team_score' => $match->away_team_score !== null ? (string) $match->away_team_score : '',
                 'league_name' => $match->league_name,
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,
@@ -92,7 +85,7 @@ class ApiController extends Controller
         set_time_limit(300);
         $gg = new AutoVnMatchesController();
         $matches = json_decode($gg->scrapeMatches(), true);
-// return $matches;
+        // return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {
@@ -112,13 +105,13 @@ class ApiController extends Controller
                 'match_time' => $match['match_time'],
                 'home_team_name' => $match['home_team_name'],
                 'home_team_logo' => $match['home_team_logo'],
-                'home_team_score' => isset($match['home_team_score']) ? (string)$match['home_team_score'] : "",
+                'home_team_score' => isset($match['home_team_score']) ? (string) $match['home_team_score'] : '',
                 'away_team_name' => $match['away_team_name'],
                 'away_team_logo' => $match['away_team_logo'],
-                'away_team_score' => isset($match['away_team_score']) ? (string)$match['away_team_score'] : "",
+                'away_team_score' => isset($match['away_team_score']) ? (string) $match['away_team_score'] : '',
                 'league_name' => $match['league_name'],
                 'league_logo' => $match['league_logo'],
-                "match_status" => $match['match_status'],
+                'match_status' => $match['match_status'],
                 'servers' => $serverDetails,
             ];
 
@@ -133,18 +126,34 @@ class ApiController extends Controller
         return $datas;
     }
 
-    public function app_setting()
+    public function app_setting(Request $request)
     {
-        $setting = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
-        $datas = $this->encryptAES($setting, 'ht3tMyatauNg1288');
-        return $datas;
+        // Check if the query parameter 'v' is set to 2
+        if ($request->query('v') === '2') {
+            $settings = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
+        } else {
+            $settings = AppSetting::first();
+
+            $settingsArray = $settings->toArray();
+
+            // Remove sensitive fields
+            unset($settingsArray['serverDetails']['password']);
+            unset($settingsArray['serverDetails']['password_image']);
+
+            // Convert array back to object
+            $settings = (object) $settingsArray;
+        }
+
+        // Encrypt the data
+        $encryptedData = $this->encryptAES($settings, 'ht3tMyatauNg1288');
+
+        return $encryptedData;
     }
 
     public function highlights(Request $request)
     {
         $count = $request->input('count', 10);
-        $matches = HighLight::take($count)
-            ->get();
+        $matches = HighLight::take($count)->get();
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {
@@ -166,10 +175,10 @@ class ApiController extends Controller
                 'match_time' => $match->match_time,
                 'home_team_name' => $match->home_team_name,
                 'home_team_logo' => $match->home_team_logo,
-                'home_team_score' => $match->home_team_score !== null ? (string)$match->home_team_score : "",
+                'home_team_score' => $match->home_team_score !== null ? (string) $match->home_team_score : '',
                 'away_team_name' => $match->away_team_name,
                 'away_team_logo' => $match->away_team_logo,
-                'away_team_score' => $match->away_team_score !== null ? (string)$match->away_team_score : "",
+                'away_team_score' => $match->away_team_score !== null ? (string) $match->away_team_score : '',
                 'league_name' => $match->league_name,
                 'league_logo' => $match->league_logo,
                 'servers' => $serverDetails,
@@ -182,7 +191,6 @@ class ApiController extends Controller
         $datas = $this->encryptAES($customResponse, 'GG');
         return $datas;
     }
-
 
     public function fetchLeagues()
     {
@@ -216,21 +224,21 @@ class ApiController extends Controller
                 $losses = $team['losses'];
 
                 $teams[] = [
-                    "id" => $id,
-                    "name" => $name,
-                    "logo" => $logo,
-                    "position" => $position,
-                    "points" => $points,
-                    "played" => $played,
-                    "wins" => $wins,
-                    "draws" => $draws,
-                    "losses" => $losses,
+                    'id' => $id,
+                    'name' => $name,
+                    'logo' => $logo,
+                    'position' => $position,
+                    'points' => $points,
+                    'played' => $played,
+                    'wins' => $wins,
+                    'draws' => $draws,
+                    'losses' => $losses,
                 ];
             }
 
             $leagueData = [
-                "league_name" => $leagueName,
-                "teams" => $teams,
+                'league_name' => $leagueName,
+                'teams' => $teams,
             ];
 
             $allLeaguesData[] = $leagueData;

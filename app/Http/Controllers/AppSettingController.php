@@ -90,6 +90,8 @@ class AppSettingController extends Controller
             'url' => $request->url,
             'mainUrl' => $request->mainUrl,
             'privacyUrl' => $request->privacyUrl,
+            'password' => $request->password,
+            'password_image' => $request->password_image,
         ];
 
         $datas->sponsorGoogle = [

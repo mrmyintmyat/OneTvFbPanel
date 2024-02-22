@@ -23,3 +23,4 @@ Route::get('/matches', [ApiController::class, 'matches']);
 Route::get('/vn-matches', [ApiController::class, 'vn_matches']);
 Route::get('/highlights', [ApiController::class, 'highlights']);
 Route::get('/app-setting', [ApiController::class, 'app_setting']);
+Route::get('/tables', [ApiController::class, 'fetchLeagues']);

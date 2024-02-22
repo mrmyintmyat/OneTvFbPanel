@@ -9,6 +9,7 @@ use App\Models\AppSetting;
 use Illuminate\Http\Request;
 use App\Models\FootballMatch;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AutoMatches\AutoVnMatchesController;
 
 class ApiController extends Controller
@@ -179,6 +180,64 @@ class ApiController extends Controller
         }
 
         $datas = $this->encryptAES($customResponse, 'GG');
+        return $datas;
+    }
+
+
+    public function fetchLeagues()
+    {
+        // Create a new Guzzle HTTP client instance
+        $client = new Client();
+
+        // List of league IDs
+        $leagueIds = [47, 87, 54, 55];
+        $leagueNames = ['Premier league', 'Laliga', 'Bundesliga', 'Serie'];
+        // Array to store league data
+        $allLeaguesData = [];
+
+        // Fetch data for each league
+        foreach ($leagueIds as $count => $leagueId) {
+            $response = $client->get("https://www.fotmob.com/api/leagues?id={$leagueId}");
+            $data = json_decode($response->getBody(), true);
+
+            $leagueName = $leagueNames[$count];
+            $teamsData = $data['table'][0]['data']['table']['all'];
+            $teams = [];
+
+            foreach ($teamsData as $i => $team) {
+                $id = $team['id'];
+                $name = $team['name'];
+                $logo = "https://images.fotmob.com/image_resources/logo/teamlogo/{$id}.png";
+                $position = $i + 1;
+                $points = $team['pts'];
+                $played = $team['played'];
+                $wins = $team['wins'];
+                $draws = $team['draws'];
+                $losses = $team['losses'];
+
+                $teams[] = [
+                    "id" => $id,
+                    "name" => $name,
+                    "logo" => $logo,
+                    "position" => $position,
+                    "points" => $points,
+                    "played" => $played,
+                    "wins" => $wins,
+                    "draws" => $draws,
+                    "losses" => $losses,
+                ];
+            }
+
+            $leagueData = [
+                "league_name" => $leagueName,
+                "teams" => $teams,
+            ];
+
+            $allLeaguesData[] = $leagueData;
+        }
+
+        // Return the league data
+        $datas = $this->encryptAES($allLeaguesData, 'GG');
         return $datas;
     }
 }

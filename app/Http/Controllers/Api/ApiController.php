@@ -213,6 +213,7 @@ class ApiController extends Controller
             $teams = [];
 
             foreach ($teamsData as $i => $team) {
+                $id = $team['id'];
                 $name = $team['name'];
                 $logo = "https://images.fotmob.com/image_resources/logo/teamlogo/{$id}.png";
                 $position = $i + 1;

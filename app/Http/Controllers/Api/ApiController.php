@@ -199,7 +199,7 @@ class ApiController extends Controller
 
         // List of league IDs
         $leagueIds = [47, 87, 54, 55];
-        $leagueNames = ['Premier league', 'Laliga', 'Bundesliga', 'Serie'];
+        $leagueNames = ['Premier league', 'Laliga', 'Bundesliga', 'Series A'];
         // Array to store league data
         $allLeaguesData = [];
 

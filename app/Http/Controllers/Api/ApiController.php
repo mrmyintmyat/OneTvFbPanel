@@ -223,7 +223,7 @@ class ApiController extends Controller
                 $draws = $team['draws'];
                 $losses = $team['losses'];
 
-                $teams[] = [
+                $allLeaguesData[] = [
                     'league_name' => $leagueName,
                     'name' => $name,
                     'logo' => $logo,
@@ -235,16 +235,10 @@ class ApiController extends Controller
                     'losses' => $losses,
                 ];
             }
-
-            $leagueData = [
-                'teams' => $teams,
-            ];
-
-            $allLeaguesData[] = $leagueData;
         }
 
         // Return the league data
         $datas = $this->encryptAES($allLeaguesData, 'GG');
-        return $datas;
+        return $allLeaguesData;
     }
 }

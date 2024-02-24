@@ -245,6 +245,6 @@ class ApiController extends Controller
 
         // Return the league data
         $datas = $this->encryptAES($allLeaguesData, 'GG');
-        return $allLeaguesData;
+        return $datas;
     }
 }

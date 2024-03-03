@@ -203,7 +203,7 @@
 
                         <div class="shadow-sm p-3">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                                <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation">
+                                <li id="server-btns-container" class="nav-item d-flex flex-row" style="overflow-x: auto;" role="presentation">
                                     @foreach ($servers as $index => $server)
                                         <button
                                             class="server-btns nav-link  {{ $index === 0 ? 'active' : '' }} text-nowrap"
@@ -211,7 +211,7 @@
                                             data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
                                             aria-controls="server-{{ $index + 1 }}"
                                             aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
-                                            Server {{ $index + 1 }}<span class="delete-server-btn">&times;</span>
+                                            {{$server['name']}}<span class="delete-server-btn">&times;</span>
                                         </button>
                                     @endforeach
 
@@ -223,6 +223,19 @@
                                     <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
                                         id="server-{{ $index + 1 }}" role="tabpanel"
                                         aria-labelledby="server-{{ $index + 1 }}-tab" tabindex="0">
+                                        <div class="row mb-3">
+                                            <div class="">
+                                                <input required id="server_name" type="text"
+                                                    class=" @error('server_name') is-invalid @enderror "
+                                                    name="server_name[]" value="{{ $server['name'] }}"
+                                                    autocomplete="server_name" placeholder="name">
+                                                @error('server_name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="">
                                                 <input id="server_url" type="url"

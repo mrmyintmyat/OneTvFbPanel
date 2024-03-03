@@ -53,14 +53,14 @@ class AutoMatches extends Command
                 $incomingServers = $match['servers'];
                 $newServers = [];
 
-                foreach ($incomingServers as $incomingServer) {
-                    $newServers[] = $incomingServer;
-                }
-
                 foreach ($existingServers as $existingServer) {
                     if ($existingServer['new'] === true) {
                         $newServers[] = $existingServer;
                     }
+                }
+
+                foreach ($incomingServers as $incomingServer) {
+                    $newServers[] = $incomingServer;
                 }
 
                 if ($match['match_status'] !== $existingMatch->match_status) {

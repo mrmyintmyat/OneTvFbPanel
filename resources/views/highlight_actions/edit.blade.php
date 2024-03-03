@@ -222,7 +222,7 @@
 
                         <div class="shadow-sm p-3">
                             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                                <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation">
+                                <li id="server-btns-container" class="nav-item d-flex flex-row" style="overflow-x: auto;" role="presentation">
                                     @foreach ($servers as $index => $server)
                                         <button
                                             class="server-btns nav-link rounded-0 {{ $index === 0 ? 'active' : '' }} text-nowrap"

@@ -77,7 +77,7 @@ class ApiController extends Controller
             $customResponse[] = $customMatch;
         }
         $datas = $this->encryptAES($customResponse, 'GG');
-        return $datas;
+        return $customResponse;
     }
 
     public function vn_matches(Request $request)

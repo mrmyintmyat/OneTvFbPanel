@@ -101,10 +101,7 @@ class HomeController extends Controller
         $leagueLogo = trim($leagueInfo[1]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $serverUrls = $request->input('server_url');
@@ -158,9 +155,7 @@ class HomeController extends Controller
                 $file->move(public_path('logos/away_team_logos'), $fileName);
             }
 
-            return redirect()
-                ->back()
-                ->with('success', 'Match Create Success');
+            return redirect()->back()->with('success', 'Match Create Success');
         } elseif ($request->match_status === 'Highlight') {
             $highlight = Highlight::create([
                 'match_time' => $match_time,
@@ -191,9 +186,7 @@ class HomeController extends Controller
                 $file->move(public_path('logos/away_team_logos'), $fileName);
             }
 
-            return redirect()
-                ->back()
-                ->with('success', 'Highlight Create Success');
+            return redirect()->back()->with('success', 'Highlight Create Success');
         }
     }
 
@@ -212,7 +205,7 @@ class HomeController extends Controller
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
             $route_match = 'vn_match';
-        }else{
+        } else {
             $match = FootballMatch::find($id);
             $route_match = 'match';
         }
@@ -229,7 +222,7 @@ class HomeController extends Controller
         $selectedMatch = request()->query('match');
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
-        }else{
+        } else {
             $match = FootballMatch::find($id);
         }
         if (!$match) {
@@ -238,15 +231,16 @@ class HomeController extends Controller
         }
 
         $serverUrls = $request->input('server_url');
+        $server_name = $request->input('server_name');
         $serverReferers = $request->input('server_referer');
 
-        $servers = [];
+        $newservers = [];
+        $oldservers = [];
+        $serversDatas = json_decode($match->servers, true);
 
         if ($match->servers) {
-            $serversDatas = json_decode($match->servers, true);
-
             if (is_array($serverUrls)) {
-                for ($i = 0; $i < count($serverUrls); $i++) {
+                for ($i = count($serverUrls) - 1; $i >= 0; $i--) {
                     if ($serverUrls[$i] !== null) {
                         $found = false;
 
@@ -257,15 +251,15 @@ class HomeController extends Controller
                         }
 
                         if (!$found) {
-                            $servers[] = [
-                                'name' => 'Server ' . ($i + 1),
+                            $newservers[] = [
+                                'name' => $server_name[$i],
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
                                 'new' => true,
                             ];
                         } else {
-                            $servers[] = [
-                                'name' => 'Server ' . ($i + 1),
+                            $oldservers[] = [
+                                'name' => $server_name[$i],
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
                                 'new' => false,
@@ -273,12 +267,13 @@ class HomeController extends Controller
                         }
                     }
                 }
+
             }
         } else {
             for ($i = 0; $i < count($serverUrls); $i++) {
                 if ($serverUrls[$i] !== null) {
-                    $servers[] = [
-                        'name' => 'Server ' . ($i + 1),
+                    $newservers[] = [
+                        'name' => $server_name[$i],
                         'url' => $serverUrls[$i],
                         'referer' => $serverReferers[$i],
                         'new' => true,
@@ -286,6 +281,11 @@ class HomeController extends Controller
                 }
             }
         }
+
+        // $serversData = $match->servers ? json_decode($match->servers, true) : [];
+
+        // // Add the new servers to the front of the existing servers
+        $servers = array_merge($newservers, $oldservers);
 
         $home_team_logo = null;
 
@@ -329,10 +329,7 @@ class HomeController extends Controller
         $leagueLogo = trim($leagueInfo[1]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $dateTimeString = $request->match_time;
@@ -397,9 +394,7 @@ class HomeController extends Controller
             }
         }
 
-        return redirect()
-            ->back()
-            ->with('success', 'Update Success');
+        return redirect()->back()->with('success', 'Update Success');
     }
 
     public function destroy($id)
@@ -407,7 +402,7 @@ class HomeController extends Controller
         $selectedMatch = request()->query('match');
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
-        }else{
+        } else {
             $match = FootballMatch::find($id);
         }
 
@@ -453,9 +448,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $user->password = Hash::make($request->input('password'));

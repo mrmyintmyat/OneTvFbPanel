@@ -284,7 +284,7 @@
     @endif
 @endsection
 @section('script')
-    <script src="/js/plus_server.js"></script>
+    <script src="/js/plus_server.js?v=<?php echo time() ?>"></script>
     <script>
         $('#match_status').on('change', function() {
             if ($(this).val() === 'Live') {

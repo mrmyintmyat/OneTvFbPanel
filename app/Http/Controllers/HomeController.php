@@ -240,7 +240,7 @@ class HomeController extends Controller
 
         if ($match->servers) {
             if (is_array($serverUrls)) {
-                for ($i = count($serverUrls) - 1; $i >= 0; $i--) {
+                for ($i = 0; $i < count($serverUrls); $i++) {
                     if ($serverUrls[$i] !== null) {
                         $found = false;
 

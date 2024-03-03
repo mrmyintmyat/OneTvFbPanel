@@ -10,6 +10,14 @@ $("#add-server-btn").click(function () {
 
     <div class="row mb-3">
         <div class="">
+            <input required id="server_name" type="text"
+                class=""
+                name="server_name[]" value=""
+                autocomplete="server_name" placeholder="name">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="">
             <input id="server_url" type="url"
                 class=""
                 name="server_url[]" value="" autocomplete="server_url" placeholder="URL">

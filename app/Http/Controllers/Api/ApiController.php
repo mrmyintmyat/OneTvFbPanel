@@ -85,7 +85,7 @@ class ApiController extends Controller
         set_time_limit(300);
         $gg = new AutoVnMatchesController();
         $matches = json_decode($gg->scrapeMatches(), true);
-        // return $matches;
+        // return $gg->scrapeMatches();
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {

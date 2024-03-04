@@ -27,7 +27,7 @@ class AutoVnMatchesController extends Controller
                         $serverDetails = [
                             'name' => "Server $i",
                             'url' => $finalServerUrl['link'],
-                            'referer' => 'https://fotliv.com/',
+                            'referer' => $finalServerUrl['referer'],
                         ];
                         $serverList[] = $serverDetails;
                     }

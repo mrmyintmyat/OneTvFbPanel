@@ -58,7 +58,7 @@ class VnMatches extends Command
                 }
 
                 foreach ($existingServers as $existingServer) {
-                    if ($existingServer['new'] === true) {
+                    if (isset($existingServer['new']) && $existingServer['new'] === true) {
                         $newServers[] = $existingServer;
                     }
                 }

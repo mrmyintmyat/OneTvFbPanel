@@ -59,12 +59,13 @@ class AutoMatchesController extends Controller
         $away_team_logo = $away_team_div->find('img.lazy', 0)->{'data-src'};
 
         $time_in_seconds = 0; // Initialize with a default value
-        $gg = $dom->find('span[data-timestamp]');
-        foreach ($gg as $span_element) {
-            // return $span_element;
-            $time_in_seconds = (int) $span_element->getAttribute('data-timestamp');
+        $gg = $dom->find('span[data-timestamp], strong[data-timestamp]'); // Search for both span and strong tags with data-timestamp attribute
+        foreach ($gg as $element) {
+            // return $element;
+            $time_in_seconds = (int) $element->getAttribute('data-timestamp');
             break;
         }
+
 
         if ($current_time_seconds >= $time_in_seconds || $ten_minutes_before > $time_in_seconds) {
             $match_status = 'Live';

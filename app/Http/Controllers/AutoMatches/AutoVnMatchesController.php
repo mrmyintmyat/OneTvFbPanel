@@ -28,6 +28,7 @@ class AutoVnMatchesController extends Controller
                             'name' => "Server $i",
                             'url' => $finalServerUrl['link'],
                             'referer' => $finalServerUrl['referer'],
+                            'new' => false,
                         ];
                         $serverList[] = $serverDetails;
                     }
@@ -40,7 +41,7 @@ class AutoVnMatchesController extends Controller
             $matchData[] = [
                 'match_time' => strval($match['match_time']),
                 'home_team_name' => $match['home_team_name'],
-                'home_team_score' =>  $homeTeamScore,
+                'home_team_score' => $homeTeamScore,
                 'home_team_logo' => $match['home_team_logo'],
                 'away_team_name' => $match['away_team_name'],
                 'away_team_logo' => $match['away_team_logo'],
@@ -56,9 +57,8 @@ class AutoVnMatchesController extends Controller
         // Convert the match data array to JSON format
         $jsonMatches = json_encode($matchData);
 
-        return $matches;
+        return $matchData;
     }
-
 
     private function decryptAES($encryptedData)
     {

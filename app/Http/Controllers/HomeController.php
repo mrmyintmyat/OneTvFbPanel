@@ -246,7 +246,7 @@ class HomeController extends Controller
                         $found = false;
 
                         foreach ($serversDatas as &$server) {
-                            if ($serverUrls[$i] === $server['url'] && $server['new'] === false) {
+                            if (isset($server['url']) && $serverUrls[$i] === $server['url'] && isset($server['new']) && $server['new'] === false) {
                                 $found = true;
                             }
                         }

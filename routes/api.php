@@ -20,7 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/matches', [ApiController::class, 'matches']);
-Route::get('/vn-matches', [ApiController::class, 'vn_matches']);
+Route::get('/vn-matches', [ApiController::class, 'matches']);
 Route::get('/highlights', [ApiController::class, 'highlights']);
 Route::get('/app-setting', [ApiController::class, 'app_setting']);
+Route::get('/slider-setting', [ApiController::class, 'slider_setting']);
+Route::get('/channels', [ApiController::class, 'channels']);
 Route::get('/tables', [ApiController::class, 'fetchLeagues']);

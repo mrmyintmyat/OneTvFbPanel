@@ -37,7 +37,7 @@ class HomeController extends Controller
         // $gg = new AutoVnMatchesController();
         // $matches = $gg->scrapeMatches();
         // return $matches;
-        $matches = FootballMatch::orderBy('match_time')->paginate(18);
+        $matches = VnMatch::orderBy('match_time')->paginate(18);
         $route_match = 'match';
         return view('index', compact('matches', 'route_match'));
     }
@@ -105,6 +105,7 @@ class HomeController extends Controller
         }
 
         $serverUrls = $request->input('server_url');
+        $serverNames = $request->input('server_name');
         $serverReferers = $request->input('server_referer');
 
         $servers = [];
@@ -112,7 +113,7 @@ class HomeController extends Controller
         for ($i = 0; $i < count($serverUrls); $i++) {
             if ($serverUrls[$i] !== null) {
                 $servers[] = [
-                    'name' => 'Server ' . ($i + 1),
+                    'name' => $serverNames[$i],
                     'url' => $serverUrls[$i],
                     'referer' => $serverReferers[$i],
                     'new' => true,
@@ -126,7 +127,7 @@ class HomeController extends Controller
         $match_time = $dateTime->timestamp;
 
         if ($request->match_status === 'Match' || $request->match_status === 'Live') {
-            $match = FootballMatch::create([
+            $match = VnMatch::create([
                 'match_time' => $match_time,
                 'home_team_name' => $request->home_team_name,
                 'home_team_logo' => $home_team_logo,
@@ -206,7 +207,7 @@ class HomeController extends Controller
             $match = VnMatch::find($id);
             $route_match = 'vn_match';
         } else {
-            $match = FootballMatch::find($id);
+            $match = VnMatch::find($id);
             $route_match = 'match';
         }
 
@@ -223,7 +224,7 @@ class HomeController extends Controller
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
         } else {
-            $match = FootballMatch::find($id);
+            $match = VnMatch::find($id);
         }
         if (!$match) {
             session()->flash('error', 'Match not found.');
@@ -352,10 +353,10 @@ class HomeController extends Controller
             'match_time' => $match_time,
             'home_team_name' => $request->home_team_name,
             'home_team_logo' => $home_team_logo,
-            'home_team_score' => null,
+            'home_team_score' => $request->home_team_score,
             'away_team_name' => $request->away_team_name,
             'away_team_logo' => $away_team_logo,
-            'away_team_score' => null,
+            'away_team_score' => $request->away_team_score,
             'league_name' => $leagueName,
             'league_logo' => $leagueLogo,
             'match_status' => $request->match_status,
@@ -403,7 +404,7 @@ class HomeController extends Controller
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
         } else {
-            $match = FootballMatch::find($id);
+            $match = VnMatch::find($id);
         }
 
         $homeTeamLogoUrl = $match->home_team_logo;

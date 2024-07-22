@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:auto-matches')->everyFiveMinutes();
+        $schedule->command('app:auto-vnmatches')->everyFiveMinutes();
         // $schedule->command('app:auto-vnmatches')->everyFiveMinutes();
         $schedule->command('app:auto-high-lights')->everyFiveMinutes();
         // $schedule->command('inspire')->hourly();

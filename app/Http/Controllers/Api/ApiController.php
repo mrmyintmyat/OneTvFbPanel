@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use GuzzleHttp\Client;
+use App\Models\Channel;
 use App\Models\VnMatch;
 use App\Models\HighLight;
 use App\Models\AppSetting;
 use Illuminate\Http\Request;
 use App\Models\FootballMatch;
+use App\Models\SliderSetting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\AutoMatches\AutoVnMatchesController;
@@ -17,7 +19,7 @@ class ApiController extends Controller
     private function encryptAES($data, $encryptionKey)
     {
         try {
-            $key = 'ht3tMyatauNg1288';
+            $key = env('ENCRYPTION_KEY');
             $iv = openssl_random_pseudo_bytes(16);
             $dataAsString = json_encode($data);
             // $data = json_decode($data, true);
@@ -42,7 +44,7 @@ class ApiController extends Controller
     public function matches(Request $request)
     {
         $count = $request->input('count', 10);
-        $matches = FootballMatch::orderBy('match_time')->take($count)->get();
+        $matches = VnMatch::orderBy('match_time')->take($count)->get();
         // return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];
@@ -84,7 +86,8 @@ class ApiController extends Controller
     {
         set_time_limit(300);
         $gg = new AutoVnMatchesController();
-        $matches = json_decode($gg->scrapeMatches(), true);
+        $matches = $gg->scrapeMatches();
+        // $matches = json_decode($gg->scrapeMatches(), true);
         // return $gg->scrapeMatches();
         // Iterate through matches and build a custom response
         $customResponse = [];
@@ -145,10 +148,48 @@ class ApiController extends Controller
         }
 
         // Encrypt the data
-        $encryptedData = $this->encryptAES($settings, 'ht3tMyatauNg1288');
+        $encryptedData = $this->encryptAES($settings, 'woww');
 
         return $encryptedData;
     }
+
+    public function slider_setting(Request $request)
+    {
+        // Fetch the first slider setting with related image URLs
+        $settings = SliderSetting::with('imageUrls')->first();
+
+        // Transform the data into the desired format
+        $transformedData = [
+            'status' => (bool) $settings->status,
+            'autoplay' => (bool) $settings->autoplay,
+            'duration' => (string) $settings->duration,
+            'data' => [
+                [
+                    'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
+                    'click_url' => $settings->click_url,
+                ]
+            ],
+        ];
+
+        // Encrypt the data if necessary
+        $encryptedData = $this->encryptAES($transformedData, 'woww');
+
+        // Return the transformed data
+        return $encryptedData;
+    }
+
+    public function channels(Request $request)
+    {
+        // Fetch the first slider setting with related image URLs
+        $channels = Channel::all();
+
+        // Encrypt the data if necessary
+        $encryptedData = $this->encryptAES($channels, 'woww');
+
+        // Return the transformed data
+        return $encryptedData;
+    }
+
 
     public function highlights(Request $request)
     {

@@ -7,7 +7,7 @@ height: 100vh;
 }
 
 .row div button.bg-menu:hover{
-border-radius: 0px;
+border-radius: 5px;
 color: white;
 background-color: #003a04f1;
 }
@@ -19,6 +19,11 @@ box-shadow: 0px 5px 15px #d8d7d798;
 .scroll_page{
 overflow: scroll;
 height: 93vh;
+background-color: #F0F3F4;
+}
+
+#edit_from_container{
+    background-color: #F0F3F4;
 }
 
 .scroll_page::-webkit-scrollbar {
@@ -37,8 +42,19 @@ background-color: #0000007d;
 }
 
 .bg-menu{
-background-color: #003a04;
+background-color: #FF0000;
 /* background: linear-gradient(to right, rgba(189, 203, 190, 0.622) 0%, #00c1fb 100%); */
+}
+
+.date-time .btn-success{
+    background-color: #FF0000;
+    border: 0px;
+    font-weight: 600;
+}
+
+.form-check.form-switch {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
 }
 
 .bg_ani{
@@ -47,6 +63,7 @@ transition: all 0.3s ease-in-out;
 
 .bg_ani:hover{
 transform: scale(1.01);
+border-radius: 5px;
 background-color: #ebe2e291;
 }
 
@@ -73,6 +90,7 @@ height: 100vh;
 } */
 
 .hover_menu_tag a:hover{
+    border-radius: 5px;
 background: rgba(255, 255, 255, 0.106);
 }
 
@@ -81,6 +99,7 @@ background: rgba(255, 255, 255, 0.251);
 }
 
 .hover_menu_tag a{
+    border-radius: 5px;
 border: 0px;
 }
 
@@ -156,7 +175,7 @@ border: none;
 outline: none;
 height: 40px;
 color: #000000;
-background: transparent;
+background-color: white !important;
 font-size: 16px;
 padding-left: 15px;
 height: 50px;
@@ -170,4 +189,9 @@ box-shadow: 0px 5px 15px #d8d7d75d;
 div input[type="password"]:focus{
 border-bottom: 2px solid #e78b2271} */
 
-div input,div select{width: 100%; margin-bottom: 15px;}
+div input:not([type="checkbox"]),
+div select {
+    width: 100%;
+    margin-bottom: 15px;
+}
+

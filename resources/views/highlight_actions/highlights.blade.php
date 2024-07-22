@@ -6,7 +6,8 @@
 @section('style')
     <style>
         .hover_menu_tag a:nth-child(3) {
-            border-left: 3px solid #ff0505 !important;
+              /* border-left: 3px solid #ff0505 !important; */
+              border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
         }
 
@@ -20,9 +21,9 @@
         @foreach ($matches as $match)
             <a href="/highlights/{{ $match->id }}/edit"
                 class="col-lg-4 col-sm-6 col-12 col-desktop text-decoration-none text-dark">
-                <div class="shadow-sm p-0 border bg_ani">
+                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white">
                     <div class="league_text fw-semibold d-flex w-100 justify-content-between">
-                        <div class="border border-top-0 py-1 bg-white">
+                        <div class="border border-top-0 py-1 bg-white" style="border-start-start-radius: 1rem;">
                             <div class="p-2 py-0 text-nowrap d-flex">
                                 <img class="me-1" style="width: 20px;" src="{{ $match->league_logo }}" alt=""
                                     sizes="" srcset="">

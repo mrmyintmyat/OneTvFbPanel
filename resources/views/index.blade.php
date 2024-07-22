@@ -6,8 +6,9 @@
 @section('style')
     <style>
         .hover_menu_tag a:nth-child(1) {
-            border-left: 3px solid #ff0505 !important;
-            background: rgba(255, 255, 255, 0.251);
+            /* border-left: 3px solid #ff0505 !important; */
+            border-radius: 5px;
+            background: rgba(251, 251, 251, 0.283);
         }
 
         #SvgjsG1016 * {
@@ -19,10 +20,10 @@
     <div class="row matchs_container g-2 my-2 px-4">
         @foreach ($matches as $match)
             <div class="col-lg-4 col-sm-6 col-12 col-desktop text-dark">
-                <div class="shadow-sm p-0 border bg_ani">
+                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white">
                     <div class="league_text fw-semibold d-flex w-100 justify-content-between">
-                        <div class="border border-top-0 py-1 bg-white">
-                            <div class="p-2 py-0 text-nowrap d-flex">
+                        <div class="border border-top-0 py-1 bg-white" style="border-start-start-radius: 1rem;">
+                            <div class="p-2 px-3 py-0 text-nowrap d-flex">
                                 {{-- <img class="me-1" style="width: 20px;" src="{{ $match->league_logo }}" alt=""
                                     sizes="" srcset=""> --}}
                                 <span class="d-inline-block text-truncate" style="max-width: 230px;">
@@ -31,14 +32,14 @@
                             </div>
                         </div>
                         <div>
-                            <a class="btn btn-light rounded-0 p-1 shadow" href="/matches/{{ $match->id }}/edit?match={{$route_match}}">
-                                <span class="py-1 px-3">
+                            <a class="btn btn-white rounded-0 p-0" href="/matches/{{ $match->id }}/edit?match={{$route_match}}">
+                                <span class="px-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </span>
                             </a>
-                            <button onclick="NotiModal({{ $match->id }})" class="btn btn-light rounded-0 p-1 shadow"
-                                type="button" data-bs-toggle="modal" data-bs-target="#notiModel">
-                                <span class="py-1 px-3">
+                            <button onclick="NotiModal({{ $match->id }})" class="btn btn-white p-0"
+                                type="button" data-bs-toggle="modal" data-bs-target="#notiModel" style="border-start-end-radius: 1rem;">
+                                <span class="px-2">
                                     <i class="fa-solid fa-bell"></i>
                                 </span>
                             </button>

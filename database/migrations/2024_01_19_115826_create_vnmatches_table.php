@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('match_time');
             $table->string('home_team_name');
-            $table->string('home_team_logo');
+            $table->longText('home_team_logo');
             $table->integer('home_team_score')->nullable();
             $table->string('away_team_name');
-            $table->string('away_team_logo');
+            $table->longText('away_team_logo');
             $table->integer('away_team_score')->nullable();
             $table->string('league_name')->default('Sports899 TV');
             $table->string('league_logo')->nullable();

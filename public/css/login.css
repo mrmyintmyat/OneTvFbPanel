@@ -8,6 +8,6 @@ body{margin: 0;padding: 0;background: rgb(255, 255, 255);height: 100vh;font-fami
     #262626;outline: none;height: 40px;color: #000000;background: transparent;font-size: 16px;padding-left: 20px;box-sizing:
     border-box}.loginBox input[type="text"]:focus,.loginBox input[type="email"]:focus,.loginBox input[type="number"]:focus, .loginBox input[type="password"]:focus{border-bottom: 2px solid
     #0C6EFD}.inputBox{position: relative}.inputBox span{position: absolute;top: 10px;color: #262626}.loginBox
-    input[type="submit"]{border: none;outline: none;height: 40px;font-size: 16px;background: #ff9215;color:
+    input[type="submit"]{border: none;outline: none;height: 40px;font-size: 16px;background: #ff1515;color:
     #fff;border-radius: 20px;cursor: pointer}.loginBox a{color: #262626;font-size: 14px;font-weight: bold;text-decoration:
     none;text-align: center;display: block}a:hover{color: #15C7FF}p{color: #0000ff}

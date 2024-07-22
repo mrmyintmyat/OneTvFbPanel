@@ -4,7 +4,7 @@
 @extends('layouts.home')
 @section('page')
 @if (!session('error'))
-    <div class="card text-start mt-lg-2 rounded-0 px-lg-0 px-2 mb-3">
+    <div class="card text-start border-0 rounded-0 px-lg-0 px-2 mb-3" id="edit_from_container">
         <div class="card-body pe-0">
             <div class="border-bottom border-2 d-flex justify-content-between py-2 pe-5 align-items-center">
                 <h5 class="">EDIT MATCH</h5>
@@ -15,7 +15,7 @@
                         class="w-100 row d-flex justify-content-between px-2 g-3" enctype="multipart/form-data">
                         @csrf @method('PUT')
 
-                        <div class="shadow-sm p-3">
+                        <div class="p-3">
                             <div class="row mb-3">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
                                 @php
@@ -67,7 +67,7 @@
                                 @enderror
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row">
                                 <label for="match_status" class="form-label fw-semibold">MATCH STATUS</label>
 
                                 <div class="">
@@ -84,8 +84,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 shadow-sm p-3">
-                            <div class="row mb-3">
+                        <div class="col-lg-6 p-3 mt-0">
+                            <div class="row mb-3 mt-0">
                                 <label for="home_team_name" class="form-label fw-semibold">HOME TEAM NAME</label>
 
                                 <div class="">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-3 mt-0">
                                 <label for="home_team_logo" class="form-label fw-semibold d-flex align-items-center">HOME
                                     TEAM LOGO <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item d-flex" role="presentation">
@@ -149,7 +149,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 shadow-sm p-3">
+                        <div class="col-lg-6 p-3 mt-0">
                             <div class="row mb-3">
                                 <label for="away_team_name" class="form-label fw-semibold">AWAY TEAM NAME</label>
 

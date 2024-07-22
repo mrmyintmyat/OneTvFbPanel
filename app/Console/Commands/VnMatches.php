@@ -67,6 +67,14 @@ class VnMatches extends Command
                     $existingMatch->match_status = $match['match_status'];
                 }
 
+                if ($match['home_team_score'] !== $existingMatch->home_team_score) {
+                    $existingMatch->home_team_score = $match['home_team_score'];
+                }
+
+                if ($match['away_team_score'] !== $existingMatch->away_team_score) {
+                    $existingMatch->away_team_score = $match['away_team_score'];
+                }
+
                 $existingMatch->servers = json_encode($newServers);
                 $existingMatch->update();
             }

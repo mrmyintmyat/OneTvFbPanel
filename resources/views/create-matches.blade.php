@@ -2,7 +2,8 @@
 @section('style')
     <style>
         .hover_menu_tag a:nth-child(2) {
-            border-left: 3px solid #ff0505 !important;
+              /* border-left: 3px solid #ff0505 !important; */
+              border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
         }
 
@@ -12,15 +13,15 @@
     </style>
 @endsection
 @section('page')
-    <div class="card text-start border-0 px-lg-0 px-2 mb-3">
+    <div class="card text-start border-0 px-lg-0 px-2 " style="background: #ffffff00;">
         <div class="card-body pe-0 ">
             @if (!session('error'))
                 <div class="d-flex w-100 ">
                     <form method="post" action="/matches" class="w-100 row d-flex justify-content-between px-2 g-3"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="shadow-sm p-3">
-                            <div class="row">
+                        <div class="row p-lg-3 w-100">
+                            <div class="col-lg-4 col-12">
                                 <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
 
                                 <div class="">
@@ -38,7 +39,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="col-lg-4 col-12 ">
                                 <label for="league" class="form-label fw-semibold">LEAGUE NAME</label>
                                 <div>
                                     <select id="league" name="league" class=""
@@ -61,7 +62,7 @@
                                 @enderror
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="col-lg-4 col-12 ">
                                 <label for="match_status" class="form-label fw-semibold">MATCH STATUS</label>
 
                                 <div class="">
@@ -71,7 +72,7 @@
                                         autocomplete="match_status"> --}}
 
                                     <select id="match_status" name="match_status"
-                                        class= @error('match_status') is-invalid @enderror"
+                                        class=" @error('match_status') is-invalid @enderror"
                                         aria-label="Default select example" autocomplete="match_status">
                                         <option value="" disabled selected>Select Match Status</option>
                                         <optgroup class="ms-3 collapse show" id="collapseExample">
@@ -97,8 +98,8 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 shadow-sm p-3">
-                            <div class="row mb-3">
+                        <div class="col-lg-6 p-lg-3 m-0">
+                            <div class="row ">
                                 {{-- <label for="home_team_name" class="form-label fw-semibold">HOME TEAM NAME</label> --}}
 
                                 <div class="">
@@ -115,7 +116,7 @@
                                 </div>
                             </div>
 
-                            <div class="row shadow-sm mb-3 mx-1">
+                            <div class="row  mx-1">
                                 <label for="home_team_logo" class="form-label fw-semibold d-flex align-items-center">HOME
                                     TEAM LOGO <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item d-flex" role="presentation">
@@ -144,7 +145,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row ">
                                 <div class="">
                                     <input id="home_team_score" type="text"
                                         class=" @error('home_team_score') is-invalid @enderror"
@@ -160,8 +161,8 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 shadow-sm p-3">
-                            <div class="row mb-3">
+                        <div class="col-lg-6 p-lg-3 m-0">
+                            <div class="row ">
                                 <div class="">
                                     <input id="away_team_name" type="text"
                                         class=" @error('away_team_name') is-invalid @enderror"
@@ -176,7 +177,7 @@
                                 </div>
                             </div>
 
-                            <div class="row shadow-sm mb-3 mx-1 mb-3">
+                            <div class="row  mx-1 ">
                                 <label for="away_team_logo" class="form-label fw-semibold d-flex align-items-center">AWAY
                                     TEAM LOGO
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -206,7 +207,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row ">
                                 <div class="">
                                     <input id="away_team_score" type="text"
                                         class=" @error('away_team_score') is-invalid @enderror"
@@ -222,8 +223,8 @@
                             </div>
                         </div>
 
-                        <div class="shadow-sm p-3">
-                            <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                        <div class=" p-lg-3">
+                            <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
                                 <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation">
                                     <button class="server-btns nav-link  active text-nowrap" id="server-1-tab"
                                         data-bs-toggle="tab" data-bs-target="#server-1" type="button" role="tab"
@@ -234,8 +235,15 @@
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="server-1" role="tabpanel"
                                     aria-labelledby="server-1-tab" tabindex="0">
-
-                                    <div class="row mb-3">
+                                    <div class="row">
+                                        <div class="">
+                                            <input required id="server_name" type="text"
+                                                class=""
+                                                name="server_name[]" value=""
+                                                autocomplete="server_name" placeholder="name">
+                                        </div>
+                                    </div>
+                                    <div class="row ">
                                         <div class="">
                                             <input id="server_url" type="url"
                                                 class=" @error('server_url') is-invalid @enderror"
@@ -250,7 +258,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <div class="row ">
 
                                         <div class="">
                                             <input id="server_referer" type="url"

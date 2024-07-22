@@ -8,7 +8,7 @@ $("#add-server-btn").click(function () {
     let newtab = `<div class="tab-pane fade" id="server-${count}" role="tabpanel"
     aria-labelledby="server-${count}-tab" tabindex="0">
 
-    <div class="row mb-3">
+    <div class="row">
         <div class="">
             <input required id="server_name" type="text"
                 class=""
@@ -16,7 +16,7 @@ $("#add-server-btn").click(function () {
                 autocomplete="server_name" placeholder="name">
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row">
         <div class="">
             <input id="server_url" type="url"
                 class=""
@@ -24,7 +24,7 @@ $("#add-server-btn").click(function () {
         </div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row">
         <div class="">
             <input id="server_referer" type="url"
                 class=""

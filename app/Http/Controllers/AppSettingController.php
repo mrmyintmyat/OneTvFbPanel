@@ -14,57 +14,57 @@ class AppSettingController extends Controller
 
     public function index()
     {
-        AppSetting::create([
-            'serverDetails' => [
-                'url' => 'ur url',
-                'mainUrl' => 'url',
-                'privacyUrl' => 'url',
-            ],
-            'sponsorGoogle' => [
-                'status' => true,
-                'android_banner' => 'barnyar',
-                'android_inter' => 'barnyar',
-                'android_appopen' => 'barnyar',
-                'ios_banner' => 'barnyar',
-                'ios_inter' => 'barnyar',
-                'ios_appopen' => 'barnyar',
-            ],
-            'sponsorText' => [
-                'status' => true,
-                'text' => 'barnyar',
-            ],
-            'sponsorBanner' => [
-                'status' => true,
-                "smallAd" => "barnyar",
-                "smallAdUrl" => "barnyarF",
-                "mediumAd" => "FbarnyarF",
-                "mediumAdUrl" => "barnyar"
-            ],
+        // AppSetting::create([
+        //     'serverDetails' => [
+        //         'url' => 'ur url',
+        //         'mainUrl' => 'url',
+        //         'privacyUrl' => 'url',
+        //     ],
+        //     'sponsorGoogle' => [
+        //         'status' => true,
+        //         'android_banner' => 'barnyar',
+        //         'android_inter' => 'barnyar',
+        //         'android_appopen' => 'barnyar',
+        //         'ios_banner' => 'barnyar',
+        //         'ios_inter' => 'barnyar',
+        //         'ios_appopen' => 'barnyar',
+        //     ],
+        //     'sponsorText' => [
+        //         'status' => true,
+        //         'text' => 'barnyar',
+        //     ],
+        //     'sponsorBanner' => [
+        //         'status' => true,
+        //         "smallAd" => "barnyar",
+        //         "smallAdUrl" => "barnyarF",
+        //         "mediumAd" => "FbarnyarF",
+        //         "mediumAdUrl" => "barnyar"
+        //     ],
 
-            'sponsorInter' => [
-                'status' => True,
-                'adImage' => 'barnyar',
-                'adUrl' => 'barnyar'
-            ],
-        ]);
+        //     'sponsorInter' => [
+        //         'status' => True,
+        //         'adImage' => 'barnyar',
+        //         'adUrl' => 'barnyar'
+        //     ],
+        // ]);
 
-        AppSetting::create([
-            'serverDetails' => [
-                'key' => 'noti app key'
-            ],
-            'sponsorGoogle' => [
-              null
-            ],
-            'sponsorText' => [
-               null
-            ],
-            'sponsorBanner' => [
-              null
-            ],
-            'sponsorInter' => [
-               null
-            ],
-        ]);
+        // AppSetting::create([
+        //     'serverDetails' => [
+        //         'key' => 'noti app key'
+        //     ],
+        //     'sponsorGoogle' => [
+        //       null
+        //     ],
+        //     'sponsorText' => [
+        //        null
+        //     ],
+        //     'sponsorBanner' => [
+        //       null
+        //     ],
+        //     'sponsorInter' => [
+        //        null
+        //     ],
+        // ]);
 
         $datas = AppSetting::find(1);
         $id = $datas->id;

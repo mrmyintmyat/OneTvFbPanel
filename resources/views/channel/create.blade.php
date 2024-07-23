@@ -36,31 +36,40 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <label for="channel_logo" class="form-label fw-semibold d-flex align-items-center">CHANNEL LOGO <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item d-flex" role="presentation">
-                                            <button onclick="Change_input('channel_logo', 'file')"
-                                                class="nav-link fw-normal active ms-2" id="upload-tab" data-bs-toggle="tab"
-                                                data-bs-target="#upload-tab-pane" type="button" role="tab"
-                                                aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                                            <button onclick="Change_input('channel_logo', 'url')"
-                                                class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
-                                                data-bs-target="#url-tab-pane" type="button" role="tab"
-                                                aria-controls="url-tab-pane" aria-selected="true">URL</button>
-                                        </li>
-                                    </ul>
-                                </label>
+                            <div class="row">
                                 <div>
-                                    <input id="channel_logo" type="file"
-                                        class="form-control @error('channel_logo') is-invalid @enderror"
-                                        name="channel_logo" value="{{ old('channel_logo') }}"
-                                        autocomplete="channel_logo" accept="image/*" placeholder="LOGO URL" required>
+                                    <div class="p-0">
+                                        <div class="d-flex mb-2 team_logo_container">
+                                            <div class="custom-file">
+                                                <input id="channel_logo" type="file"
+                                                    class="form-control @error('channel_logo') is-invalid @enderror m-0 custom-file-input"
+                                                    name="channel_logo" value="{{ old('channel_logo') }}"
+                                                    autocomplete="channel_logo" accept="image/*" placeholder="LOGO URL"
+                                                    required>
+                                                <label class="custom-file-label" for="channel_logo">Choose file</label>
+                                            </div>
 
-                                    @error('channel_logo')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item d-flex" role="presentation">
+                                                    <button onclick="Change_input('channel_logo', 'file')"
+                                                        class="nav-link fw-normal active" id="upload-tab"
+                                                        data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                        type="button" role="tab" aria-controls="upload-tab-pane"
+                                                        aria-selected="true">Upload</button>
+                                                    <button onclick="Change_input('channel_logo', 'url')"
+                                                        class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#url-tab-pane" type="button" role="tab"
+                                                        aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        @error('channel_logo')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class=" p-lg-3">
@@ -136,15 +145,31 @@
             }
         });
         function Change_input(id, type) {
-            // Get the input element using the provided id
             const inputElement = document.getElementById(id);
+            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
 
-            // Change the input type based on the provided type
             if (type === 'file') {
                 inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', id);
+                    newLabel.textContent = 'Choose file';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
             } else if (type === 'url') {
                 inputElement.type = 'url';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
             }
         }
+
+        document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+            var fileName = document.getElementById("channel_logo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+
     </script>
 @endsection

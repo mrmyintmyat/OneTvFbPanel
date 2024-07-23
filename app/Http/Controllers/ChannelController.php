@@ -11,7 +11,7 @@ class ChannelController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $channels = Channel::paginate(17);
@@ -39,7 +39,7 @@ class ChannelController extends Controller
             $path = $request->file('channel_logo')->store('logos', 'public');
             $channel->channel_logo = env('APP_URL') . '/storage/' . $path;
         }else{
-            $channel->channel_logo = $path;
+            $channel->channel_logo = $request->channel_logo;
         }
 
         $servers = [];

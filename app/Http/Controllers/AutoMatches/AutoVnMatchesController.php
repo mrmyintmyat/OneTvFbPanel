@@ -26,7 +26,7 @@ class AutoVnMatchesController extends Controller
                 if (!empty($match['servers'])) {
                     foreach ($match['servers'] as $i => $finalServerUrl) {
                         $serverDetails = [
-                            'name' => "Server $i",
+                            'name' => "Server " . ($i + 1),
                             'url' => $finalServerUrl['link'],
                             'referer' => $finalServerUrl['referer'],
                             'new' => false,

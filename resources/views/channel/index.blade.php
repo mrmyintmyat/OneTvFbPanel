@@ -5,7 +5,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child(6) {
+        .hover_menu_tag a:nth-child(3) {
             /* border-left: 3px solid #ff0505 !important; */
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
@@ -30,8 +30,8 @@
             </div>
         </a>
         @foreach ($channels as $channel)
-            <a href="/channel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark h-100">
-                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white">
+            <a href="/channel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
+                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
                     {{-- <div class="league_text fw-semibold d-flex w-100 justify-content-between">
                         <div>
                             <a class="btn btn-white rounded-0 p-0" href="/channel/{{ $channel->id }}/edit">

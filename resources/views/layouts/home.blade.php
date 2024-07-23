@@ -11,7 +11,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="/tagsinput/css/select2.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=<?php echo time() ?>">
+    <link rel="stylesheet" href="/css/style.css?v=<?php echo time(); ?>">
 </head>
 @yield('style')
 
@@ -110,6 +110,20 @@
                                 <span class="ms-2">HIGHLIGHTS</span>
                             </div>
                         </a>
+                        <a id="focus_tag" href="/channel"
+                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-tv"></i>
+                                <span class="ms-2">CHANNELS</span>
+                            </div>
+                        </a>
+                        <a id="focus_tag" href="/league"
+                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-square-plus"></i>
+                                <span class="ms-2">MANAGE LEAGUE</span>
+                            </div>
+                        </a>
                         <a id="focus_tag" href="/notification"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center">
@@ -122,20 +136,6 @@
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-gear"></i>
                                 <span class="ms-2">APP SETTING</span>
-                            </div>
-                        </a>
-                        <a id="focus_tag" href="/league"
-                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-square-plus"></i>
-                                <span class="ms-2">MANAGE LEAGUE</span>
-                            </div>
-                        </a>
-                        <a id="focus_tag" href="/channel"
-                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-tv"></i>
-                                <span class="ms-2">CHANNELS</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/slider-setting"

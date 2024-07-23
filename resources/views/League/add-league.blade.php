@@ -1,9 +1,9 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child(6) {
-             /* border-left: 3px solid #ff0505 !important; */
-             border-radius: 5px;
+        .hover_menu_tag a:nth-child(5) {
+            /* border-left: 3px solid #ff0505 !important; */
+            border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
         }
 
@@ -17,23 +17,24 @@
         <div class="card-body pe-0">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="list-league-tab" data-bs-toggle="tab" data-bs-target="#list-league-tab-pane"
-                        type="button" role="tab" aria-controls="list-league-tab-pane"
-                        aria-selected="false">list-league</button>
+                    <button class="nav-link active" id="list-league-tab" data-bs-toggle="tab"
+                        data-bs-target="#list-league-tab-pane" type="button" role="tab"
+                        aria-controls="list-league-tab-pane" aria-selected="false">list-league</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="add-league-tab" data-bs-toggle="tab"
-                        data-bs-target="#add-league-tab-pane" type="button" role="tab"
-                        aria-controls="add-league-tab-pane" aria-selected="true">add-league</button>
+                    <button class="nav-link" id="add-league-tab" data-bs-toggle="tab" data-bs-target="#add-league-tab-pane"
+                        type="button" role="tab" aria-controls="add-league-tab-pane"
+                        aria-selected="true">add-league</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="list-league-tab-pane" role="tabpanel" aria-labelledby="list-league-tab"
-                    tabindex="0">
+                <div class="tab-pane fade show active" id="list-league-tab-pane" role="tabpanel"
+                    aria-labelledby="list-league-tab" tabindex="0">
                     <div class="table-responsive w-100">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th scope="col">LOGO</th>
                                     <th scope="col">NAME</th>
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -42,6 +43,9 @@
 
                                 @foreach ($leagues as $league)
                                     <tr id="{{ $league->id }}">
+                                        <td>
+                                            <img src="{{ $league->logo }}" alt="" style="width: 3rem;">
+                                        </td>
                                         <td>{{ $league->name }}</td>
                                         {{-- <td>
                                             <img style="width: 2rem;" src="{{ $league->logo }}" alt="">
@@ -81,6 +85,42 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="p-0">
+                                        <div class="d-flex mb-2 team_logo_container">
+                                            <div class="custom-file">
+                                                <input id="league_logo" type="file"
+                                                    class="form-control @error('league_logo') is-invalid @enderror m-0 custom-file-input"
+                                                    name="league_logo" value="{{ old('league_logo') }}"
+                                                    autocomplete="league_logo" accept="image/*" placeholder="LOGO URL"
+                                                    required>
+                                                <label class="custom-file-label" for="league_logo">Choose file</label>
+                                            </div>
+
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item d-flex" role="presentation">
+                                                    <button onclick="Change_input('league_logo', 'file')"
+                                                        class="nav-link fw-normal active" id="upload-tab"
+                                                        data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                        type="button" role="tab" aria-controls="upload-tab-pane"
+                                                        aria-selected="true">Upload</button>
+                                                    <button onclick="Change_input('league_logo', 'url')"
+                                                        class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#url-tab-pane" type="button" role="tab"
+                                                        aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        @error('league_logo')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
 
@@ -129,15 +169,6 @@
 @endsection
 @section('script')
     <script>
-        function Change_input(id, type) {
-            const inputElement = document.getElementById(id);
-
-            if (type === 'file') {
-                inputElement.type = 'file';
-            } else if (type === 'text') {
-                inputElement.type = 'text';
-            }
-        }
 
         function Delete_league(id) {
             if (confirm("Are you sure?")) {
@@ -155,6 +186,33 @@
                             alert('An error occurred while deleting the items.');
                         }
                     });
+            }
+        }
+
+        document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+            var fileName = document.getElementById("league_logo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+
+        function Change_input(id, type) {
+            const inputElement = document.getElementById(id);
+            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
+
+            if (type === 'file') {
+                inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', id);
+                    newLabel.textContent = 'Choose file';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
+            } else if (type === 'url') {
+                inputElement.type = 'url';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
             }
         }
     </script>

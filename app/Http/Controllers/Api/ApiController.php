@@ -75,8 +75,8 @@ class ApiController extends Controller
                 'away_team_name' => $match->away_team_name,
                 'away_team_logo' => $match->away_team_logo,
                 'away_team_score' => $match->away_team_score !== null ? (string) $match->away_team_score : '',
-                'league_name' => $match->league_name,
-                'league_logo' => $match->league_logo,
+                'league_name' => $match->league->name,
+                'league_logo' => $match->league->logo,
                 'servers' => $serverDetails,
             ];
 

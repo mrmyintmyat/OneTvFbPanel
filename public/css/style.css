@@ -127,7 +127,7 @@ border-left: 0px !important;
 
 
 .time-font_size{
-font-size: 1.4rem;
+font-size: 1rem;
 }
 
 @media(max-width: 576px){
@@ -181,7 +181,7 @@ padding-left: 15px;
 height: 50px;
 border-radius: 10px;
 box-sizing: border-box;
-/* box-shadow: 0px 5px 15px #d8d7d75d; */
+box-shadow: 0px 5px 15px #d8d7d75d;
 
 }
 
@@ -195,7 +195,7 @@ div select {
     margin-bottom: 8px;
 }
 
-.logo_container input[type="url"],input[type="file"]{
+.team_logo_container input[type="url"],input[type="file"]{
     border: none;
     /* border-bottom: 1px solid#2626265e; */
     outline: none;
@@ -210,21 +210,69 @@ div select {
     box-shadow: none;
 }
 
-.logo_container .nav-link{
+.team_logo_container .nav-link{
   border-radius: 0px;
   background-color: #fff;
   border: 0px;
-  color: #000000;
+  color: #706f6f;
+  font-weight: 800;
 }
 
-.logo_container #url-tab{
+.team_logo_container #url-tab{
     border-radius: 0px 10px 10px 0px;
   }
 
   .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #FF0000;
+    color: #000000;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple{
     border: 0px;
+}
+
+span.text-truncate{
+    font-size: 0.8rem;
+}
+
+.custom-file{
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    height: 50px;
+}
+
+.team_logo_container input[type="file"]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    cursor: inherit;
+    display: block;
+
+}
+
+.custom-file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    padding: 10px;
+    padding-left: 15px;
+    font-weight: 400;
+    height: 100%;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border-radius: 10px 0px 0px 10px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
 }

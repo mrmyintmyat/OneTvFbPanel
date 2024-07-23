@@ -21,7 +21,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="col-lg-4 col-12 px-lg-3">
-                            <label for="match_time" class="form-label fw-semibold">MATCH TIME</label>
+                            <label for="match_time" class="form-label fw-semibold">Match time</label>
 
                             <div class="">
                                 <input id="match_time" type="datetime-local"
@@ -38,22 +38,13 @@
                         </div>
 
                         <div class="col-lg-4 col-12 px-lg-3">
-                            <label for="league" class="form-label fw-semibold">LEAGUE </label>
+                            <label for="league" class="form-label fw-semibold">League </label>
                             <div>
-                                {{-- <select id="league" name="league" class="" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <div class="ms-3 collapse show" id="collapseExample" style="">
-                                        @foreach ($leagues as $league)
-                                            <option value="{{ $league->name }},{{ $league->logo }}">
-                                                <span class="ms-2 text-truncate">
-                                                    {{ $league->name }}</span>
-                                            </option>
-                                        @endforeach
-                                    </div>
-                                </select> --}}
                                 <select id="league" name="league" multiple="multiple">
                                     @foreach ($leagues as $league)
-                                        <option value="{{ $league->name }}">{{ $league->name }}</option>
+                                        <option value="{{ $league->id }}" data-logo="{{ $league->logo }}">
+                                            {{ $league->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -65,7 +56,7 @@
                         </div>
 
                         <div class="col-lg-4 col-12 px-lg-3 ">
-                            <label for="match_status" class="form-label fw-semibold">MATCH STATUS</label>
+                            <label for="match_status" class="form-label fw-semibold">Match status</label>
 
                             <div class="">
                                 {{-- <input id="match_status" type="text"
@@ -102,14 +93,14 @@
                         <div class="col-lg-6 p-lg-3 m-0">
                             <div class="row ">
                                 <label for="home_team_name" class="form-label fw-semibold d-flex align-items-center">
-                                    HOME TEAM INFO
+                                    Home team info
                                 </label>
 
                                 <div class="">
                                     <input id="home_team_name" type="text"
                                         class=" @error('home_team_name') is-invalid @enderror" name="home_team_name"
                                         value="{{ old('home_team_name') }}" required autocomplete="home_team_name"
-                                        autofocus placeholder="HOME TEAM NAME">
+                                        autofocus placeholder="Home team name">
 
                                     @error('home_team_name')
                                         <span class="invalid-feedback" role="alert">
@@ -122,12 +113,16 @@
                             <div class="row">
                                 <div>
                                     <div class="p-0">
-                                        <div class="d-flex mb-2 logo_container">
-                                            <input id="home_team_logo" type="file"
-                                                class="form-control @error('home_team_logo') is-invalid @enderror m-0"
-                                                name="home_team_logo" value="{{ old('home_team_logo') }}"
-                                                autocomplete="home_team_logo" accept="image/*" placeholder="LOGO URL"
-                                                required>
+                                        <div class="d-flex mb-2 team_logo_container">
+                                            <div class="custom-file">
+                                                <input id="home_team_logo" type="file"
+                                                    class="form-control @error('home_team_logo') is-invalid @enderror m-0 custom-file-input"
+                                                    name="home_team_logo" value="{{ old('home_team_logo') }}"
+                                                    autocomplete="home_team_logo" accept="image/*" placeholder="LOGO URL"
+                                                    required>
+                                                <label class="custom-file-label" for="home_team_logo">Choose file</label>
+                                            </div>
+
                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                 <li class="nav-item d-flex" role="presentation">
                                                     <button onclick="Change_input('home_team_logo', 'file')"
@@ -157,7 +152,7 @@
                                     <input id="home_team_score" type="text"
                                         class=" @error('home_team_score') is-invalid @enderror" name="home_team_score"
                                         value="{{ old('home_team_score') }}" autocomplete="home_team_score"
-                                        placeholder="HOME TEAM SCORE">
+                                        placeholder="Home team score">
 
                                     @error('home_team_score')
                                         <span class="invalid-feedback" role="alert">
@@ -170,11 +165,15 @@
 
                         <div class="col-lg-6 p-lg-3 m-0">
                             <div class="row ">
+                                <label for="away_team_name" class="form-label fw-semibold d-flex align-items-center">
+                                    Away team info
+                                </label>
+
                                 <div class="">
                                     <input id="away_team_name" type="text"
                                         class=" @error('away_team_name') is-invalid @enderror" name="away_team_name"
                                         value="{{ old('away_team_name') }}" required autocomplete="away_team_name"
-                                        placeholder="AWAY TEAM NAME">
+                                        autofocus placeholder="Away team name">
 
                                     @error('away_team_name')
                                         <span class="invalid-feedback" role="alert">
@@ -186,28 +185,31 @@
 
                             <div class="row">
                                 <div>
-                                    <label for="away_team_logo"
-                                        class="form-label fw-semibold d-flex align-items-center">AWAY
-                                        TEAM LOGO
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item d-flex" role="presentation">
-                                                <button onclick="Change_input('away_team_logo', 'file')"
-                                                    class="nav-link fw-normal active ms-2" id="upload-tab"
-                                                    data-bs-toggle="tab" data-bs-target="#upload-tab-pane" type="button"
-                                                    role="tab" aria-controls="upload-tab-pane"
-                                                    aria-selected="true">Upload Logo</button>
-                                                <button onclick="Change_input('away_team_logo', 'url')"
-                                                    class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#url-tab-pane" type="button" role="tab"
-                                                    aria-controls="url-tab-pane" aria-selected="true">URL</button>
-                                            </li>
-                                        </ul>
-                                    </label>
                                     <div class="p-0">
-                                        <input id="away_team_logo" type="file"
-                                            class="form-control @error('away_team_logo') is-invalid @enderror"
-                                            name="away_team_logo" value="{{ old('away_team_logo') }}" required
-                                            autocomplete="away_team_logo" accept="image/*" placeholder="LOGO URL">
+                                        <div class="d-flex mb-2 team_logo_container">
+                                            <div class="custom-file">
+                                                <input id="away_team_logo" type="file"
+                                                    class="form-control @error('away_team_logo') is-invalid @enderror m-0 custom-file-input"
+                                                    name="away_team_logo" value="{{ old('away_team_logo') }}"
+                                                    autocomplete="away_team_logo" accept="image/*" placeholder="LOGO URL"
+                                                    required>
+                                                <label class="custom-file-label" for="away_team_logo">Choose file</label>
+                                            </div>
+
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item d-flex" role="presentation">
+                                                    <button onclick="Change_input('away_team_logo', 'file')"
+                                                        class="nav-link fw-normal active" id="upload-tab"
+                                                        data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                        type="button" role="tab" aria-controls="upload-tab-pane"
+                                                        aria-selected="true">Upload</button>
+                                                    <button onclick="Change_input('away_team_logo', 'url')"
+                                                        class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#url-tab-pane" type="button" role="tab"
+                                                        aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                                </li>
+                                            </ul>
+                                        </div>
 
                                         @error('away_team_logo')
                                             <span class="invalid-feedback" role="alert">
@@ -223,7 +225,7 @@
                                     <input id="away_team_score" type="text"
                                         class=" @error('away_team_score') is-invalid @enderror" name="away_team_score"
                                         value="{{ old('away_team_score') }}" autocomplete="away_team_score"
-                                        placeholder="AWAY TEAM SCORE">
+                                        placeholder="Away team score">
 
                                     @error('away_team_score')
                                         <span class="invalid-feedback" role="alert">
@@ -306,6 +308,19 @@
 @section('script')
     <script src="/js/plus_server.js"></script>
     <script>
+        $(document).ready(function() {
+            // Add the beforeunload event listener inside the document ready function
+            window.addEventListener('beforeunload', function(event) {
+                // Cancel the event as returning a non-empty string will prompt the user with a confirmation dialog
+                event.preventDefault();
+                // Set the message to display in the confirmation dialog
+                event.returnValue =
+                    'Are you sure you want to leave this page? Your changes may not be saved.';
+            });
+
+            // Your other JavaScript code here...
+        });
+
         $('#match_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
                 $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', true);
@@ -315,24 +330,61 @@
         });
 
         function Change_input(id, type) {
-            // Get the input element using the provided id
             const inputElement = document.getElementById(id);
+            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
 
-            // Change the input type based on the provided type
             if (type === 'file') {
                 inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', id);
+                    newLabel.textContent = 'Choose file';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
             } else if (type === 'url') {
                 inputElement.type = 'url';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
             }
         }
+
 
         $(document).ready(function() {
             $('#league').select2({
                 tags: true, // Disable the creation of new tags
                 tokenSeparators: [',', ' '], // Allow commas and spaces as separators
                 width: '100%',
-                maximumSelectionLength: 1
+                maximumSelectionLength: 1,
+                templateResult: formatState,
+                templateSelection: formatState
             });
+        });
+
+        function formatState(state) {
+            if (!state.id) {
+                return state.text;
+            }
+
+            var $state = $(
+                '<span><img style="width: 1.5rem; height: auto;" src="' + $(state.element).data('logo') +
+                '" class="img-flag rounded-circle" /> ' + state.text + '</span>'
+            );
+
+            return $state;
+        }
+
+        document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+            var fileName = document.getElementById("home_team_logo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+
+        document.querySelector('#away_team_logo').addEventListener('change', function(e) {
+            var fileName = document.getElementById("away_team_logo").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
         });
     </script>
 @endsection

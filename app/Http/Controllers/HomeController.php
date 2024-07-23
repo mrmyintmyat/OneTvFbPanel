@@ -96,9 +96,9 @@ class HomeController extends Controller
             'server_referer.*' => ['nullable'],
         ]);
 
-        $leagueInfo = explode(',', $request->league);
-        $leagueName = trim($leagueInfo[0]);
-        $leagueLogo = trim($leagueInfo[1]);
+        // $leagueInfo = explode(',', $request->league);
+        // $leagueName = trim($leagueInfo[0]);
+        // $leagueLogo = trim($leagueInfo[1]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -135,8 +135,7 @@ class HomeController extends Controller
                 'away_team_name' => $request->away_team_name,
                 'away_team_logo' => $away_team_logo,
                 'away_team_score' => $request->away_team_score,
-                'league_name' => $leagueName,
-                'league_logo' => $leagueLogo,
+                'league_id' => $request->league,
                 'match_status' => $request->match_status,
                 'servers' => json_encode($servers),
                 'is_auto_match' => false,

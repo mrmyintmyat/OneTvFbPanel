@@ -39,6 +39,14 @@ class AutoVnMatchesController extends Controller
             }
             $homeTeamScore = isset($match['homeTeamScore']) ? $match['homeTeamScore'] : null;
             $awayTeamScore = isset($match['awayTeamScore']) ? $match['awayTeamScore'] : null;
+            $League = League::where('name', $match['league_name'])->first();
+
+            if (!$League) {
+                $League = League::create([
+                    'name' => $match['league_name'],
+                    'logo' => $match['league_logo'],
+                ]);
+            }
             $matchData[] = [
                 'match_time' => strval($match['match_time']),
                 'home_team_name' => $match['home_team_name'],
@@ -47,21 +55,11 @@ class AutoVnMatchesController extends Controller
                 'away_team_name' => $match['away_team_name'],
                 'away_team_logo' => $match['away_team_logo'],
                 'away_team_score' => $awayTeamScore,
-                'league_name' => $match['league_name'],
-                'league_logo' => $match['league_logo'],
+                'league_id' => $League->id,
                 'match_status' => $match['match_status'],
                 'servers' => $serverList,
                 'is_auto_match' => true,
             ];
-
-            $existingLeague = League::where('name', $match['league_name'])->first();
-
-            if (!$existingLeague) {
-                $league = League::create([
-                    'name' => $match['league_name'],
-                    'logo' => $match['league_logo'],
-                ]);
-            }
         }
 
         // Convert the match data array to JSON format

@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('away_team_name');
             $table->longText('away_team_logo');
             $table->integer('away_team_score')->nullable();
-            $table->string('league_name')->default('Sports899 TV');
-            $table->string('league_logo')->nullable();
+            $table->foreignId('league_id')->constrained('leagues')->onDelete('cascade');
             $table->string('match_status');
             $table->json('servers')->nullable();
             $table->boolean('is_auto_match');

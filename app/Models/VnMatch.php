@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\League;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VnMatch extends Model
 {
@@ -20,11 +21,14 @@ class VnMatch extends Model
         'away_team_name',
         'away_team_logo',
         'away_team_score',
-        'league_name',
-        'league_logo',
+        'league_id',
         'match_status',
         'servers',
         'is_auto_match',
     ];
 
+    public function league()
+    {
+        return $this->belongsTo(League::class);
+    }
 }

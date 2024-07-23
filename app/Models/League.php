@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\VnMatch;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class League extends Model
 {
@@ -15,4 +16,9 @@ class League extends Model
         'name',
         'logo',
     ];
+
+    public function matches()
+    {
+        return $this->hasMany(VnMatch::class);
+    }
 }

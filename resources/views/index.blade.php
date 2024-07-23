@@ -18,9 +18,16 @@
 @endsection
 @section('page')
     <div class="row matchs_container g-2 my-2 px-4">
+        <a href="/matches/create" class="col-lg-4 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
+            <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
+                <div class="league_text fw-semibold d-flex w-100 justify-content-center align-items-center h-100">
+                    <i class="fa-solid fa-plus fs-3"></i>
+                </div>
+            </div>
+        </a>
         @foreach ($matches as $match)
             <div class="col-lg-4 col-sm-6 col-12 col-desktop text-dark">
-                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white">
+                <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
                     <div class="league_text fw-semibold d-flex w-100 justify-content-between">
                         <div class="border border-top-0 py-1 bg-white" style="border-start-start-radius: 1rem;">
                             <div class="p-2 px-3 py-0 text-nowrap d-flex">

@@ -90,8 +90,8 @@
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
                             <div class="d-flex align-items-center">
-                                <i class="fas fa-home"></i>
-                                <span class="ms-2">HOME</span>
+                                <i class="fa-solid fa-futbol"></i>
+                                <span class="ms-2">MATCHES</span>
                             </div>
                         </a>
                         {{-- <a href="/vn_matches" id="focus_tag"
@@ -102,13 +102,6 @@
                                 <span class="ms-2">VN MATCHES</span>
                             </div>
                         </a> --}}
-                        <a id="focus_tag" href="/matches/create"
-                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-square-plus"></i>
-                                <span class="ms-2">CREATE MATCH</span>
-                            </div>
-                        </a>
                         <a id="focus_tag" href="/highlights"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center">
@@ -134,20 +127,13 @@
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-square-plus"></i>
-                                <span class="ms-2">ADD LEAGUE</span>
-                            </div>
-                        </a>
-                        <a id="focus_tag" href="/password-change"
-                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-lock"></i>
-                                <span class="ms-2">CHANGE PASSWORD</span>
+                                <span class="ms-2">MANAGE LEAGUE</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/channel"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-circle-info"></i>
+                                <i class="fa-solid fa-tv"></i>
                                 <span class="ms-2">CHANNELS</span>
                             </div>
                         </a>
@@ -156,6 +142,13 @@
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-gears"></i>
                                 <span class="ms-2">Slider Setting</span>
+                            </div>
+                        </a>
+                        <a id="focus_tag" href="/password-change"
+                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-lock"></i>
+                                <span class="ms-2">CHANGE PASSWORD</span>
                             </div>
                         </a>
                     </div>

@@ -181,7 +181,7 @@ padding-left: 15px;
 height: 50px;
 border-radius: 10px;
 box-sizing: border-box;
-box-shadow: 0px 5px 15px #d8d7d75d;
+/* box-shadow: 0px 5px 15px #d8d7d75d; */
 
 }
 
@@ -192,6 +192,35 @@ border-bottom: 2px solid #e78b2271} */
 div input:not([type="checkbox"]),
 div select {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
+.logo_container input[type="url"],input[type="file"]{
+    border: none;
+    /* border-bottom: 1px solid#2626265e; */
+    outline: none;
+    height: 40px;
+    color: #000000;
+    background-color: white !important;
+    font-size: 16px;
+    padding-left: 15px;
+    height: 50px;
+    border-radius: 10px 0px 0px 10px;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+.logo_container .nav-link{
+  border-radius: 0px;
+  background-color: #fff;
+  border: 0px;
+  color: #000000;
+}
+
+.logo_container #url-tab{
+    border-radius: 0px 10px 10px 0px;
+  }
+
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #FF0000;
+}

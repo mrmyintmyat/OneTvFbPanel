@@ -94,43 +94,43 @@ class ApiController extends Controller
         // $matches = json_decode($gg->scrapeMatches(), true);
         // return $gg->scrapeMatches();
         // Iterate through matches and build a custom response
-        $customResponse = [];
-        foreach ($matches as $match) {
-            $serverDetails = [];
-            $servers = $match['servers']; // Access the "servers" array directly
+        // $customResponse = [];
+        // foreach ($matches as $match) {
+        //     $serverDetails = [];
+        //     $servers = $match['servers']; // Access the "servers" array directly
 
-            // Iterate through servers and extract relevant details
-            foreach ($servers as $server) {
-                $serverDetails[] = [
-                    'name' => $server['name'],
-                    'url' => $server['url'],
-                    'referer' => $server['referer'],
-                ];
-            }
+        //     // Iterate through servers and extract relevant details
+        //     foreach ($servers as $server) {
+        //         $serverDetails[] = [
+        //             'name' => $server['name'],
+        //             'url' => $server['url'],
+        //             'referer' => $server['referer'],
+        //         ];
+        //     }
 
-            $customMatch = [
-                'match_time' => $match['match_time'],
-                'home_team_name' => $match['home_team_name'],
-                'home_team_logo' => $match['home_team_logo'],
-                'home_team_score' => isset($match['home_team_score']) ? (string) $match['home_team_score'] : '',
-                'away_team_name' => $match['away_team_name'],
-                'away_team_logo' => $match['away_team_logo'],
-                'away_team_score' => isset($match['away_team_score']) ? (string) $match['away_team_score'] : '',
-                'league_name' => $match['league_name'],
-                'league_logo' => $match['league_logo'],
-                'match_status' => $match['match_status'],
-                'servers' => $serverDetails,
-            ];
+        //     $customMatch = [
+        //         'match_time' => $match['match_time'],
+        //         'home_team_name' => $match['home_team_name'],
+        //         'home_team_logo' => $match['home_team_logo'],
+        //         'home_team_score' => isset($match['home_team_score']) ? (string) $match['home_team_score'] : '',
+        //         'away_team_name' => $match['away_team_name'],
+        //         'away_team_logo' => $match['away_team_logo'],
+        //         'away_team_score' => isset($match['away_team_score']) ? (string) $match['away_team_score'] : '',
+        //         'league_name' => $match['league_name'],
+        //         'league_logo' => $match['league_logo'],
+        //         'match_status' => $match['match_status'],
+        //         'servers' => $serverDetails,
+        //     ];
 
-            // Add the custom match entry to the response array
-            $customResponse[] = $customMatch;
-        }
+        //     // Add the custom match entry to the response array
+        //     $customResponse[] = $customMatch;
+        // }
 
-        // Encode the custom response array as JSON
-        $jsonResponse = $customResponse;
+        // // Encode the custom response array as JSON
+        // $jsonResponse = $customResponse;
 
-        $datas = $this->encryptAES($jsonResponse, 'GG');
-        return $datas;
+        // $datas = $this->encryptAES($jsonResponse, 'GG');
+        return $matches;
     }
 
     public function app_setting(Request $request)

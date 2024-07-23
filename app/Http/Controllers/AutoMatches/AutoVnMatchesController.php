@@ -47,7 +47,7 @@ class AutoVnMatchesController extends Controller
                 'away_team_logo' => $match['away_team_logo'],
                 'away_team_score' => $awayTeamScore,
                 'league_name' => $match['league_name'],
-                'league_logo' => null,
+                'league_logo' => $match['league_logo'],
                 'match_status' => $match['match_status'],
                 'servers' => $serverList,
                 'is_auto_match' => true,

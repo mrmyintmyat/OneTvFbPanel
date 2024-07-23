@@ -18,6 +18,17 @@
 @endsection
 @section('page')
     <div class="row matchs_container g-2 my-2 px-4">
+        <a href="/channel/create" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none ">
+            <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100 d-flex align-items-center justify-content-center">
+                <div class="p-4">
+                    <div class="team-pair d-flex justify-content-around">
+                        <div style="width: 3.8rem;" class="home d-flex flex-column align-items-center">
+                            <i class="fa-solid fa-plus fs-3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
         @foreach ($channels as $channel)
             <a href="/channel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark h-100">
                 <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white">
@@ -51,17 +62,7 @@
                 </div>
             </a>
         @endforeach
-        <a href="/channel/create" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none ">
-            <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100 d-flex align-items-center justify-content-center">
-                <div class="p-4">
-                    <div class="team-pair d-flex justify-content-around">
-                        <div style="width: 3.8rem;" class="home d-flex flex-column align-items-center">
-                            <i class="fa-solid fa-plus fs-3"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
+
         <div class="col-11">
             {{ $channels->links('layouts.bootstrap-5') }}
         </div>

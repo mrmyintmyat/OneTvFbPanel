@@ -43,8 +43,12 @@ class ApiController extends Controller
 
     public function matches(Request $request)
     {
-        $count = $request->input('count', 10);
-        $matches = VnMatch::orderBy('match_time')->take($count)->get();
+        // $count = $request->input('count', 10);
+        if ($request->input('all') == true) {
+            $matches = VnMatch::orderBy('match_time')->get();
+        } else{
+            $matches = VnMatch::orderBy('match_time')->paginate(10);
+        }
         // return $matches;
         // Iterate through matches and build a custom response
         $customResponse = [];

@@ -31,10 +31,10 @@ class ApiController extends Controller
 
             $iv_base64 = base64_encode($iv);
             $encrypted_data_base64 = base64_encode($padded_data);
-
-            return json_encode([
-                $iv_base64 => $encrypted_data_base64,
-            ]);
+            return $data;
+            // return json_encode([
+            //     $iv_base64 => $encrypted_data_base64,
+            // ]);
         } catch (Exception $e) {
             echo $e->getMessage();
             return null;
@@ -167,7 +167,7 @@ class ApiController extends Controller
                 [
                     'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
                     'click_url' => $settings->click_url,
-                ]
+                ],
             ],
         ];
 
@@ -189,7 +189,6 @@ class ApiController extends Controller
         // Return the transformed data
         return $encryptedData;
     }
-
 
     public function highlights(Request $request)
     {

@@ -42,7 +42,7 @@
                                             <div class="custom-file">
                                                 <input id="channel_logo" type="url"
                                                     class="form-control @error('channel_logo') is-invalid @enderror m-0 custom-file-input"
-                                                    name="channel_logo" value="{{ $channel->logo }}"
+                                                    name="channel_logo" value="{{ $channel->channel_logo }}"
                                                     autocomplete="channel_logo" accept="image/*" placeholder="LOGO URL"
                                                     required>
                                             </div>

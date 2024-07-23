@@ -169,7 +169,7 @@ max-width: 25%;
 
 
 div input[type="text"],div select,div input[type="datetime-local"],div input[type="email"],div input[type="number"], div
-input[type="password"], div textarea, div input[type="url"]{
+input[type="password"], div textarea, div input[type="url"], .select2-selection{
 border: none;
 /* border-bottom: 1px solid#2626265e; */
 outline: none;
@@ -223,4 +223,8 @@ div select {
 
   .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #FF0000;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+    border: 0px;
 }

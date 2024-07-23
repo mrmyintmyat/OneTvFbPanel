@@ -38,9 +38,9 @@
                         </div>
 
                         <div class="col-lg-4 col-12 px-lg-3">
-                            <label for="league" class="form-label fw-semibold">LEAGUE NAME</label>
+                            <label for="league" class="form-label fw-semibold">LEAGUE </label>
                             <div>
-                                <select id="league" name="league" class="" aria-label="Default select example">
+                                {{-- <select id="league" name="league" class="" aria-label="Default select example">
                                     <option selected>Open this select menu</option>
                                     <div class="ms-3 collapse show" id="collapseExample" style="">
                                         @foreach ($leagues as $league)
@@ -50,6 +50,11 @@
                                             </option>
                                         @endforeach
                                     </div>
+                                </select> --}}
+                                <select id="league" name="league" multiple="multiple">
+                                    @foreach ($leagues as $league)
+                                        <option value="{{ $league->name }}">{{ $league->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             @error('league_name')
@@ -320,5 +325,14 @@
                 inputElement.type = 'url';
             }
         }
+
+        $(document).ready(function() {
+            $('#league').select2({
+                tags: true, // Disable the creation of new tags
+                tokenSeparators: [',', ' '], // Allow commas and spaces as separators
+                width: '100%',
+                maximumSelectionLength: 1
+            });
+        });
     </script>
 @endsection

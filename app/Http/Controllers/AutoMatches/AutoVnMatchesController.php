@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AutoMatches;
 
 use RandomUserAgent;
+use App\Models\League;
 use Illuminate\Support\Carbon;
 use voku\helper\HtmlDomParser;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +53,15 @@ class AutoVnMatchesController extends Controller
                 'servers' => $serverList,
                 'is_auto_match' => true,
             ];
+
+            $existingLeague = League::where('name', $match['league_name'])->first();
+
+            if (!$existingLeague) {
+                $league = League::create([
+                    'name' => $match['league_name'],
+                    'logo' => $match['league_logo'],
+                ]);
+            }
         }
 
         // Convert the match data array to JSON format

@@ -68,6 +68,7 @@ class ApiController extends Controller
             $customMatch = [
                 'id' => $match->id,
                 'match_time' => $match->match_time,
+                'match_status' => $match->match_status,
                 'home_team_name' => $match->home_team_name,
                 'home_team_logo' => $match->home_team_logo,
                 'home_team_score' => $match->home_team_score !== null ? (string) $match->home_team_score : '',

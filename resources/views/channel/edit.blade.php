@@ -79,11 +79,13 @@
                                                 id="server-{{ $index + 1 }}-tab" data-bs-toggle="tab"
                                                 data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
                                                 aria-controls="server-{{ $index + 1 }}-tab-pane"
-                                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}">Server
+                                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}" style="border-radius: 10px 0px 0px 10px;">Server
                                                 {{ $index + 1 }}</button>
                                         </li>
                                     @endforeach
-                                    <button id="add-server-btn" type="button" class="px-3 btn btn-info">+</button>
+                                    <button id="add-server-btn" type="button" class="px-3 btn bg-menu text-white" style="border-radius: 0px 10px 10px 0px;">
+                                        <i class="fa-solid fa-plus text-white"></i>
+                                    </button>
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     @foreach ($channel->servers as $index => $server)

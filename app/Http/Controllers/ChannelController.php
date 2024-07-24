@@ -46,7 +46,7 @@ class ChannelController extends Controller
         foreach ($validated['server_url'] as $index => $name) {
             $servers[] = [
                 'url' => $validated['server_url'][$index],
-                'headers' => $validated['server_header'][$index] ?? null,
+                'referer' => $validated['server_header'][$index] ?? null,
             ];
         }
 

@@ -1,7 +1,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child(2) {
+        .hover_menu_tag a:nth-child() {
             /* border-left: 3px solid #ff0505 !important; */
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
@@ -241,9 +241,11 @@
                                 <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation">
                                     <button class="server-btns nav-link  active text-nowrap" id="server-1-tab"
                                         data-bs-toggle="tab" data-bs-target="#server-1" type="button" role="tab"
-                                        aria-controls="server-1-tab-pane" aria-selected="true">Server 1</button>
+                                        aria-controls="server-1-tab-pane" aria-selected="true" style="border-radius: 10px 0px 0px 10px;">Server 1</button>
                                 </li>
-                                <button id="add-server-btn" type="button" class="px-3 btn btn-info">+</button>
+                                <button id="add-server-btn" type="button" class="px-3 btn bg-menu text-white" style="border-radius: 0px 10px 10px 0px;">
+                                    <i class="fa-solid fa-plus text-white"></i>
+                                </button>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="server-1" role="tabpanel"

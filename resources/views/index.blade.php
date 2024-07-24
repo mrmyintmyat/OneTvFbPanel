@@ -33,13 +33,13 @@
                             <div class="p-2 px-3 py-0 text-nowrap d-flex">
                                 <img class="me-1 rounded-circle" style="width: 20px;" src="{{ $match->league->logo }}" alt=""
                                     sizes="" srcset="">
-                                <span class="d-inline-block text-truncate" style="max-width: 180px;">
+                                <span class="d-inline-block text-truncate" style="max-width: 120px;">
                                     {{ $match->league->name }}
                                 </span>
                             </div>
                         </div>
                         <div>
-                            <a class="btn btn-white rounded-0 p-0"
+                            <a class="btn btn-white  p-0"
                                 href="/matches/{{ $match->id }}/edit?match={{ $route_match }}">
                                 <span class="px-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
@@ -66,7 +66,7 @@
                             <div
                                 class="date-time d-flex flex-column text-center justify-content-center align-items-center text-center fw-semibold col-4">
                                 @if ($match->match_status == 'Live')
-                                    <div class="btn btn-success py-1 col-6 text-center" style="font-size: 0.8rem;">Live</div>
+                                    <button class="btn btn-success py-1 col-6 text-center" style="font-size: 0.8rem;">Live</button>
                                 @else
                                     <div
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
@@ -112,17 +112,17 @@
                     <button type="button" id="closebtn" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-0" style="background: #F0F3F4;">
                     <div class="mt-3 w-100 tab-pane fade show active" id="list-sdnoti-tab-pane" role="tabpanel"
                         aria-labelledby="list-sdnoti-tab" tabindex="0">
                         <form id="notiform" method="post" action="/notification"
                             class="w-100 row d-flex justify-content-around px-2 g-3" enctype="multipart/form-data">
                             @csrf
-                            <div class="shadow-sm m-0 p-3">
-                                <div class="row mb-3">
+                            <div class="m-0 p-3">
+                                <div class="mb-2">
                                     <div class="">
                                         <input id="title" type="text"
-                                            class="form-control @error('title') is-invalid @enderror rounded-0"
+                                            class="form-control @error('title') is-invalid @enderror "
                                             name="title" value="{{ old('title') }}" required autocomplete="title"
                                             autofocus placeholder="Title">
 
@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <textarea class="form-control @error('body') is-invalid @enderror" id="validationTextarea" placeholder="Body"
                                         name="body" required>Click here to watch.</textarea>
                                     @error('body')
@@ -144,10 +144,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="mb-2">
                                     <div class="">
                                         <input id="img_url" type="url"
-                                            class="form-control @error('img_url') is-invalid @enderror rounded-0"
+                                            class="form-control @error('img_url') is-invalid @enderror "
                                             name="img_url" value="{{ old('img_url') }}" autocomplete="img_url" autofocus
                                             placeholder="Image Url">
 

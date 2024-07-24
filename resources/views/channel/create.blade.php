@@ -105,7 +105,7 @@
                                                 <input id="server_header" type="text"
                                                     class=" @error('server_header') is-invalid @enderror"
                                                     name="server_header[]" value="{{ old('server_header.0') }}"
-                                                    autocomplete="server_header" placeholder="Headers">
+                                                    autocomplete="server_header" placeholder="referer">
 
                                                 @error('server_header')
                                                     <span class="invalid-feedback" role="alert">

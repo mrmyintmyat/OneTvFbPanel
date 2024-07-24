@@ -90,7 +90,7 @@
                         <a href="/" id="focus_tag"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-futbol"></i>
                                 <span class="ms-2">MATCHES</span>
                             </div>
@@ -98,56 +98,56 @@
                         {{-- <a href="/vn_matches" id="focus_tag"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-baseball"></i>
                                 <span class="ms-2">VN MATCHES</span>
                             </div>
                         </a> --}}
                         <a id="focus_tag" href="/highlights"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
                                 <span class="ms-2">HIGHLIGHTS</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/channel"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-tv"></i>
                                 <span class="ms-2">CHANNELS</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/league"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-square-plus"></i>
+                            <div class="d-flex align-items-center fw-semibold">
+                                <i class="fa-solid fa-globe"></i>
                                 <span class="ms-2">MANAGE LEAGUE</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/notification"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-bell"></i>
                                 <span class="ms-2">NOTIFICATION</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/app_setting"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-gear"></i>
                                 <span class="ms-2">APP SETTING</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/slider-setting"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-gears"></i>
                                 <span class="ms-2">Slider Setting</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/password-change"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-lock"></i>
                                 <span class="ms-2">CHANGE PASSWORD</span>
                             </div>

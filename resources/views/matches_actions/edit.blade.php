@@ -252,13 +252,13 @@
                                             id="server-{{ $index + 1 }}-tab" data-bs-toggle="tab"
                                             data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
                                             aria-controls="server-{{ $index + 1 }}"
-                                            aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
+                                            aria-selected="{{ $index === 0 ? 'true' : 'false' }}" style="border-radius: 10px 0px 0px 10px;">
                                             {{ $server['name'] }}<span class="delete-server-btn">&times;</span>
                                         </button>
                                     @endforeach
 
                                 </li>
-                                <button id="add-server-btn" type="button" class="px-3 btn bg-menu">
+                                <button id="add-server-btn" type="button" class="px-3 btn bg-menu"  style="border-radius: 0px 10px 10px 0px;">
                                     <i class="fa-solid fa-plus text-white"></i>
                                 </button>
                             </ul>

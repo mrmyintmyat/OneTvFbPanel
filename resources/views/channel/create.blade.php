@@ -88,10 +88,24 @@
                                         aria-labelledby="server-1-tab" tabindex="0">
                                         <div class="row ">
                                             <div class="">
+                                                <input id="server_name" type="text"
+                                                    class=" @error('server_name') is-invalid @enderror"
+                                                    name="server_name[]" value="{{ old('server_name.0') }}"
+                                                    autocomplete="server_name" placeholder="name" required>
+
+                                                @error('server_name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="">
                                                 <input id="server_url" type="url"
                                                     class=" @error('server_url') is-invalid @enderror"
                                                     name="server_url[]" value="{{ old('server_url.0') }}"
-                                                    autocomplete="server_url" placeholder="URL">
+                                                    autocomplete="server_url" placeholder="url" required>
 
                                                 @error('server_url')
                                                     <span class="invalid-feedback" role="alert">
@@ -102,19 +116,39 @@
                                         </div>
 
                                         <div class="row ">
-
                                             <div class="">
-                                                <input id="server_header" type="text"
-                                                    class=" @error('server_header') is-invalid @enderror"
-                                                    name="server_header[]" value="{{ old('server_header.0') }}"
-                                                    autocomplete="server_header" placeholder="referer">
+                                                <input id="server_referer" type="text"
+                                                    class=" @error('server_referer') is-invalid @enderror"
+                                                    name="server_referer[]" value="{{ old('server_referer.0') }}"
+                                                    autocomplete="server_referer" placeholder="referer" required>
 
-                                                @error('server_header')
+                                                @error('server_referer')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="">
+                                            <select id="server_type" name="server_type[]"
+                                                class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
+                                                autocomplete="server_type" required>
+                                                <option value="" disabled selected>Select Type</option>
+                                                <optgroup class="ms-3 collapse show" id="collapseExample">
+                                                    <option value="Direct Player" {{ old('server_type.0') == 'Direct Player' ? 'selected' : '' }}>
+                                                        Direct Player
+                                                    </option>
+                                                    <option value="Embed Player" {{ old('server_type.0') == 'Embed Player' ? 'selected' : '' }}>
+                                                        Embed Player
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+
+                                            @error('server_type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -141,9 +175,9 @@
     <script>
        $('#match_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
-                $('#away_team_score, #home_team_score, #server_url, #server_header').prop('required', true);
+                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', true);
             } else {
-                $('#away_team_score, #home_team_score, #server_url, #server_header').prop('required', false);
+                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', false);
             }
         });
         function Change_input(id, type) {

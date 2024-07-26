@@ -59,11 +59,6 @@
                             <label for="match_status" class="form-label fw-semibold">Match status</label>
 
                             <div class="">
-                                {{-- <input id="match_status" type="text"
-                                        class=" @error('match_status') is-invalid @enderror"
-                                        name="match_status" value="{{ old('match_status') }}" required
-                                        autocomplete="match_status"> --}}
-
                                 <select id="match_status" name="match_status"
                                     class=" @error('match_status') is-invalid @enderror" aria-label="Default select example"
                                     autocomplete="match_status">
@@ -238,7 +233,7 @@
 
                         <div class="m-0 p-lg-3">
                             <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
-                                <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation">
+                                <li id="server-btns-container" class="nav-item d-flex flex-row" role="presentation" style="overflow-x: auto; overflow-y: hidden;">
                                     <button class="server-btns nav-link  active text-nowrap" id="server-1-tab"
                                         data-bs-toggle="tab" data-bs-target="#server-1" type="button" role="tab"
                                         aria-controls="server-1-tab-pane" aria-selected="true" style="border-radius: 10px 0px 0px 10px;">Server 1</button>
@@ -262,7 +257,7 @@
                                             <input id="server_url" type="url"
                                                 class=" @error('server_url') is-invalid @enderror" name="server_url[]"
                                                 value="{{ old('server_url.0') }}" autocomplete="server_url"
-                                                placeholder="URL">
+                                                placeholder="url">
 
                                             @error('server_url')
                                                 <span class="invalid-feedback" role="alert">
@@ -272,13 +267,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="row ">
-
+                                    <div class="row">
                                         <div class="">
                                             <input id="server_referer" type="url"
                                                 class=" @error('server_referer') is-invalid @enderror"
                                                 name="server_referer[]" value="{{ old('server_referer.0') }}"
-                                                autocomplete="server_referer" placeholder="REFERER">
+                                                autocomplete="server_referer" placeholder="referer">
 
                                             @error('server_referer')
                                                 <span class="invalid-feedback" role="alert">
@@ -286,6 +280,27 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                    </div>
+                                    <div class="">
+                                        <select id="server_type" name="server_type[]"
+                                            class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
+                                            autocomplete="server_type" required>
+                                            <option value="" disabled selected>Select Type</option>
+                                            <optgroup class="ms-3 collapse show" id="collapseExample">
+                                                <option value="Direct Player" {{ old('server_type.0') == 'Direct Player' ? 'selected' : '' }}>
+                                                    Direct Player
+                                                </option>
+                                                <option value="Embed Player" {{ old('server_type.0') == 'Embed Player' ? 'selected' : '' }}>
+                                                    Embed Player
+                                                </option>
+                                            </optgroup>
+                                        </select>
+
+                                        @error('server_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

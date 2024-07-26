@@ -32,21 +32,6 @@
         @foreach ($channels as $channel)
             <a href="/channel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
                 <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
-                    {{-- <div class="league_text fw-semibold d-flex w-100 justify-content-between">
-                        <div>
-                            <a class="btn btn-white rounded-0 p-0" href="/channel/{{ $channel->id }}/edit">
-                                <span class="px-2">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </span>
-                            </a>
-                            <button onclick="NotiModal({{ $channel->id }})" class="btn btn-white p-0"
-                                type="button" data-bs-toggle="modal" data-bs-target="#notiModel" style="border-start-end-radius: 1rem;">
-                                <span class="px-2">
-                                    <i class="fa-solid fa-bell"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div> --}}
 
                     <div class="p-4">
                         <div class="team-pair d-flex justify-content-around">

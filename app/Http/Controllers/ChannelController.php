@@ -27,9 +27,11 @@ class ChannelController extends Controller
     {
         $validated = $request->validate([
             'channel_name' => 'required|string|max:255',
-            'channel_logo' => 'nullable',
+            'channel_logo' => 'required',
+            'server_name.*' => 'required',
             'server_url.*' => 'required|url',
-            'server_header.*' => 'nullable',
+            'server_referer.*' => 'required',
+            'server_type.*' => 'required',
         ]);
 
         $channel = new Channel();
@@ -37,7 +39,7 @@ class ChannelController extends Controller
 
         if ($request->hasFile('channel_logo')) {
             $path = $request->file('channel_logo')->store('logos', 'public');
-            $channel->channel_logo = env('APP_URL') . '/storage/' . $path;
+            $channel->channel_logo = url('storage/' . $path);
         }else{
             $channel->channel_logo = $request->channel_logo;
         }
@@ -45,8 +47,10 @@ class ChannelController extends Controller
         $servers = [];
         foreach ($validated['server_url'] as $index => $name) {
             $servers[] = [
+                'name' => $validated['server_name'][$index],
                 'url' => $validated['server_url'][$index],
-                'referer' => $validated['server_header'][$index] ?? null,
+                'type' => $validated['server_type'][$index],
+                'referer' => $validated['server_referer'][$index] ?? null,
             ];
         }
 
@@ -66,16 +70,18 @@ class ChannelController extends Controller
     {
         $validated = $request->validate([
             'channel_name' => 'required|string|max:255',
-            'channel_logo' => 'nullable',
+            'channel_logo' => 'required',
+            'server_name.*' => 'required',
             'server_url.*' => 'required|url',
-            'server_header.*' => 'nullable',
+            'server_referer.*' => 'required',
+            'server_type.*' => 'required',
         ]);
 
         $channel->channel_name = $validated['channel_name'];
 
         if ($request->hasFile('channel_logo')) {
             $path = $request->file('channel_logo')->store('logos', 'public');
-            $channel->channel_logo = env('APP_URL') . '/storage/' . $path;
+            $channel->channel_logo = url('storage/' . $path);
         } else{
             $channel->channel_logo = $request->channel_logo;
         }
@@ -83,15 +89,16 @@ class ChannelController extends Controller
         $servers = [];
         foreach ($validated['server_url'] as $index => $name) {
             $servers[] = [
-                'name' => $name,
+                'name' => $validated['server_name'][$index],
                 'url' => $validated['server_url'][$index],
-                'headers' => $validated['server_header'][$index] ?? null,
+                'type' => $validated['server_type'][$index],
+                'referer' => $validated['server_referer'][$index] ?? null,
             ];
         }
 
         $channel->servers = $servers;
         $channel->save();
 
-        return redirect()->route('channel.index')->with('success', 'channel updated successfully.');
+        return redirect()->back()->with('success', 'channel updated successfully.');
     }
 }

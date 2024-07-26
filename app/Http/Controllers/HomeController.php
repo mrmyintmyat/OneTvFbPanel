@@ -94,6 +94,7 @@ class HomeController extends Controller
             'server_url.*' => ['nullable'],
             'server_referer' => ['nullable', 'array'],
             'server_referer.*' => ['nullable'],
+            'server_type.*' => ['required', Rule::in(['Direct Player', 'Embed Player'])],
         ]);
 
         // $leagueInfo = explode(',', $request->league);
@@ -107,6 +108,7 @@ class HomeController extends Controller
         $serverUrls = $request->input('server_url');
         $serverNames = $request->input('server_name');
         $serverReferers = $request->input('server_referer');
+        $serverType = $request->input('server_type');
 
         $servers = [];
 
@@ -116,6 +118,7 @@ class HomeController extends Controller
                     'name' => $serverNames[$i],
                     'url' => $serverUrls[$i],
                     'referer' => $serverReferers[$i],
+                    'type' => $serverType[$i],
                     'new' => true,
                 ];
             }
@@ -219,6 +222,20 @@ class HomeController extends Controller
     // Update the specified resource in storage.
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'match_time' => ['required'], // Validate timestamp format
+            'home_team_name' => ['required', 'string'],
+            'home_team_score' => ['nullable', 'integer'],
+            'away_team_name' => ['required', 'string'],
+            'away_team_score' => ['nullable', 'integer'],
+            'match_status' => ['required', Rule::in(['Live', 'Match', 'Highlight'])],
+            'server_url' => ['nullable', 'array'],
+            'server_url.*' => ['nullable'],
+            'server_referer' => ['nullable', 'array'],
+            'server_referer.*' => ['nullable'],
+            'server_type.*' => ['required', Rule::in(['Direct Player', 'Embed Player'])],
+        ]);
+
         $selectedMatch = request()->query('match');
         if ($selectedMatch === 'vn_match') {
             $match = VnMatch::find($id);
@@ -233,6 +250,7 @@ class HomeController extends Controller
         $serverUrls = $request->input('server_url');
         $server_name = $request->input('server_name');
         $serverReferers = $request->input('server_referer');
+        $serverType = $request->input('server_type');
 
         $newservers = [];
         $oldservers = [];
@@ -255,6 +273,7 @@ class HomeController extends Controller
                                 'name' => $server_name[$i],
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
+                                'type' => $serverType[$i],
                                 'new' => true,
                             ];
                         } else {
@@ -262,6 +281,7 @@ class HomeController extends Controller
                                 'name' => $server_name[$i],
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
+                                'type' => $serverType[$i],
                                 'new' => false,
                             ];
                         }
@@ -276,6 +296,7 @@ class HomeController extends Controller
                         'name' => $server_name[$i],
                         'url' => $serverUrls[$i],
                         'referer' => $serverReferers[$i],
+                        'type' => $serverType[$i],
                         'new' => true,
                     ];
                 }
@@ -311,22 +332,9 @@ class HomeController extends Controller
             $away_team_logo = $url;
         }
 
-        $validator = Validator::make($request->all(), [
-            'match_time' => ['required'], // Validate timestamp format
-            'home_team_name' => ['required', 'string'],
-            'home_team_score' => ['nullable', 'integer'],
-            'away_team_name' => ['required', 'string'],
-            'away_team_score' => ['nullable', 'integer'],
-            'match_status' => ['required', Rule::in(['Live', 'Match', 'Highlight'])],
-            'server_url' => ['nullable', 'array'],
-            'server_url.*' => ['nullable'],
-            'server_referer' => ['nullable', 'array'],
-            'server_referer.*' => ['nullable'],
-        ]);
-
-        $leagueInfo = explode(',', $request->league);
-        $leagueName = trim($leagueInfo[0]);
-        $leagueLogo = trim($leagueInfo[1]);
+        // $leagueInfo = explode(',', $request->league);
+        // $leagueName = trim($leagueInfo[0]);
+        // $leagueLogo = trim($leagueInfo[1]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -356,8 +364,7 @@ class HomeController extends Controller
             'away_team_name' => $request->away_team_name,
             'away_team_logo' => $away_team_logo,
             'away_team_score' => $request->away_team_score,
-            'league_name' => $leagueName,
-            'league_logo' => $leagueLogo,
+            'league_id' => $request->league,
             'match_status' => $request->match_status,
             'servers' => json_encode($servers),
         ]);

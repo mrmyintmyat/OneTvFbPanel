@@ -14,7 +14,7 @@ class AppSetting extends Model
 
       // The attributes that are mass assignable
       protected $fillable = [
-        'serverDetails',
+        'appDetails',
         'sponsorGoogle',
         'sponsorText',
         'sponsorBanner',
@@ -22,7 +22,7 @@ class AppSetting extends Model
       ];
 
       protected $casts = [
-        'serverDetails' => 'json',
+        'appDetails' => 'json',
         'sponsorGoogle' => 'json',
         'sponsorText' => 'json',
         'sponsorBanner' => 'json',

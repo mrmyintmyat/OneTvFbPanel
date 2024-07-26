@@ -185,13 +185,10 @@ class ApiController extends Controller
 
     public function channels(Request $request)
     {
-        // Fetch the first slider setting with related image URLs
-        $channels = Channel::all();
+        $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
 
-        // Encrypt the data if necessary
         $encryptedData = $this->encryptAES($channels, 'woww');
 
-        // Return the transformed data
         return $encryptedData;
     }
 

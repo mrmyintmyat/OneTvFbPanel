@@ -10,6 +10,10 @@
         #SvgjsG1016 * {
             height: 100px;
         }
+
+        .tab-content>.active {
+            display: inline-flex;
+        }
     </style>
 @endsection
 @section('page')
@@ -28,44 +32,28 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="list-league-tab-pane" role="tabpanel"
+                <div class="tab-pane fade show active row g-2 my-2 pe-4" id="list-league-tab-pane" role="tabpanel"
                     aria-labelledby="list-league-tab" tabindex="0">
-                    <div class="table-responsive w-100">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">LOGO</th>
-                                    <th scope="col">NAME</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    @foreach ($leagues as $league)
+                        <a href="/league/{{ $league->id }}/edit"
+                            class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
+                            <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
 
-                                @foreach ($leagues as $league)
-                                    <tr id="{{ $league->id }}">
-                                        <td>
-                                            <img src="{{ $league->logo }}" alt="" style="width: 3rem;">
-                                        </td>
-                                        <td>{{ $league->name }}</td>
-                                        {{-- <td>
-                                            <img style="width: 2rem;" src="{{ $league->logo }}" alt="">
-                                        </td> --}}
-                                        <td class="d-flex flex-row">
-                                            <a href="/league/{{ $league->id }}/edit"
-                                                class="btn btn-info btn-sm rounded-0 text-white">
-                                                Edit
-                                            </a>
-                                            <button onclick="Delete_league({{ $league->id }})"
-                                                class="btn btn-danger btn-sm rounded-0 text-white ms-2">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                            </tbody>
-                        </table>
-                    </div>
+                                <div class="p-4">
+                                    <div class="team-pair d-flex justify-content-around">
+                                        <div class="home d-flex flex-column align-items-center">
+                                            <img style="width: 3rem; height: 3rem;" class="" src="{{ $league->logo }}"
+                                                alt="{{ $league->league_name }} Logo">
+                                            <span id="league_name_{{ $league->id }}"
+                                                class="text-center fw-semibold text-nowrap team_name d-inline-block text-truncate"
+                                                style="max-width: 150px;">{{ $league->name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                    {{ $leagues->links('layouts.bootstrap-5') }}
                 </div>
                 <div class="mt-3 w-100 tab-pane fade" id="add-league-tab-pane" role="tabpanel"
                     aria-labelledby="add-league-tab" tabindex="0">
@@ -169,7 +157,6 @@
 @endsection
 @section('script')
     <script>
-
         function Delete_league(id) {
             if (confirm("Are you sure?")) {
                 axios.delete('/league/' + id)

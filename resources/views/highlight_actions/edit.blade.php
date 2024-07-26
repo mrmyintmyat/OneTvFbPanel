@@ -56,7 +56,7 @@
                             <div>
                                 <select id="league" name="league" multiple="multiple">
                                     @foreach ($leagues as $league)
-                                        <option value="{{ $league->name }}" data-logo="{{ $league->logo }}"
+                                        <option value="{{ $league->name }},{{ $league->logo }}" data-logo="{{ $league->logo }}"
                                             {{ $match->league_name == $league->name ? 'selected' : '' }}>
                                             {{ $league->name }}
                                         </option>
@@ -307,6 +307,27 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="">
+                                            <select id="server_type" name="server_type[]"
+                                                class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
+                                                autocomplete="server_type">
+                                                <option value="" disabled selected>Select Type</option>
+                                                <optgroup class="ms-3 collapse show" id="collapseExample">
+                                                    <option value="Direct Player" {{ $server['type'] == 'Direct Player' ? 'selected' : '' }}>
+                                                        Direct Player
+                                                    </option>
+                                                    <option value="Embed Player" {{ $server['type'] == 'Embed Player' ? 'selected' : '' }}>
+                                                        Embed Player
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+
+                                            @error('server_type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -415,7 +436,6 @@
             }
         }
 
-
         $(document).ready(function() {
             // Initialize Select2
             $('#league').select2({
@@ -428,13 +448,12 @@
             });
 
             // Preselect value
-            var preselectedValues = "{{ $match->league_name }}";
+            var preselectedValues = "{{ $match->league_name }},{{ $match->league_logo }}";
             if (preselectedValues) {
                 var newOption = new Option(preselectedValues, preselectedValues, true, true);
                 $('#league').append(newOption).trigger('change');
             }
         });
-
 
         function formatState(state) {
             if (!state.id) {

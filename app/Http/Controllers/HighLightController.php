@@ -8,6 +8,7 @@ use App\Models\HighLight;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use App\Console\Commands\AutoHighLights;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\AutoMatches\AutoHighLightController;
@@ -39,6 +40,20 @@ class HighLightController extends Controller
     public function update(Request $request, $id)
     {
 
+        $validator = Validator::make($request->all(), [
+            'match_time' => ['required'], // Validate timestamp format
+            'home_team_name' => ['required', 'string'],
+            'home_team_score' => ['nullable', 'integer'],
+            'away_team_name' => ['required', 'string'],
+            'away_team_score' => ['nullable', 'integer'],
+            'match_status' => [Rule::in(['Live', 'Match', 'Highlight'])],
+            'server_url' => ['nullable', 'array'],
+            'server_url.*' => ['nullable'],
+            'server_referer' => ['nullable', 'array'],
+            'server_referer.*' => ['nullable'],
+            'server_type.*' => ['required', Rule::in(['Direct Player', 'Embed Player'])],
+        ]);
+
         $match = HighLight::findOrFail($id);
 
         if (!$match) {
@@ -48,6 +63,7 @@ class HighLightController extends Controller
 
         $serverUrls = $request->input('server_url');
         $serverReferers = $request->input('server_referer');
+        $serverType = $request->input('server_type');
 
         $servers = [];
 
@@ -70,6 +86,7 @@ class HighLightController extends Controller
                                 'name' => 'Server ' . ($i + 1),
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
+                                'type' => $serverType[$i],
                                 'new' => true,
                             ];
                         } else {
@@ -77,6 +94,7 @@ class HighLightController extends Controller
                                 'name' => 'Server ' . ($i + 1),
                                 'url' => $serverUrls[$i],
                                 'referer' => $serverReferers[$i],
+                                'type' => $serverType[$i],
                                 'new' => false,
                             ];
                         }
@@ -90,6 +108,7 @@ class HighLightController extends Controller
                         'name' => 'Server ' . ($i + 1),
                         'url' => $serverUrls[$i],
                         'referer' => $serverReferers[$i],
+                        'type' => $serverType[$i],
                         'new' => true,
                     ];
                 }
@@ -119,19 +138,6 @@ class HighLightController extends Controller
             $url = $request->input('away_team_logo');
             $away_team_logo = $url;
         }
-
-        $validator = Validator::make($request->all(), [
-            'match_time' => ['required'], // Validate timestamp format
-            'home_team_name' => ['required', 'string'],
-            'home_team_score' => ['nullable', 'integer'],
-            'away_team_name' => ['required', 'string'],
-            'away_team_score' => ['nullable', 'integer'],
-            'match_status' => [Rule::in(['Live', 'Match', 'Highlight'])],
-            'server_url' => ['nullable', 'array'],
-            'server_url.*' => ['nullable'],
-            'server_referer' => ['nullable', 'array'],
-            'server_referer.*' => ['nullable'],
-        ]);
 
         $leagueInfo = explode(',', $request->league);
         $leagueName = trim($leagueInfo[0]);

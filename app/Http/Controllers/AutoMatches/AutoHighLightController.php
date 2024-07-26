@@ -100,6 +100,7 @@ class AutoHighLightController extends Controller
                 'name' => "Server " . ($i + 1),
                 'url' => $serverUrl,
                 'referer' => 'https://bingsport.com/',
+                'type' => 'Direct Player',
                 'new' => false,
             ];
 

@@ -1,7 +1,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child() {
+        #collapseSetting a:nth-child(3) {
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
         }
@@ -21,13 +21,13 @@
             margin-bottom: 15px;
         }
 
-        .nav-tabs .nav-link.active {
-            background-color: #f8f9fa;
-        }
+        /* .nav-tabs .nav-link.active {
+                            background-color: #f8f9fa;
+                        }
 
-        .nav-tabs .nav-link {
-            border: 1px solid #dee2e6;
-        }
+                        .nav-tabs .nav-link {
+                            border: 1px solid #dee2e6;
+                        } */
 
         .form-switch .form-check-input {
             cursor: pointer;
@@ -83,43 +83,44 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="bg-white shadow rounded-3 pt-3 px-0">
-                            <div id="img-url-container" class="col-lg-12 px-3">
-                                <div class="img-url-group row">
-                                    <label for="img_url_1" class="form-label fw-semibold d-flex align-items-center">
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item d-flex" role="presentation">
-                                                <button onclick="changeInput('img_url_1', 'file')"
-                                                    class="nav-link fw-normal active ms-2" id="upload-tab"
-                                                    data-bs-toggle="tab" data-bs-target="#upload-tab-pane" type="button"
-                                                    role="tab" aria-controls="upload-tab-pane"
-                                                    aria-selected="true">Upload Logo</button>
-                                                <button onclick="changeInput('img_url_1', 'url')" class="nav-link fw-normal"
-                                                    id="url-tab" data-bs-toggle="tab" data-bs-target="#url-tab-pane"
-                                                    type="button" role="tab" aria-controls="url-tab-pane"
-                                                    aria-selected="false">URL</button>
-                                            </li>
-                                        </ul>
-                                    </label>
-                                    <div class="col-12">
-                                        <input id="img_url_1" type="file"
-                                            class="form-control @error('img_url') is-invalid @enderror m-0" name="img_url[]"
-                                            value="" autocomplete="img_url" accept="image/*" placeholder="LOGO URL"
-                                            required>
-                                        @error('img_url')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                        <div class="col-12">
+                            <div class="bg-white shadow rounded-3 pt-3 px-0">
+                                <div id="img-url-container" class="col-lg-12 px-3">
+                                    <div class="img-url-group row">
+                                        <div class="d-flex mb-2 team_logo_container">
+                                            <div class="custom-file">
+                                                <input id="img_url_1" type="file"
+                                                    class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
+                                                    name="img_url[]" value="{{ old('img_url_1') }}" autocomplete="img_url_1"
+                                                    accept="image/*" placeholder="LOGO URL" required>
+                                                <label class="custom-file-label" for="img_url_1">Choose file</label>
+                                            </div>
+
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item d-flex" role="presentation">
+                                                    <button onclick="Change_input('img_url_1', 'file')"
+                                                        class="nav-link fw-normal active" id="upload-tab"
+                                                        data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                        type="button" role="tab" aria-controls="upload-tab-pane"
+                                                        aria-selected="true">Upload</button>
+                                                    <button onclick="Change_input('img_url_1', 'url')"
+                                                        class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#url-tab-pane" type="button" role="tab"
+                                                        aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12 d-flex justify-content-start m-0">
-                                <button type="button" class="btn btn-secondary w-100 rounded-bottom-3 rounded-top-0" onclick="addImageUrlField()">Add Another
-                                    Image URL</button>
+                                <div class="col-12 d-flex justify-content-start m-0">
+                                    <button type="button"
+                                        class="btn btn-white text-black fw-semibold w-100 mb-2 border-top"
+                                        onclick="addImageUrlField()">Add Another
+                                        Image URL</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mb-0 col-12 ms-1 mt-3 p-0">
+                        <div class="col-12">
                             <div class="w-100 p-0">
                                 <button type="submit" class="btn py-2 bg-menu w-100 text-white">
                                     {{ __('CREATE') }}
@@ -146,39 +147,76 @@
             div.classList.add('img-url-group', 'row');
             const id = 'img_url_' + imgUrlCount;
             div.innerHTML = `
-                <label for="${id}" class="form-label fw-semibold d-flex align-items-center">
-                    <ul class="nav nav-tabs ms-3" role="tablist">
-                        <li class="nav-item d-flex" role="presentation">
-                            <button onclick="changeInput('${id}', 'file')" class="nav-link fw-normal active ms-2" data-bs-toggle="tab" data-bs-target="#upload-tab-pane" type="button" role="tab" aria-controls="upload-tab-pane" aria-selected="true">Upload Logo</button>
-                            <button onclick="changeInput('${id}', 'url')" class="nav-link fw-normal" data-bs-toggle="tab" data-bs-target="#url-tab-pane" type="button" role="tab" aria-controls="url-tab-pane" aria-selected="false">URL</button>
-                    <span class="remove-button d-flex align-items-center px-3"
+                <div class="d-flex mb-2 team_logo_container">
+                                        <div class="custom-file">
+                                            <input id="${id}" type="file"
+                                                class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
+                                                name="img_url[]" value="{{ old('${id}') }}"
+                                                autocomplete="${id}" accept="image/*" placeholder="LOGO URL"
+                                                required>
+                                            <label class="custom-file-label" for="${id}">Choose file</label>
+                                        </div>
+
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item d-flex" role="presentation">
+                                                <button onclick="Change_input('${id}', 'file')"
+                                                    class="nav-link fw-normal active" id="upload-tab"
+                                                    data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                    type="button" role="tab" aria-controls="upload-tab-pane"
+                                                    aria-selected="true">Upload</button>
+                                                <button onclick="Change_input('${id}', 'url')"
+                                                    class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#url-tab-pane" type="button" role="tab"
+                                                    aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                                    <span class="remove-button d-flex align-items-center px-3"
                                                     onclick="removeImageUrlField(this)"><i class="fa-solid fa-trash"></i></span>
-                        </li>
-                    </ul>
-                </label>
-                <div class="col-12">
-                    <input id="${id}" type="file" class="form-control" name="img_url[]" autocomplete="off" accept="image/*" placeholder="LOGO URL">
-                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
             `;
             container.appendChild(div);
+            document.getElementById(id).addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : 'Choose file';
+                const nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
+            });
             imgUrlCount++;
         }
 
         function removeImageUrlField(button) {
             const container = document.getElementById('img-url-container');
             if (container.children.length > 1) {
-                button.parentElement.parentElement.remove();
+                button.parentElement.parentElement.parentElement.parentElement.remove();
             } else {
                 alert("You must have at least one Image URL/File field.");
             }
         }
 
-        function changeInput(inputId, type) {
-            const inputElement = document.getElementById(inputId);
-            inputElement.type = type === 'file' ? 'file' : 'url';
-            inputElement.value = '';
-            inputElement.placeholder = type === 'file' ? '' : 'LOGO URL';
-            inputElement.accept = type === 'file' ? 'image/*' : '';
+        function Change_input(id, type) {
+            const inputElement = document.getElementById(id);
+            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
+
+            if (type === 'file') {
+                inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', id);
+                    newLabel.textContent = 'Choose file';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
+            } else if (type === 'url') {
+                inputElement.type = 'url';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
+            }
         }
+
+        document.querySelector('#img_url_1').addEventListener('change', function(e) {
+            var fileName = document.getElementById("img_url_1").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
     </script>
 @endsection

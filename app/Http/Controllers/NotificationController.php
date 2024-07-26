@@ -10,15 +10,15 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $appsetting = AppSetting::find(2);
-        $key = $appsetting->serverDetails['key'];
+        $appsetting = AppSetting::where('sponsorGoogle', '[null]')->first();
+        $key = $appsetting->appDetails['key'];
         return view('notification.notification', compact('key'));
     }
 
     public function UpdateKey(Request $request)
     {
-        $appsetting = AppSetting::find(2);
-        $appsetting->serverDetails = [
+        $appsetting = AppSetting::where('sponsorGoogle', '[null]')->first();
+        $appsetting->appDetails = [
             'key' => $request->key,
         ];
 
@@ -31,8 +31,8 @@ class NotificationController extends Controller
 
     public function sendNotification(Request $request)
     {
-        $appsetting = AppSetting::find(2);
-        $key = $appsetting->serverDetails['key'];
+        $appsetting = AppSetting::where('sponsorGoogle', '[null]')->first();
+        $key = $appsetting->appDetails['key'];
         $notificationData = [
             'to' => '/topics/all_users',
             'notification' => [

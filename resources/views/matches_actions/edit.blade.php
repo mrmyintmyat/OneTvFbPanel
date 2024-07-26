@@ -56,7 +56,7 @@
                             <div>
                                 <select id="league" name="league" multiple="multiple">
                                     @foreach ($leagues as $league)
-                                        <option value="{{ $league->name }}" data-logo="{{ $league->logo }}" {{ $match->league->name == $league->name ? 'selected' : '' }}>
+                                        <option value="{{ $league->id }}" data-logo="{{ $league->logo }}" {{ $match->league->name == $league->name ? 'selected' : '' }}>
                                             {{ $league->name }}
                                         </option>
                                     @endforeach
@@ -256,7 +256,6 @@
                                             {{ $server['name'] }}<span class="delete-server-btn">&times;</span>
                                         </button>
                                     @endforeach
-
                                 </li>
                                 <button id="add-server-btn" type="button" class="px-3 btn bg-menu"  style="border-radius: 0px 10px 10px 0px;">
                                     <i class="fa-solid fa-plus text-white"></i>
@@ -305,6 +304,27 @@
                                                     </span>
                                                 @enderror
                                             </div>
+                                        </div>
+                                        <div class="">
+                                            <select id="server_type" name="server_type[]"
+                                                class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
+                                                autocomplete="server_type" required>
+                                                <option value="" disabled selected>Select Type</option>
+                                                <optgroup class="ms-3 collapse show" id="collapseExample">
+                                                    <option value="Direct Player" {{ $server['type'] == 'Direct Player' ? 'selected' : '' }}>
+                                                        Direct Player
+                                                    </option>
+                                                    <option value="Embed Player" {{ $server['type'] == 'Embed Player' ? 'selected' : '' }}>
+                                                        Embed Player
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+
+                                            @error('server_type')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 @endforeach

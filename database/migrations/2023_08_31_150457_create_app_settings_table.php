@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('app_settings', function (Blueprint $table) {
             $table->id();
-            $table->json('serverDetails');
+            $table->json('appDetails');
             $table->json('sponsorGoogle');
             $table->json('sponsorText');
             $table->json('sponsorBanner');

@@ -15,7 +15,9 @@ class AutoVnMatchesController extends Controller
     public function scrapeMatches()
     {
         $url = 'https://raw.githubusercontent.com/devmm12/data/main/soccer.json';
-        $response = Http::get($url);
+        $response = Http::timeout(30)
+                         ->retry(3, 100)
+                         ->get($url);
         $htmlContent = $response->body();
         $matches = $this->decryptAES($htmlContent);
         // return $matches;
@@ -29,6 +31,7 @@ class AutoVnMatchesController extends Controller
                             'name' => "Server " . ($i + 1),
                             'url' => $finalServerUrl['link'],
                             'referer' => $finalServerUrl['referer'],
+                            'type' => 'Direct Player',
                             'new' => false,
                         ];
                         $serverList[] = $serverDetails;

@@ -26,7 +26,10 @@ Route::get('/', [HomeController::class, 'index']);
 Route::resource('/league', LeagueController::class);
 
 Route::get('/app_setting', [AppSettingController::class, 'index']);
-Route::put('/app_setting/{id}', [AppSettingController::class, 'update']);
+Route::put('/app_setting/{id}', [AppSettingController::class, 'updateAppSetting']);
+
+Route::get('/ads_setting', [AppSettingController::class, 'ads_setting']);
+Route::put('/ads_setting/{id}', [AppSettingController::class, 'update']);
 
 Route::get('/notification', [NotificationController::class, 'index']);
 Route::post('/notification', [NotificationController::class, 'sendNotification']);
@@ -43,7 +46,7 @@ Route::post('/set-timezone', [LoginController::class, 'setTimezone']);
 Route::resource('channel', ChannelController::class);
 Route::resource('slider-setting',SliderSettingController::class);
 
-Auth::routes(['register' => false]);
-
+Auth::routes();
+// ['register' => false]
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

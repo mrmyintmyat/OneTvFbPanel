@@ -79,8 +79,7 @@
                                                 id="server-{{ $index + 1 }}-tab" data-bs-toggle="tab"
                                                 data-bs-target="#server-{{ $index + 1 }}" type="button" role="tab"
                                                 aria-controls="server-{{ $index + 1 }}-tab-pane"
-                                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}" style="border-radius: 10px 0px 0px 10px;">Server
-                                                {{ $index + 1 }}</button>
+                                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}" style="border-radius: 10px 0px 0px 10px;">{{$server['name']}}</button>
                                         </li>
                                     @endforeach
                                     <button id="add-server-btn" type="button" class="px-3 btn bg-menu text-white" style="border-radius: 0px 10px 10px 0px;">
@@ -92,13 +91,27 @@
                                         <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
                                             id="server-{{ $index + 1 }}" role="tabpanel"
                                             aria-labelledby="server-{{ $index + 1 }}-tab" tabindex="0">
+                                            <div class="row ">
+                                                <div class="">
+                                                    <input id="server_name" type="text"
+                                                        class=" @error('server_name') is-invalid @enderror"
+                                                        name="server_name[]" value="{{ old('server_name.' . $index, $server['name']) }}"
+                                                        autocomplete="server_name" placeholder="name" required>
+
+                                                    @error('server_name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div>
                                                     <input id="server_url" type="url"
                                                         class="@error('server_url') is-invalid @enderror"
                                                         name="server_url[]"
                                                         value="{{ old('server_url.' . $index, $server['url']) }}"
-                                                        autocomplete="server_url" placeholder="URL">
+                                                        autocomplete="server_url" placeholder="url">
                                                     @error('server_url')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -108,17 +121,38 @@
                                             </div>
                                             <div class="row">
                                                 <div>
-                                                    <input id="server_header" type="text"
-                                                        class="@error('server_header') is-invalid @enderror"
-                                                        name="server_header[]"
-                                                        value="{{ old('server_header.' . $index, $server['headers']) }}"
-                                                        autocomplete="server_header" placeholder="REFERER">
-                                                    @error('server_header')
+                                                    <input id="server_referer" type="text"
+                                                        class="@error('server_referer') is-invalid @enderror"
+                                                        name="server_referer[]"
+                                                        value="{{ old('server_referer.' . $index, $server['referer']) }}"
+                                                        autocomplete="server_referer" placeholder="referer">
+                                                    @error('server_referer')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
+                                            </div>
+                                            <div class="">
+                                                <select id="server_type" name="server_type[]"
+                                                    class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
+                                                    autocomplete="server_type" required>
+                                                    <option value="" disabled selected>Select Type</option>
+                                                    <optgroup class="ms-3 collapse show" id="collapseExample">
+                                                        <option value="Direct Player" {{ $server['type'] == 'Direct Player' ? 'selected' : '' }}>
+                                                            Direct Player
+                                                        </option>
+                                                        <option value="Embed Player" {{ $server['type'] == 'Embed Player' ? 'selected' : '' }}>
+                                                            Embed Player
+                                                        </option>
+                                                    </optgroup>
+                                                </select>
+
+                                                @error('server_type')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     @endforeach
@@ -144,9 +178,9 @@
     <script>
         $('#channel_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
-                $('#away_team_score, #home_team_score, #server_url, #server_header').prop('required', true);
+                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', true);
             } else {
-                $('#away_team_score, #home_team_score, #server_url, #server_header').prop('required', false);
+                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', false);
             }
         });
 

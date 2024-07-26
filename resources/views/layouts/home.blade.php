@@ -92,7 +92,7 @@
                             aria-current="true">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-futbol"></i>
-                                <span class="ms-2">MATCHES</span>
+                                <span class="ms-2">Matches</span>
                             </div>
                         </a>
                         {{-- <a href="/vn_matches" id="focus_tag"
@@ -107,49 +107,67 @@
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
-                                <span class="ms-2">HIGHLIGHTS</span>
+                                <span class="ms-2">Highlights</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/channel"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-tv"></i>
-                                <span class="ms-2">CHANNELS</span>
+                                <span class="ms-2">Channels</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/league"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-globe"></i>
-                                <span class="ms-2">MANAGE LEAGUE</span>
+                                <span class="ms-2">Manage league</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/notification"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-bell"></i>
-                                <span class="ms-2">NOTIFICATION</span>
+                                <span class="ms-2">Notification</span>
                             </div>
                         </a>
-                        <a id="focus_tag" href="/app_setting"
+                        <a
+                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
+                            class="btn btn-primary" data-bs-toggle="collapse" href="#collapseSetting" role="button"
+                            aria-expanded="false" aria-controls="collapseSetting">
+                            <div class="d-flex align-items-center fw-semibold">
+                                <i class="fa-solid fa-gears"></i>
+                                <span class="ms-2">Settings</span>
+                            </div>
+                        </a>
+                        <div class="collapse ms-2" id="collapseSetting">
+                            <a id="focus_tag" href="/app_setting?setting=true"
+                                class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                                <div class="d-flex align-items-center fw-semibold">
+                                    <i class="fa-solid fa-gear"></i>
+                                    <span class="ms-2">App settings</span>
+                                </div>
+                            </a>
+                            <a id="focus_tag" href="/ads_setting?setting=true"
+                                class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                                <div class="d-flex align-items-center fw-semibold">
+                                    <i class="fa-solid fa-gear"></i>
+                                    <span class="ms-2">Ads settings</span>
+                                </div>
+                            </a>
+                            <a id="focus_tag" href="/slider-setting?setting=true"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-gear"></i>
-                                <span class="ms-2">APP SETTING</span>
-                            </div>
-                        </a>
-                        <a id="focus_tag" href="/slider-setting"
-                            class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center fw-semibold">
-                                <i class="fa-solid fa-gears"></i>
                                 <span class="ms-2">Slider Setting</span>
                             </div>
                         </a>
+                        </div>
                         <a id="focus_tag" href="/password-change"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold">
                                 <i class="fa-solid fa-lock"></i>
-                                <span class="ms-2">CHANGE PASSWORD</span>
+                                <span class="ms-2">Change password</span>
                             </div>
                         </a>
                     </div>
@@ -204,6 +222,19 @@
     <script src="/tagsinput/js/select2.min.js"></script>
     <script>
         AOS.init();
+    </script>
+    <script>
+        // Function to get query parameters
+        function getQueryParam(param) {
+            let params = new URLSearchParams(window.location.search);
+            return params.get(param);
+        }
+
+        // Check if 'setting' query parameter is set to 'true'
+        if (getQueryParam('setting') === 'true') {
+            $('#collapseSetting').addClass('show');
+            $('a[href="#collapseSetting"]').attr('aria-expanded', 'true');
+        }
     </script>
     @yield('script')
 </body>

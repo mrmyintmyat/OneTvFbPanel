@@ -15,10 +15,15 @@ class AppSettingController extends Controller
     public function index()
     {
         // AppSetting::create([
-        //     'serverDetails' => [
-        //         'url' => 'ur url',
-        //         'mainUrl' => 'url',
-        //         'privacyUrl' => 'url',
+        //     'appDetails' => [
+        //         'app_name' => 'OneTvApp',
+        //         'version' => '0.000',
+        //         'share_message' => 'https://myintmyat.dev',
+        //         'rate_url' => 'https://myintmyat.dev',
+        //         'about_url' => 'https://myintmyat.dev',
+        //         'privacy_url' => 'https://myintmyat.dev',
+        //         'contact_us_url' => 'https://myintmyat.dev',
+        //         'website_url' => 'https://myintmyat.dev',
         //     ],
         //     'sponsorGoogle' => [
         //         'status' => true,
@@ -49,8 +54,8 @@ class AppSettingController extends Controller
         // ]);
 
         // AppSetting::create([
-        //     'serverDetails' => [
-        //         'key' => 'noti app key'
+        //     'appDetails' => [
+        //         'key' => 'noti app key',
         //     ],
         //     'sponsorGoogle' => [
         //       null
@@ -66,15 +71,46 @@ class AppSettingController extends Controller
         //     ],
         // ]);
 
-        $datas = AppSetting::find(1);
+        $datas = AppSetting::first();
         $id = $datas->id;
-        $serverDetails = $datas->serverDetails;
+        $appDetails = $datas->appDetails;
+        return view('settings.app-setting', compact('id', 'appDetails'));
+    }
+
+    public function ads_setting()
+    {
+        $datas = AppSetting::first();
+        $id = $datas->id;
         $sponsorGoogle = $datas->sponsorGoogle;
         $sponsorText = $datas->sponsorText;
         $sponsorBanner = $datas->sponsorBanner;
         $sponsorInter = $datas->sponsorInter;
 
-        return view('app-setting', compact('id', 'serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter'));
+        return view('settings.ads-setting', compact('id', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter'));
+    }
+
+    public function updateAppSetting(Request $request, $id)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'appDetails' => 'required|array',
+            'appDetails.app_name' => 'required|string',
+            'appDetails.version' => 'required|string|max:10',
+            'appDetails.share_message' => 'required|string',
+            'appDetails.rate_url' => 'required|url',
+            'appDetails.about_url' => 'required|url',
+            'appDetails.privacy_url' => 'required|url',
+            'appDetails.contact_us_url' => 'required|url',
+            'appDetails.website_url' => 'required|url',
+        ]);
+
+        $appSetting = AppSetting::findOrFail($id);
+
+        $appSetting->appDetails = $validatedData['appDetails'];
+
+        $appSetting->save();
+
+        return redirect()->back()->with('success', 'App settings updated successfully.');
     }
 
     public function update(Request $request, $id)
@@ -85,14 +121,6 @@ class AppSettingController extends Controller
         $sponsorInter_status = $request->sponsorInter_status;
 
         $datas = AppSetting::find($id);
-
-        $datas->serverDetails = [
-            'url' => $request->url,
-            'mainUrl' => $request->mainUrl,
-            'privacyUrl' => $request->privacyUrl,
-            'password' => $request->password,
-            'password_image' => $request->password_image,
-        ];
 
         $datas->sponsorGoogle = [
             'status' => $this->status_check($sponsorGoogle_status),
@@ -106,7 +134,7 @@ class AppSettingController extends Controller
 
         $datas->sponsorText = [
             'status' => $this->status_check($sponsorText_status),
-            'text' => $request -> text,
+            'text' => $request->text,
         ];
 
         $datas->sponsorBanner = [
@@ -128,10 +156,11 @@ class AppSettingController extends Controller
         return redirect()->back()->with('success', 'Update Success');
     }
 
-    private function status_check($data){
+    private function status_check($data)
+    {
         if ($data === 'on') {
             return true;
-        } else{
+        } else {
             return false;
         }
     }

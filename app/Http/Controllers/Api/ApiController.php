@@ -62,6 +62,7 @@ class ApiController extends Controller
                     'name' => $server['name'],
                     'url' => $server['url'],
                     'referer' => $server['referer'],
+                    'type' => $server['type'],
                 ];
             }
 
@@ -208,6 +209,7 @@ class ApiController extends Controller
                     'name' => $server['name'],
                     'url' => $server['url'],
                     'referer' => $server['referer'],
+                    'type' => $server['type'],
                 ];
             }
 

@@ -14,62 +14,62 @@ class AppSettingController extends Controller
 
     public function index()
     {
-        // AppSetting::create([
-        //     'appDetails' => [
-        //         'app_name' => 'OneTvApp',
-        //         'version' => '0.000',
-        //         'share_message' => 'https://myintmyat.dev',
-        //         'rate_url' => 'https://myintmyat.dev',
-        //         'about_url' => 'https://myintmyat.dev',
-        //         'privacy_url' => 'https://myintmyat.dev',
-        //         'contact_us_url' => 'https://myintmyat.dev',
-        //         'website_url' => 'https://myintmyat.dev',
-        //     ],
-        //     'sponsorGoogle' => [
-        //         'status' => true,
-        //         'android_banner' => 'barnyar',
-        //         'android_inter' => 'barnyar',
-        //         'android_appopen' => 'barnyar',
-        //         'ios_banner' => 'barnyar',
-        //         'ios_inter' => 'barnyar',
-        //         'ios_appopen' => 'barnyar',
-        //     ],
-        //     'sponsorText' => [
-        //         'status' => true,
-        //         'text' => 'barnyar',
-        //     ],
-        //     'sponsorBanner' => [
-        //         'status' => true,
-        //         "smallAd" => "barnyar",
-        //         "smallAdUrl" => "barnyarF",
-        //         "mediumAd" => "FbarnyarF",
-        //         "mediumAdUrl" => "barnyar"
-        //     ],
+        AppSetting::create([
+            'appDetails' => [
+                'app_name' => 'OneTvApp',
+                'version' => '0.000',
+                'share_message' => 'https://myintmyat.dev',
+                'rate_url' => 'https://myintmyat.dev',
+                'about_url' => 'https://myintmyat.dev',
+                'privacy_url' => 'https://myintmyat.dev',
+                'contact_us_url' => 'https://myintmyat.dev',
+                'website_url' => 'https://myintmyat.dev',
+            ],
+            'sponsorGoogle' => [
+                'status' => true,
+                'android_banner' => 'barnyar',
+                'android_inter' => 'barnyar',
+                'android_appopen' => 'barnyar',
+                'ios_banner' => 'barnyar',
+                'ios_inter' => 'barnyar',
+                'ios_appopen' => 'barnyar',
+            ],
+            'sponsorText' => [
+                'status' => true,
+                'text' => 'barnyar',
+            ],
+            'sponsorBanner' => [
+                'status' => true,
+                "smallAd" => "barnyar",
+                "smallAdUrl" => "barnyarF",
+                "mediumAd" => "FbarnyarF",
+                "mediumAdUrl" => "barnyar"
+            ],
 
-        //     'sponsorInter' => [
-        //         'status' => True,
-        //         'adImage' => 'barnyar',
-        //         'adUrl' => 'barnyar'
-        //     ],
-        // ]);
+            'sponsorInter' => [
+                'status' => True,
+                'adImage' => 'barnyar',
+                'adUrl' => 'barnyar'
+            ],
+        ]);
 
-        // AppSetting::create([
-        //     'appDetails' => [
-        //         'key' => 'noti app key',
-        //     ],
-        //     'sponsorGoogle' => [
-        //       null
-        //     ],
-        //     'sponsorText' => [
-        //        null
-        //     ],
-        //     'sponsorBanner' => [
-        //       null
-        //     ],
-        //     'sponsorInter' => [
-        //        null
-        //     ],
-        // ]);
+        AppSetting::create([
+            'appDetails' => [
+                'key' => 'noti app key',
+            ],
+            'sponsorGoogle' => [
+              null
+            ],
+            'sponsorText' => [
+               null
+            ],
+            'sponsorBanner' => [
+              null
+            ],
+            'sponsorInter' => [
+               null
+            ],
+        ]);
 
         $datas = AppSetting::first();
         $id = $datas->id;

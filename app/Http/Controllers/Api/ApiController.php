@@ -45,9 +45,9 @@ class ApiController extends Controller
     {
         // $count = $request->input('count', 10);
         if ($request->input('all') == true) {
-            $matches = VnMatch::orderBy('match_time')->get();
+            $matches = VnMatch::orderBy('match_time')->get()->makeHidden(['created_at', 'updated_at']);
         } else{
-            $matches = VnMatch::orderBy('match_time')->paginate(10);
+            $matches = VnMatch::orderBy('match_time')->paginate(10)->makeHidden(['created_at', 'updated_at']);
         }
         // return $matches;
         // Iterate through matches and build a custom response
@@ -146,6 +146,7 @@ class ApiController extends Controller
             $settingsArray = $settings->toArray();
 
             // Remove sensitive fields
+            $settingsArray = $settings->makeHidden(['created_at', 'updated_at'])->toArray();
             unset($settingsArray['serverDetails']['password']);
             unset($settingsArray['serverDetails']['password_image']);
 
@@ -163,7 +164,14 @@ class ApiController extends Controller
     {
         // Fetch the first slider setting with related image URLs
         $settings = SliderSetting::with('imageUrls')->first();
+        if ($settings) {
+            $settings->makeHidden(['created_at', 'updated_at']);
 
+            // Hide the attributes for the related models if necessary
+            if ($settings->relationLoaded('imageUrls')) {
+                $settings->imageUrls->each->makeHidden(['created_at', 'updated_at']);
+            }
+        }
         // Transform the data into the desired format
         $transformedData = [
             'status' => (bool) $settings->status,
@@ -195,8 +203,11 @@ class ApiController extends Controller
 
     public function highlights(Request $request)
     {
-        $count = $request->input('count', 10);
-        $matches = HighLight::take($count)->get();
+        if ($request->input('all') == true) {
+            $matches = HighLight::orderBy('match_time')->get()->makeHidden(['created_at', 'updated_at']);
+        } else{
+            $matches = HighLight::orderBy('match_time')->paginate(10)->makeHidden(['created_at', 'updated_at']);
+        }
         // Iterate through matches and build a custom response
         $customResponse = [];
         foreach ($matches as $match) {

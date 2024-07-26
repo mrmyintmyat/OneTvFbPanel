@@ -46,7 +46,7 @@ Route::post('/set-timezone', [LoginController::class, 'setTimezone']);
 Route::resource('channel', ChannelController::class);
 Route::resource('slider-setting',SliderSettingController::class);
 
-Auth::routes();
-// ['register' => false]
+Auth::routes(['register' => false]);
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

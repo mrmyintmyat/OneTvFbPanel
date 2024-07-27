@@ -54,7 +54,6 @@ class SliderSettingController extends Controller
             if (filter_var($url, FILTER_VALIDATE_URL)) {
                 $imageDataArray[] = [
                     'img_url' => $url,
-                    'file_path' => null,
                 ];
             }
         }
@@ -65,7 +64,6 @@ class SliderSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
-                    'file_path' => null,
                 ];
             }
         }

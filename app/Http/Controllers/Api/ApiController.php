@@ -61,7 +61,7 @@ class ApiController extends Controller
                 $serverDetails[] = [
                     'name' => $server['name'],
                     'url' => $server['url'],
-                    'referer' => $server['referer'],
+                    'referer' => $server['referer'] ?? '',
                     'type' => $server['type'],
                 ];
             }
@@ -195,7 +195,11 @@ class ApiController extends Controller
     public function channels(Request $request)
     {
         $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
-
+        $channels = $channels->map(function ($channel) {
+            return $channel->map(function ($value) {
+                return $value === null ? '' : $value;
+            });
+        });
         $encryptedData = $this->encryptAES($channels, 'woww');
 
         return $encryptedData;
@@ -219,7 +223,7 @@ class ApiController extends Controller
                 $serverDetails[] = [
                     'name' => $server['name'],
                     'url' => $server['url'],
-                    'referer' => $server['referer'],
+                    'referer' => $server['referer'] ?? '',
                     'type' => $server['type'],
                 ];
             }

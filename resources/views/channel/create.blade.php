@@ -120,7 +120,7 @@
                                                 <input id="server_referer" type="text"
                                                     class=" @error('server_referer') is-invalid @enderror"
                                                     name="server_referer[]" value="{{ old('server_referer.0') }}"
-                                                    autocomplete="server_referer" placeholder="referer" required>
+                                                    autocomplete="server_referer" placeholder="referer">
 
                                                 @error('server_referer')
                                                     <span class="invalid-feedback" role="alert">

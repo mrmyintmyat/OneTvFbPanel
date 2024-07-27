@@ -352,9 +352,9 @@
     <script>
         $('#match_status').on('change', function() {
             if ($(this).val() === 'Live') {
-                $('#server_url, #server_referer').prop('required', true);
+                $('#server_url').prop('required', true);
             } else {
-                $('#server_url, #server_referer').prop('required', false);
+                $('#server_url').prop('required', false);
             }
         });
 

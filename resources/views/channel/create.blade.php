@@ -175,9 +175,9 @@
     <script>
        $('#match_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
-                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', true);
+                $('#away_team_score, #home_team_score, #server_url').prop('required', true);
             } else {
-                $('#away_team_score, #home_team_score, #server_url, #server_referer').prop('required', false);
+                $('#away_team_score, #home_team_score, #server_url').prop('required', false);
             }
         });
         function Change_input(id, type) {

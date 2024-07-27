@@ -14,6 +14,6 @@ class SliderSetting extends Model
 
     public function imageUrls()
     {
-        return $this->hasMany(ImageUrl::class);
+        return $this->hasMany(ImageUrl::class, 'slider_setting_id');
     }
 }

@@ -84,7 +84,7 @@
                             @enderror
                         </div>
                         <div class="col-12">
-                            <div class="bg-white shadow rounded-3 pt-3 px-0">
+                            <div class="bg-white rounded-3 pt-3 px-0">
                                 <div id="img-url-container" class="col-lg-12 px-3">
                                     <div class="img-url-group row">
                                         <div class="d-flex mb-2 team_logo_container">

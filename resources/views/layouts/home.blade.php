@@ -94,7 +94,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-futbol"></i>
                                 </div>
-                                <span class="col-10">Matches</span>
+                                <span class="col-10 text-start">Matches</span>
                             </div>
                         </a>
                         {{-- <a href="/vn_matches" id="focus_tag"
@@ -104,7 +104,7 @@
                                 <div class="col-2">
                                 <i class="fa-solid fa-baseball"></i>
                                                                 </div>
-                                <span class="col-10">VN MATCHES</span>
+                                <span class="col-10 text-start">VN MATCHES</span>
                             </div>
                         </a> --}}
                         <a id="focus_tag" href="/highlights"
@@ -113,7 +113,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-clock-rotate-left"></i>
                                 </div>
-                                <span class="col-10">Highlights</span>
+                                <span class="col-10 text-start">Highlights</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/channel"
@@ -122,7 +122,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-tv"></i>
                                 </div>
-                                <span class="col-10">Channels</span>
+                                <span class="col-10 text-start">Channels</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/league"
@@ -131,7 +131,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
-                                <span class="col-10">Manage league</span>
+                                <span class="col-10 text-start">Manage league</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/notification"
@@ -140,7 +140,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-bell"></i>
                                 </div>
-                                <span class="col-10">Notification</span>
+                                <span class="col-10 text-start">Notification</span>
                             </div>
                         </a>
                         <a class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
@@ -150,7 +150,7 @@
                                 <div class="col-2">
                                     <i class="fa-solid fa-gears"></i>
                                 </div>
-                                <span class="col-10">Settings</span>
+                                <span class="col-10 text-start">Settings</span>
                             </div>
                         </a>
                         <div class="collapse ms-2" id="collapseSetting">
@@ -160,7 +160,7 @@
                                     <div class="col-2">
                                         <i class="fa-solid fa-gear"></i>
                                     </div>
-                                    <span class="col-10">App settings</span>
+                                    <span class="col-10 text-start">App settings</span>
                                 </div>
                             </a>
                             <a id="focus_tag" href="/ads_setting?setting=true"
@@ -169,7 +169,7 @@
                                     <div class="col-2">
                                         <i class="fa-solid fa-gear"></i>
                                     </div>
-                                    <span class="col-10">Ads settings</span>
+                                    <span class="col-10 text-start">Ads settings</span>
                                 </div>
                             </a>
                             <a id="focus_tag" href="/slider-setting?setting=true"
@@ -178,7 +178,7 @@
                                     <div class="col-2">
                                         <i class="fa-solid fa-gear"></i>
                                     </div>
-                                    <span class="col-10">Slider Setting</span>
+                                    <span class="col-10 text-start">Slider Setting</span>
                                 </div>
                             </a>
                         </div>

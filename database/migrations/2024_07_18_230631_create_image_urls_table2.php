@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('image_urls', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('slider_setting_id')->constrained()->onDelete('cascade');
+            $table->foreignId('slider_setting_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('app_setting_id')->nullable()->constrained()->onDelete('cascade');
             $table->longText('img_url')->nullable();
             $table->timestamps();
         });

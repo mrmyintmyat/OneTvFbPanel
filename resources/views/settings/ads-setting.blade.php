@@ -21,10 +21,10 @@
             <div class="card-body pe-0">
                 <div class="d-flex mt-3 w-100">
                     <form action="/ads_setting/{{ $id }}" class="w-100 row d-flex justify-content-around px-2 g-3"
-                        method="post">
+                        method="post" enctype="multipart/form-data">
                         @csrf @method('PUT')
 
-                        <div class="col-lg-6 p-3">
+                        <div class="col-lg-6 p-lg-3">
                             <div>
                                 <h4 class="d-flex">sponsorGoogle
                                     <div class="form-check form-switch ms-3">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 p-3">
+                        <div class="col-lg-6 p-lg-3">
                             <div>
                                 <h4 class="d-flex">sponsorText
                                     <div class="form-check form-switch ms-3">
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12 p-3 m-0">
+                        <div class="p-lg-3 m-0">
                             <div>
                                 <h4 class="d-flex">sponsorBanner
                                     <div class="form-check form-switch ms-3">
@@ -191,64 +191,111 @@
                                     </div>
                                 </h4>
                             </div>
-                            <div class="row mb-3">
-                                <label for="banner_smallAd" class="form-label ">
-                                    smallAd
-                                </label>
+                            <div class="row">
+                                <div class="col-lg-6 mb-3">
+                                    <label for="banner_smallAd" class="form-label ">
+                                        smallAd
+                                    </label>
 
-                                <div class="">
-                                    <input id="banner_smallAd" type="text" class="form-control "
-                                        name="banner_smallAd" value="{{ $sponsorBanner['smallAd'] }}" required=""
-                                        autocomplete="banner_smallAd" autofocus="">
+                                    <div class="">
+                                        <input id="banner_smallAd" type="text" class="form-control "
+                                            name="banner_smallAd" value="{{ $sponsorBanner['smallAd'] }}" required=""
+                                            autocomplete="banner_smallAd" autofocus="">
 
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 mb-3">
+                                    <label for="banner_smallAdUrl" class="form-label  d-flex align-items-center">
+                                        smallAdUrl
+                                    </label>
+                                    <div>
+                                        <input id="banner_smallAdUrl" type="text" class="form-control "
+                                            name="banner_smallAdUrl" value="{{ $sponsorBanner['smallAdUrl'] }}"
+                                            autocomplete="banner_smallAdUrl">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 mb-3">
+                                    <label for="banner_mediumAd" class="form-label ">
+                                        mediumAd
+                                    </label>
+
+                                    <div class="">
+                                        <input id="banner_mediumAd" type="text" class="form-control "
+                                            name="banner_mediumAd" value="{{ $sponsorBanner['mediumAd'] }}"
+                                            required="" autocomplete="banner_mediumAd" autofocus="">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 mb-3">
+                                    <label for="banner_mediumAdUrl" class="form-label ">
+                                        mediumAdUrl
+                                    </label>
+
+                                    <div class="">
+                                        <input id="banner_mediumAdUrl" type="text" class="form-control "
+                                            name="banner_mediumAdUrl" value="{{ $sponsorBanner['mediumAdUrl'] }}"
+                                            required="" autocomplete="banner_mediumAdUrl" autofocus="">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="bg-white rounded-3 pt-3 px-0">
+                                        <div id="img-url-container" class="col-lg-12 px-3">
+                                            @foreach ($settings->imageUrls as $index => $imageUrl)
+                                                <div class="img-url-group row">
+                                                    <div class="d-flex mb-2 team_logo_container">
+                                                        <div class="custom-file">
+                                                            <input id="img_url_{{ $index + 1 }}" type="url"
+                                                                class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
+                                                                name="img_url[]"
+                                                                value="{{ old('img_url.' . $index, $imageUrl->img_url) }}"
+                                                                autocomplete="img_url_1" accept="image/*"
+                                                                placeholder="LOGO URL" required>
+                                                        </div>
+
+                                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                            <li class="nav-item d-flex" role="presentation">
+                                                                <button
+                                                                    onclick="Change_input('img_url_{{ $index + 1 }}', 'file')"
+                                                                    class="nav-link fw-normal" id="upload-tab"
+                                                                    data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                                    type="button" role="tab"
+                                                                    aria-controls="upload-tab-pane"
+                                                                    aria-selected="{{ !filter_var($imageUrl->img_url, FILTER_VALIDATE_URL) ? 'true' : 'false' }}">Upload</button>
+                                                                <button
+                                                                    onclick="Change_input('img_url_{{ $index + 1 }}', 'url')"
+                                                                    class="nav-link fw-normal active" id="url-tab"
+                                                                    data-bs-toggle="tab" data-bs-target="#url-tab-pane"
+                                                                    type="button" role="tab"
+                                                                    aria-controls="url-tab-pane"
+                                                                    aria-selected="{{ !filter_var($imageUrl->img_url, FILTER_VALIDATE_URL) ? 'true' : 'false' }}">URL</button>
+                                                                <span class="remove-button d-flex align-items-center px-3"
+                                                                    onclick="removeImageUrlField(this)"><i
+                                                                        class="fa-solid fa-trash text-danger"></i></span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-start m-0">
+                                            <button type="button"
+                                                class="btn btn-white text-black fw-semibold w-100 mb-2 border-top"
+                                                onclick="addImageUrlField()">Add Another
+                                                Image URL</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="row mb-3">
-                                <label for="banner_smallAdUrl" class="form-label  d-flex align-items-center">
-                                    smallAdUrl
-                                </label>
-                                <div>
-                                    <input id="banner_smallAdUrl" type="text" class="form-control "
-                                        name="banner_smallAdUrl" value="{{ $sponsorBanner['smallAdUrl'] }}"
-                                        autocomplete="banner_smallAdUrl">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="banner_mediumAd" class="form-label ">
-                                    mediumAd
-                                </label>
-
-                                <div class="">
-                                    <input id="banner_mediumAd" type="text" class="form-control "
-                                        name="banner_mediumAd" value="{{ $sponsorBanner['mediumAd'] }}" required=""
-                                        autocomplete="banner_mediumAd" autofocus="">
-
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="banner_mediumAdUrl" class="form-label ">
-                                    mediumAdUrl
-                                </label>
-
-                                <div class="">
-                                    <input id="banner_mediumAdUrl" type="text" class="form-control "
-                                        name="banner_mediumAdUrl" value="{{ $sponsorBanner['mediumAdUrl'] }}"
-                                        required="" autocomplete="banner_mediumAdUrl" autofocus="">
+                            <div class="col-12 mt-3">
+                                <div class="w-100 p-0">
+                                    <button type="submit"
+                                        class="btn py-2 bg-menu w-100 text-white fw-semibold">UPDATE</button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mb-0 col-12 mt-3 p-0">
-                            <div class="w-100 p-0">
-                                <button type="submit" class="btn py-2 bg-menu w-100 text-white">
-                                    UPDATE
-                                </button>
-                            </div>
-                        </div>
-
                 </div>
                 </form>
 
@@ -258,4 +305,87 @@
     @else
         <h3 class="mt-3">Match Not found</h3>
     @endif
+@endsection
+@section('script')
+    <script>
+        let imgUrlCount = 2;
+
+        function addImageUrlField() {
+            const container = document.getElementById('img-url-container');
+            const div = document.createElement('div');
+            div.classList.add('img-url-group', 'row');
+            const id = 'img_url_' + imgUrlCount;
+            div.innerHTML = `
+        <div class="d-flex mb-2 team_logo_container">
+                                <div class="custom-file">
+                                    <input id="${id}" type="file"
+                                        class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
+                                        name="img_url[]" value="{{ old('${id}') }}"
+                                        autocomplete="${id}" accept="image/*" placeholder="LOGO URL"
+                                        required>
+                                    <label class="custom-file-label" for="${id}">Choose file</label>
+                                </div>
+
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item d-flex" role="presentation">
+                                        <button onclick="Change_input('${id}', 'file')"
+                                            class="nav-link fw-normal active" id="upload-tab"
+                                            data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                            type="button" role="tab" aria-controls="upload-tab-pane"
+                                            aria-selected="true">Upload</button>
+                                        <button onclick="Change_input('${id}', 'url')"
+                                            class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                            data-bs-target="#url-tab-pane" type="button" role="tab"
+                                            aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                            <span class="remove-button d-flex align-items-center px-3"
+                                            onclick="removeImageUrlField(this)"><i class="fa-solid fa-trash text-danger"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+    `;
+            container.appendChild(div);
+            document.getElementById(id).addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : 'Choose file';
+                const nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
+            });
+            imgUrlCount++;
+        }
+
+        function removeImageUrlField(button) {
+            const container = document.getElementById('img-url-container');
+            if (container.children.length > 1) {
+                button.parentElement.parentElement.parentElement.parentElement.remove();
+            } else {
+                alert("You must have at least one Image URL/File field.");
+            }
+        }
+
+        function Change_input(id, type) {
+            const inputElement = document.getElementById(id);
+            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
+
+            if (type === 'file') {
+                inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', id);
+                    newLabel.textContent = 'Choose file';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
+            } else if (type === 'url') {
+                inputElement.type = 'url';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
+            }
+        }
+
+        document.querySelector('#img_url_1').addEventListener('change', function(e) {
+            var fileName = document.getElementById("img_url_1").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 @endsection

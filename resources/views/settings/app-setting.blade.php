@@ -17,14 +17,14 @@
 @endsection
 @section('page')
     @if (!session('error'))
-        <div class="card text-start mt-lg-2 rounded-0 px-lg-0 px-2 mb-3" style="background: #ffffff00;">
+        <div class="card text-start mt-lg-2 rounded-0 px-lg-0 px-lg-2 mb-3" style="background: #ffffff00;">
             <div class="card-body pe-0">
                 <div class="d-flex mt-3 w-100">
-                    <form action="/app_setting/{{ $id }}" class="w-100 row d-flex justify-content-around px-2 g-3"
+                    <form action="/app_setting/{{ $id }}" class="w-100 row d-flex justify-content-around px-lg-2 g-3"
                         method="post">
                         @csrf @method('PUT')
 
-                        <div class="row p-3">
+                        <div class="row p-lg-3">
                             <div>
                                 <h4>App Details</h4>
                             </div>

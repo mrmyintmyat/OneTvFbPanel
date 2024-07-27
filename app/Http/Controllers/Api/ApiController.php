@@ -139,9 +139,9 @@ class ApiController extends Controller
     {
         // Check if the query parameter 'v' is set to 2
         if ($request->query('v') === '2') {
-            $settings = AppSetting::select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
+            $settings = AppSetting::with('imageUrls')->select('serverDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter')->first();
         } else {
-            $settings = AppSetting::first();
+            $settings = AppSetting::with('imageUrls')->first();
 
             $settingsArray = $settings->toArray();
 
@@ -149,13 +149,29 @@ class ApiController extends Controller
             $settingsArray = $settings->makeHidden(['created_at', 'updated_at'])->toArray();
             unset($settingsArray['serverDetails']['password']);
             unset($settingsArray['serverDetails']['password_image']);
-
-            // Convert array back to object
-            $settings = (object) $settingsArray;
         }
 
         // Encrypt the data
-        $encryptedData = $this->encryptAES($settings, 'woww');
+        $response = [
+            'appDetails' => $settings->appDetails,
+            'sponsorGoogle' => $settings->sponsorGoogle,
+            'sponsorText' => $settings->sponsorText,
+            'sponsorBanner' => [
+                'status' => $settings->sponsorBanner['status'],
+                'smallAd' => $settings->sponsorBanner['smallAd'],
+                'smallAdUrl' => $settings->sponsorBanner['smallAdUrl'],
+                'mediumAd' => $settings->sponsorBanner['mediumAd'],
+                'mediumAdUrl' => $settings->sponsorBanner['mediumAdUrl'],
+                'data' => [
+                    [
+                        'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
+                    ],
+                ],
+            ],
+            'sponsorInter' => $settings->sponsorInter,
+        ];
+
+        $encryptedData = $this->encryptAES($response, 'woww');
 
         return $encryptedData;
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AppSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AppSettingController extends Controller
 {
@@ -79,14 +81,14 @@ class AppSettingController extends Controller
 
     public function ads_setting()
     {
-        $datas = AppSetting::first();
-        $id = $datas->id;
-        $sponsorGoogle = $datas->sponsorGoogle;
-        $sponsorText = $datas->sponsorText;
-        $sponsorBanner = $datas->sponsorBanner;
-        $sponsorInter = $datas->sponsorInter;
+        $settings = AppSetting::with('imageUrls')->first();
+        $id = $settings->id;
+        $sponsorGoogle = $settings->sponsorGoogle;
+        $sponsorText = $settings->sponsorText;
+        $sponsorBanner = $settings->sponsorBanner;
+        $sponsorInter = $settings->sponsorInter;
 
-        return view('settings.ads-setting', compact('id', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter'));
+        return view('settings.ads-setting', compact('id', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter', 'settings'));
     }
 
     public function updateAppSetting(Request $request, $id)
@@ -152,6 +154,37 @@ class AppSettingController extends Controller
         ];
 
         $datas->save();
+
+        $imageDataArray = [];
+
+        // Get all inputs including files
+        $imgUrls = $request->input('img_url', []);
+        $files = $request->file('img_url', []);
+
+        // Process image URLs
+        foreach ($imgUrls as $index => $url) {
+            $imageDataArray[] = [
+                'img_url' => $url,
+            ];
+        }
+
+        // Process file uploads
+        foreach ($files as $index => $file) {
+            if ($file && $file->isValid()) {
+                $path = $file->store('images', 'public');
+                $imageDataArray[] = [
+                    'img_url' => url(Storage::url($path)),
+                ];
+            }
+        }
+
+        // Remove old image URLs
+        $datas->imageUrls()->delete();
+
+        // Store the new image data in the database
+        foreach ($imageDataArray as $imageData) {
+            $datas->imageUrls()->create($imageData);
+        }
 
         return redirect()->back()->with('success', 'Update Success');
     }

@@ -30,7 +30,7 @@ class ChannelController extends Controller
             'channel_logo' => 'required',
             'server_name.*' => 'required',
             'server_url.*' => 'required|url',
-            'server_referer.*' => 'required',
+            'server_referer.*' => 'nullable',
             'server_type.*' => 'required',
         ]);
 

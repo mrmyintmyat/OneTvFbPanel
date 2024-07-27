@@ -107,7 +107,6 @@ class SliderSettingController extends Controller
         foreach ($imgUrls as $index => $url) {
             $imageDataArray[] = [
                 'img_url' => $url,
-                'file_path' => null,
             ];
         }
 
@@ -117,7 +116,6 @@ class SliderSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
-                    'file_path' => null,
                 ];
             }
         }

@@ -74,26 +74,16 @@
                             @enderror
                         </div>
                         <div class="col-12">
-                            <label for="click_url" class="form-label">Click URL:</label>
-                            <input type="url" name="click_url" id="click_url" class="form-control"
-                                value="{{ old('click_url') }}" required>
-                            @error('click_url')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="col-12">
                             <div class="bg-white rounded-3 pt-3 px-0">
                                 <div id="img-url-container" class="col-lg-12 px-3">
-                                    <div class="img-url-group row">
-                                        <div class="d-flex mb-2 team_logo_container">
+                                    <div class="img-url-group mb-0 row">
+                                        <div class="d-flex team_logo_container">
                                             <div class="custom-file">
                                                 <input id="img_url_1" type="file"
                                                     class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
                                                     name="img_url[]" value="{{ old('img_url_1') }}" autocomplete="img_url_1"
-                                                    accept="image/*" placeholder="LOGO URL" required>
-                                                <label class="custom-file-label" for="img_url_1">Choose file</label>
+                                                    accept="image/*" placeholder="logo url" required>
+                                                <label class="custom-file-label" for="img_url_1">choose file</label>
                                             </div>
 
                                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -109,6 +99,15 @@
                                                         aria-controls="url-tab-pane" aria-selected="true">URL</button>
                                                 </li>
                                             </ul>
+                                        </div>
+                                        <div class="col-12 team_logo_container">
+                                            <input type="url" name="click_url[]" id="click_url_1" class="form-control"
+                                                value="{{ old('click_url_1') }}" placeholder="click url" required>
+                                            @error('click_url_1')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -144,17 +143,17 @@
         function addImageUrlField() {
             const container = document.getElementById('img-url-container');
             const div = document.createElement('div');
-            div.classList.add('img-url-group', 'row');
+            div.classList.add('img-url-group', 'row', 'mb-0');
             const id = 'img_url_' + imgUrlCount;
             div.innerHTML = `
-                <div class="d-flex mb-2 team_logo_container">
+                <div class="d-flex team_logo_container">
                                         <div class="custom-file">
                                             <input id="${id}" type="file"
                                                 class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
                                                 name="img_url[]" value="{{ old('${id}') }}"
-                                                autocomplete="${id}" accept="image/*" placeholder="LOGO URL"
+                                                autocomplete="${id}" accept="image/*" placeholder="logo url"
                                                 required>
-                                            <label class="custom-file-label" for="${id}">Choose file</label>
+                                            <label class="custom-file-label" for="${id}">choose file</label>
                                         </div>
 
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -173,6 +172,15 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="col-12 team_logo_container">
+                                            <input type="url" name="click_url[]" id="click_url_${imgUrlCount}" class="form-control"
+                                                value="{{ old('click_url_${imgUrlCount}') }}" placeholder="click url" required>
+                                            @error('click_url_${imgUrlCount}')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
             `;
             container.appendChild(div);
             document.getElementById(id).addEventListener('change', function(e) {

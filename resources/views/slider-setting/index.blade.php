@@ -67,16 +67,6 @@
                             @enderror
                         </div>
                         <div class="col-12">
-                            <label for="click_url" class="form-label">Click URL:</label>
-                            <input type="url" name="click_url" id="click_url" class="form-control"
-                                value="{{ old('click_url', $sliderSetting->click_url) }}" required>
-                            @error('click_url')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="col-12">
                             <div class="bg-white rounded-3 pt-3 px-0 ">
                                 <div id="img-url-container" class="col-lg-12 px-3">
                                     @foreach ($sliderSetting->imageUrls as $index => $imageUrl)
@@ -110,6 +100,15 @@
                                                                 class="fa-solid fa-trash"></i></span>
                                                     </li>
                                                 </ul>
+                                            </div>
+                                            <div class="col-12 team_logo_container">
+                                                <input type="url" name="click_url[]" id="click_url_{{$index + 1}}" class="form-control"
+                                                    value="{{ $imageUrl->click_url }}" placeholder="click url" required>
+                                                @error('click_url_{{$index + 1}}')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     @endforeach
@@ -175,6 +174,15 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="col-12 team_logo_container">
+                                            <input type="url" name="click_url[]" id="click_url_${imgUrlCount}" class="form-control"
+                                                value="{{ old('click_url_${imgUrlCount}') }}" placeholder="click url" required>
+                                            @error('click_url_${imgUrlCount}')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
             `;
             container.appendChild(div);
             document.getElementById(id).addEventListener('change', function(e) {

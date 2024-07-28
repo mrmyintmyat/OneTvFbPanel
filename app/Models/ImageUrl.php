@@ -11,7 +11,7 @@ class ImageUrl extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slider_setting_id', 'app_setting_id', 'img_url', 'file_path'];
+    protected $fillable = ['slider_setting_id', 'app_setting_id', 'img_url', 'click_url'];
 
     public function SliderSetting()
     {

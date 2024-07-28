@@ -155,6 +155,12 @@ class ApiController extends Controller
             unset($settingsArray['serverDetails']['password_image']);
         }
 
+        $imageUrlsData = $settings->imageUrls->map(function ($imageUrl) {
+            return [
+                'img_url' => $imageUrl->img_url ?? '',
+                'click_url' => $imageUrl->click_url ?? '',
+            ];
+        });
         // Encrypt the data
         $response = [
             'appDetails' => $settings->appDetails,
@@ -162,12 +168,7 @@ class ApiController extends Controller
             'sponsorText' => $settings->sponsorText,
             'sponsorBanner' => [
                 'status' => $settings->sponsorBanner['status'],
-                'data' => [
-                    [
-                        'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
-                        'click_url' => $settings->sponsorBanner['click_url'],
-                    ],
-                ],
+                'data' => $imageUrlsData,
             ],
             'sponsorInter' => $settings->sponsorInter,
         ];
@@ -190,16 +191,17 @@ class ApiController extends Controller
             }
         }
         // Transform the data into the desired format
+        $imageUrlsData = $settings->imageUrls->map(function ($imageUrl) {
+            return [
+                'img_url' => $imageUrl->img_url ?? '',
+                'click_url' => $imageUrl->click_url ?? '',
+            ];
+        });
         $transformedData = [
             'status' => (bool) $settings->status,
             'autoplay' => (bool) $settings->autoplay,
             'duration' => (string) $settings->duration,
-            'data' => [
-                [
-                    'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
-                    'click_url' => $settings->click_url,
-                ],
-            ],
+            'data' => $imageUrlsData,
         ];
 
         // Encrypt the data if necessary

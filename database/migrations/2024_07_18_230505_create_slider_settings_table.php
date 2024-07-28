@@ -16,7 +16,6 @@ return new class extends Migration
             $table->boolean('status');
             $table->boolean('autoplay');
             $table->integer('duration');
-            $table->longText('click_url');
             $table->timestamps();
         });
     }

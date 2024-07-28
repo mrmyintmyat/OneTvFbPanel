@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('slider_setting_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('app_setting_id')->nullable()->constrained()->onDelete('cascade');
             $table->longText('img_url')->nullable();
+            $table->longText('click_url')->nullable();
             $table->timestamps();
         });
     }

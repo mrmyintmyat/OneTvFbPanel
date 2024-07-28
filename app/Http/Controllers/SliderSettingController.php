@@ -40,7 +40,6 @@ class SliderSettingController extends Controller
             'status' => filter_var($request->input('status'), FILTER_VALIDATE_BOOLEAN),
             'autoplay' => filter_var($request->input('autoplay'), FILTER_VALIDATE_BOOLEAN),
             'duration' => $request->input('duration'),
-            'click_url' => $request->click_url,
         ]);
         // Prepare an array to store image data
         $imageDataArray = [];
@@ -48,12 +47,14 @@ class SliderSettingController extends Controller
         // Get all inputs including files
         $imgUrls = $request->input('img_url', []);
         $files = $request->file('img_url', []);
+        $click_urls = $request->input('click_url', []);
 
         // Process image URLs
         foreach ($imgUrls as $index => $url) {
             if (filter_var($url, FILTER_VALIDATE_URL)) {
                 $imageDataArray[] = [
                     'img_url' => $url,
+                    'click_url' => $click_urls[$index],
                 ];
             }
         }
@@ -64,6 +65,7 @@ class SliderSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
+                    'click_url' => $click_urls[$index],
                 ];
             }
         }
@@ -84,14 +86,12 @@ class SliderSettingController extends Controller
     {
         $request->validate([
             'duration' => 'required|integer|min:1',
-            'click_url' => 'required|url',
         ]);
 
         $sliderSetting->update([
             'status' => filter_var($request->input('status'), FILTER_VALIDATE_BOOLEAN),
             'autoplay' => filter_var($request->input('autoplay'), FILTER_VALIDATE_BOOLEAN),
             'duration' => $request->input('duration'),
-            'click_url' => $request->click_url,
         ]);
 
         // Prepare an array to store image data
@@ -100,11 +100,13 @@ class SliderSettingController extends Controller
         // Get all inputs including files
         $imgUrls = $request->input('img_url', []);
         $files = $request->file('img_url', []);
+        $click_urls = $request->input('click_url', []);
 
         // Process image URLs
         foreach ($imgUrls as $index => $url) {
             $imageDataArray[] = [
                 'img_url' => $url,
+                'click_url' => $click_urls[$index],
             ];
         }
 
@@ -114,6 +116,7 @@ class SliderSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
+                    'click_url' => $click_urls[$index],
                 ];
             }
         }

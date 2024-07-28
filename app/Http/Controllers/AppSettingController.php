@@ -154,11 +154,13 @@ class AppSettingController extends Controller
         // Get all inputs including files
         $imgUrls = $request->input('img_url', []);
         $files = $request->file('img_url', []);
+        $click_urls = $request->input('click_url', []);
 
         // Process image URLs
         foreach ($imgUrls as $index => $url) {
             $imageDataArray[] = [
                 'img_url' => $url,
+                'click_url' => $click_urls[$index],
             ];
         }
 
@@ -168,6 +170,7 @@ class AppSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
+                    'click_url' => $click_urls[$index],
                 ];
             }
         }

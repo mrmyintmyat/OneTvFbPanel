@@ -230,9 +230,11 @@
                                                         </ul>
                                                     </div>
                                                     <div class="col-12 team_logo_container">
-                                                        <input type="url" name="click_url[]" id="click_url_{{$index + 1}}" class="form-control"
-                                                            value="{{ $imageUrl->click_url }}" placeholder="click url" required>
-                                                        @error('click_url_{{$index + 1}}')
+                                                        <input type="url" name="click_url[]"
+                                                            id="click_url_{{ $index + 1 }}" class="form-control"
+                                                            value="{{ $imageUrl->click_url }}" placeholder="click url"
+                                                            required>
+                                                        @error('click_url_{{ $index + 1 }}')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
                                                             </span>
@@ -269,7 +271,7 @@
 @endsection
 @section('script')
     <script>
-        let imgUrlCount = 2;
+        let imgUrlCount = {{ $sliderSetting->imageUrls->count() + 1 }};
 
         function addImageUrlField() {
             const container = document.getElementById('img-url-container');

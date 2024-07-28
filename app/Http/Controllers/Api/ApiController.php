@@ -45,9 +45,13 @@ class ApiController extends Controller
     {
         // $count = $request->input('count', 10);
         if ($request->input('all') == true) {
-            $matches = VnMatch::orderBy('match_time')->get()->makeHidden(['created_at', 'updated_at']);
-        } else{
-            $matches = VnMatch::orderBy('match_time')->paginate(10)->makeHidden(['created_at', 'updated_at']);
+            $matches = VnMatch::orderBy('match_time')
+                ->get()
+                ->makeHidden(['created_at', 'updated_at']);
+        } else {
+            $matches = VnMatch::orderBy('match_time')
+                ->paginate(10)
+                ->makeHidden(['created_at', 'updated_at']);
         }
         // return $matches;
         // Iterate through matches and build a custom response
@@ -211,11 +215,15 @@ class ApiController extends Controller
     public function channels(Request $request)
     {
         $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
-        $channels = $channels->map(function ($channel) {
-            return $channel->map(function ($value) {
+
+        // Convert to a base collection to use the map method
+        $channels = collect($channels)->map(function ($channel) {
+            // Map each attribute of the channel
+            return collect($channel)->map(function ($value) {
                 return $value === null ? '' : $value;
             });
         });
+
         $encryptedData = $this->encryptAES($channels, 'woww');
 
         return $encryptedData;
@@ -224,9 +232,13 @@ class ApiController extends Controller
     public function highlights(Request $request)
     {
         if ($request->input('all') == true) {
-            $matches = HighLight::orderBy('match_time')->get()->makeHidden(['created_at', 'updated_at']);
-        } else{
-            $matches = HighLight::orderBy('match_time')->paginate(10)->makeHidden(['created_at', 'updated_at']);
+            $matches = HighLight::orderBy('match_time')
+                ->get()
+                ->makeHidden(['created_at', 'updated_at']);
+        } else {
+            $matches = HighLight::orderBy('match_time')
+                ->paginate(10)
+                ->makeHidden(['created_at', 'updated_at']);
         }
         // Iterate through matches and build a custom response
         $customResponse = [];

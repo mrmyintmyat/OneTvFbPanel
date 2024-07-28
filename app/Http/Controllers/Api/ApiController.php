@@ -212,27 +212,28 @@ class ApiController extends Controller
     }
 
     public function channels(Request $request)
-    {
-        $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
+{
+    $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
 
-        // Convert to a base collection to use the map method
-        $channels = collect($channels)->map(function ($channel) {
-            // Map each attribute of the channel
-            return collect($channel)->map(function ($value) {
-                if (is_array($value) || is_object($value)) {
-                    // Handle nested objects or arrays
-                    return collect($value)->map(function ($nestedValue) {
-                        return $nestedValue === null ? '' : $nestedValue;
-                    });
-                }
-                return $value === null ? '' : $value;
-            });
-        });
+    // Recursive function to handle null values
+    $replaceNullWithEmptyString = function ($item) use (&$replaceNullWithEmptyString) {
+        if (is_array($item) || is_object($item)) {
+            return collect($item)->map(function ($value) use ($replaceNullWithEmptyString) {
+                return $replaceNullWithEmptyString($value);
+            })->toArray();
+        }
+        return $item === null ? '' : $item;
+    };
 
-        $encryptedData = $this->encryptAES($channels, 'woww');
+    $channels = $channels->map(function ($channel) use ($replaceNullWithEmptyString) {
+        return $replaceNullWithEmptyString($channel);
+    });
 
-        return $encryptedData;
-    }
+    $encryptedData = $this->encryptAES($channels, 'woww');
+
+    return $encryptedData;
+}
+
 
     public function highlights(Request $request)
     {

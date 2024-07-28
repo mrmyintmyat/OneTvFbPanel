@@ -197,7 +197,7 @@
                                         <div id="img-url-container" class="col-lg-12 px-3">
                                             @foreach ($settings->imageUrls as $index => $imageUrl)
                                                 <div class="img-url-group row">
-                                                    <div class="d-flex mb-2 team_logo_container">
+                                                    <div class="d-flex team_logo_container">
                                                         <div class="custom-file">
                                                             <input id="img_url_{{ $index + 1 }}" type="url"
                                                                 class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"
@@ -271,7 +271,7 @@
 @endsection
 @section('script')
     <script>
-        let imgUrlCount = {{ $sliderSetting->imageUrls->count() + 1 }};
+        let imgUrlCount = {{ $settings->imageUrls->count() + 1 }};
 
         function addImageUrlField() {
             const container = document.getElementById('img-url-container');
@@ -279,7 +279,7 @@
             div.classList.add('img-url-group', 'row');
             const id = 'img_url_' + imgUrlCount;
             div.innerHTML = `
-        <div class="d-flex mb-2 team_logo_container">
+        <div class="d-flex team_logo_container">
                                 <div class="custom-file">
                                     <input id="${id}" type="file"
                                         class="form-control @error('img_url') is-invalid @enderror m-0 custom-file-input"

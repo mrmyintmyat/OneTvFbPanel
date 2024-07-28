@@ -42,10 +42,7 @@ class AppSettingController extends Controller
         //     ],
         //     'sponsorBanner' => [
         //         'status' => true,
-        //         "smallAd" => "barnyar",
-        //         "smallAdUrl" => "barnyarF",
-        //         "mediumAd" => "FbarnyarF",
-        //         "mediumAdUrl" => "barnyar"
+        //         "click_url" => "https://myintmyat.dev",
         //     ],
 
         //     'sponsorInter' => [
@@ -141,10 +138,7 @@ class AppSettingController extends Controller
 
         $datas->sponsorBanner = [
             'status' => $this->status_check($sponsorBanner_status),
-            'smallAd' => $request->banner_smallAd,
-            'smallAdUrl' => $request->banner_smallAdUrl,
-            'mediumAd' => $request->banner_mediumAd,
-            'mediumAdUrl' => $request->banner_mediumAdUrl,
+            'click_url' => $request->banner_click_url,
         ];
 
         $datas->sponsorInter = [

@@ -162,13 +162,10 @@ class ApiController extends Controller
             'sponsorText' => $settings->sponsorText,
             'sponsorBanner' => [
                 'status' => $settings->sponsorBanner['status'],
-                'smallAd' => $settings->sponsorBanner['smallAd'],
-                'smallAdUrl' => $settings->sponsorBanner['smallAdUrl'],
-                'mediumAd' => $settings->sponsorBanner['mediumAd'],
-                'mediumAdUrl' => $settings->sponsorBanner['mediumAdUrl'],
                 'data' => [
                     [
                         'img_urls' => $settings->imageUrls->pluck('img_url')->toArray(),
+                        'click_url' => $settings->sponsorBanner['click_url'],
                     ],
                 ],
             ],

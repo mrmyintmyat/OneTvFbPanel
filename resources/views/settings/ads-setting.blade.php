@@ -192,52 +192,16 @@
                                 </h4>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 mb-3">
-                                    <label for="banner_smallAd" class="form-label ">
-                                        smallAd
+                                <div class="col-lg-12 mb-3">
+                                    <label for="banner_click_url" class="form-label ">
+                                        Click Url
                                     </label>
 
                                     <div class="">
-                                        <input id="banner_smallAd" type="text" class="form-control "
-                                            name="banner_smallAd" value="{{ $sponsorBanner['smallAd'] }}" required=""
-                                            autocomplete="banner_smallAd" autofocus="">
+                                        <input id="banner_click_url" type="text" class="form-control "
+                                            name="banner_click_url" value="{{ $sponsorBanner['click_url'] }}" required=""
+                                            autocomplete="banner_click_url" autofocus="">
 
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 mb-3">
-                                    <label for="banner_smallAdUrl" class="form-label  d-flex align-items-center">
-                                        smallAdUrl
-                                    </label>
-                                    <div>
-                                        <input id="banner_smallAdUrl" type="text" class="form-control "
-                                            name="banner_smallAdUrl" value="{{ $sponsorBanner['smallAdUrl'] }}"
-                                            autocomplete="banner_smallAdUrl">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 mb-3">
-                                    <label for="banner_mediumAd" class="form-label ">
-                                        mediumAd
-                                    </label>
-
-                                    <div class="">
-                                        <input id="banner_mediumAd" type="text" class="form-control "
-                                            name="banner_mediumAd" value="{{ $sponsorBanner['mediumAd'] }}"
-                                            required="" autocomplete="banner_mediumAd" autofocus="">
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 mb-3">
-                                    <label for="banner_mediumAdUrl" class="form-label ">
-                                        mediumAdUrl
-                                    </label>
-
-                                    <div class="">
-                                        <input id="banner_mediumAdUrl" type="text" class="form-control "
-                                            name="banner_mediumAdUrl" value="{{ $sponsorBanner['mediumAdUrl'] }}"
-                                            required="" autocomplete="banner_mediumAdUrl" autofocus="">
                                     </div>
                                 </div>
                                 <div class="col-12">

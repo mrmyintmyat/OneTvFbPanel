@@ -220,6 +220,12 @@ class ApiController extends Controller
         $channels = collect($channels)->map(function ($channel) {
             // Map each attribute of the channel
             return collect($channel)->map(function ($value) {
+                if (is_array($value) || is_object($value)) {
+                    // Handle nested objects or arrays
+                    return collect($value)->map(function ($nestedValue) {
+                        return $nestedValue === null ? '' : $nestedValue;
+                    });
+                }
                 return $value === null ? '' : $value;
             });
         });

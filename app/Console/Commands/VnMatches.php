@@ -110,10 +110,10 @@ class VnMatches extends Command
             }
         }
 
-        foreach ($manuallyMatches as $existingMatch) {
-            if ($existingMatch->match_time + (100 * 60) <= $currentTime) {
-                $existingMatch->delete();
-            }
-        }
+        // foreach ($manuallyMatches as $existingMatch) {
+        //     if ($existingMatch->match_time + (100 * 60) <= $currentTime) {
+        //         $existingMatch->delete();
+        //     }
+        // }
     }
 }

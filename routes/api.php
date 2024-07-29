@@ -25,4 +25,6 @@ Route::get('/highlights', [ApiController::class, 'highlights']);
 Route::get('/app-setting', [ApiController::class, 'app_setting']);
 Route::get('/slider-setting', [ApiController::class, 'slider_setting']);
 Route::get('/channels', [ApiController::class, 'channels']);
+Route::get('/fake-channels', [ApiController::class, 'fakechannels']);
 Route::get('/tables', [ApiController::class, 'fetchLeagues']);
+

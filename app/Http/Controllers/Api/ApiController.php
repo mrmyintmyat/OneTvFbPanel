@@ -7,6 +7,7 @@ use App\Models\Channel;
 use App\Models\VnMatch;
 use App\Models\HighLight;
 use App\Models\AppSetting;
+use App\Models\FakeChannel;
 use Illuminate\Http\Request;
 use App\Models\FootballMatch;
 use App\Models\SliderSetting;
@@ -212,28 +213,54 @@ class ApiController extends Controller
     }
 
     public function channels(Request $request)
-{
-    $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
+    {
+        $channels = Channel::all()->makeHidden(['created_at', 'updated_at']);
 
-    // Recursive function to handle null values
-    $replaceNullWithEmptyString = function ($item) use (&$replaceNullWithEmptyString) {
-        if (is_array($item) || is_object($item)) {
-            return collect($item)->map(function ($value) use ($replaceNullWithEmptyString) {
-                return $replaceNullWithEmptyString($value);
-            })->toArray();
-        }
-        return $item === null ? '' : $item;
-    };
+        // Recursive function to handle null values
+        $replaceNullWithEmptyString = function ($item) use (&$replaceNullWithEmptyString) {
+            if (is_array($item) || is_object($item)) {
+                return collect($item)
+                    ->map(function ($value) use ($replaceNullWithEmptyString) {
+                        return $replaceNullWithEmptyString($value);
+                    })
+                    ->toArray();
+            }
+            return $item === null ? '' : $item;
+        };
 
-    $channels = $channels->map(function ($channel) use ($replaceNullWithEmptyString) {
-        return $replaceNullWithEmptyString($channel);
-    });
+        $channels = $channels->map(function ($channel) use ($replaceNullWithEmptyString) {
+            return $replaceNullWithEmptyString($channel);
+        });
 
-    $encryptedData = $this->encryptAES($channels, 'woww');
+        $encryptedData = $this->encryptAES($channels, 'woww');
 
-    return $encryptedData;
-}
+        return $encryptedData;
+    }
 
+    public function fakechannels(Request $request)
+    {
+        $channels = FakeChannel::all()->makeHidden(['created_at', 'updated_at']);
+
+        // Recursive function to handle null values
+        $replaceNullWithEmptyString = function ($item) use (&$replaceNullWithEmptyString) {
+            if (is_array($item) || is_object($item)) {
+                return collect($item)
+                    ->map(function ($value) use ($replaceNullWithEmptyString) {
+                        return $replaceNullWithEmptyString($value);
+                    })
+                    ->toArray();
+            }
+            return $item === null ? '' : $item;
+        };
+
+        $channels = $channels->map(function ($channel) use ($replaceNullWithEmptyString) {
+            return $replaceNullWithEmptyString($channel);
+        });
+
+        $encryptedData = $this->encryptAES($channels, 'woww');
+
+        return $encryptedData;
+    }
 
     public function highlights(Request $request)
     {

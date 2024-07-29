@@ -191,7 +191,7 @@
                                                             type="button" role="tab" aria-controls="url-tab-pane"
                                                             aria-selected="{{ !filter_var($imageUrl['img_url'], FILTER_VALIDATE_URL) ? 'true' : 'false' }}">URL</button>
                                                         <span class="remove-button d-flex align-items-center px-3"
-                                                            onclick="removeImageUrlField(this)"><i
+                                                            onclick="removeImageInterUrlField(this)"><i
                                                                 class="fa-solid fa-trash text-danger"></i></span>
                                                     </li>
                                                 </ul>
@@ -462,7 +462,7 @@
             imgInterUrlCount++;
         }
 
-        function removeImageUrlField(button) {
+        function removeImageInterUrlField(button) {
             const container = document.getElementById('img-url-inter-container');
             if (container.children.length > 1) {
                 button.parentElement.parentElement.parentElement.parentElement.remove();

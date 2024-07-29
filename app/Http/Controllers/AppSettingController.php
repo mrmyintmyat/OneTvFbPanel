@@ -16,59 +16,59 @@ class AppSettingController extends Controller
 
     public function index()
     {
-        AppSetting::create([
-            'appDetails' => [
-                'app_name' => 'OneTvApp',
-                'version' => '0.000',
-                'share_message' => 'https://myintmyat.dev',
-                'rate_url' => 'https://myintmyat.dev',
-                'about_url' => 'https://myintmyat.dev',
-                'privacy_url' => 'https://myintmyat.dev',
-                'contact_us_url' => 'https://myintmyat.dev',
-                'website_url' => 'https://myintmyat.dev',
-            ],
-            'sponsorGoogle' => [
-                'status' => true,
-                'android_banner' => 'barnyar',
-                'android_inter' => 'barnyar',
-                'android_appopen' => 'barnyar',
-                'ios_banner' => 'barnyar',
-                'ios_inter' => 'barnyar',
-                'ios_appopen' => 'barnyar',
-            ],
-            'sponsorText' => [
-                'status' => true,
-                'text' => 'barnyar',
-            ],
-            'sponsorBanner' => [
-                'status' => true,
-            ],
+        // AppSetting::create([
+        //     'appDetails' => [
+        //         'app_name' => 'OneTvApp',
+        //         'version' => '0.000',
+        //         'share_message' => 'https://myintmyat.dev',
+        //         'rate_url' => 'https://myintmyat.dev',
+        //         'about_url' => 'https://myintmyat.dev',
+        //         'privacy_url' => 'https://myintmyat.dev',
+        //         'contact_us_url' => 'https://myintmyat.dev',
+        //         'website_url' => 'https://myintmyat.dev',
+        //     ],
+        //     'sponsorGoogle' => [
+        //         'status' => true,
+        //         'android_banner' => 'barnyar',
+        //         'android_inter' => 'barnyar',
+        //         'android_appopen' => 'barnyar',
+        //         'ios_banner' => 'barnyar',
+        //         'ios_inter' => 'barnyar',
+        //         'ios_appopen' => 'barnyar',
+        //     ],
+        //     'sponsorText' => [
+        //         'status' => true,
+        //         'text' => 'barnyar',
+        //     ],
+        //     'sponsorBanner' => [
+        //         'status' => true,
+        //     ],
 
-            'sponsorInter' => [
-                'status' => true,
-                'duration' => 5,
-                'data' => [
-                    [
-                        'img_url' => 'https://yt3.ggpht.com/s5sSZJrP9SJ5qkGOTJCBFbfgz8IKnkB7mEAV0GaAWJiauzub0VPWFKFq2oDFzST_i06mMFe7qkA=s88-c-k-c0x00ffffff-no-rj',
-                        'click_url' => 'https://zynn.gameswww',
-                    ],
-                    [
-                        'img_url' => 'http://localhost:9000/storage/images/YXKhBDm7i6TkJ58dFvkbuBvChqp0MfuDVbZwvnCd.png',
-                        'click_url' => 'https://zynn.gamesrwrwr',
-                    ],
-                ],
-            ],
-        ]);
+        //     'sponsorInter' => [
+        //         'status' => true,
+        //         'duration' => 5,
+        //         'data' => [
+        //             [
+        //                 'img_url' => 'https://yt3.ggpht.com/s5sSZJrP9SJ5qkGOTJCBFbfgz8IKnkB7mEAV0GaAWJiauzub0VPWFKFq2oDFzST_i06mMFe7qkA=s88-c-k-c0x00ffffff-no-rj',
+        //                 'click_url' => 'https://zynn.gameswww',
+        //             ],
+        //             [
+        //                 'img_url' => 'http://localhost:9000/storage/images/YXKhBDm7i6TkJ58dFvkbuBvChqp0MfuDVbZwvnCd.png',
+        //                 'click_url' => 'https://zynn.gamesrwrwr',
+        //             ],
+        //         ],
+        //     ],
+        // ]);
 
-        AppSetting::create([
-            'appDetails' => [
-                'key' => 'noti app key',
-            ],
-            'sponsorGoogle' => [null],
-            'sponsorText' => [null],
-            'sponsorBanner' => [null],
-            'sponsorInter' => [null],
-        ]);
+        // AppSetting::create([
+        //     'appDetails' => [
+        //         'key' => 'noti app key',
+        //     ],
+        //     'sponsorGoogle' => [null],
+        //     'sponsorText' => [null],
+        //     'sponsorBanner' => [null],
+        //     'sponsorInter' => [null],
+        // ]);
 
         $datas = AppSetting::first();
         $id = $datas->id;

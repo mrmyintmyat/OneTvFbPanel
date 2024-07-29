@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Http;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $appsetting = AppSetting::where('sponsorGoogle', 'LIKE', '%null%')->first();

@@ -33,8 +33,9 @@ class VnMatches extends Command
         $matches = $gg->scrapeMatches();
         // return $matches;
         $existingMatches = VnMatch::where('is_auto_match', true)->get();
+        $manuallyMatches = VnMatch::where('is_auto_match', false)->get();
 
-        $this->deleteMatches($existingMatches, $matches);
+        $this->deleteMatches($existingMatches, $matches,$manuallyMatches);
 
         foreach ($matches as $match) {
             // Check if a match with the same criteria exists
@@ -83,10 +84,10 @@ class VnMatches extends Command
        $this->info('Task completed successfully.');
     }
 
-    private function deleteMatches($existingMatches, $matches)
+    private function deleteMatches($existingMatches, $matches, $manuallyMatches)
     {
         $apiMatchIdentifiers = [];
-
+        $currentTime = time();
         foreach ($matches as $match) {
             $apiMatchIdentifiers[] = [
                 'match_time' => $match['match_time'],
@@ -105,6 +106,12 @@ class VnMatches extends Command
 
             // Check if the existing match is not present in the API data
             if (!in_array($existingMatchIdentifier, $apiMatchIdentifiers, true)) {
+                $existingMatch->delete();
+            }
+        }
+
+        foreach ($manuallyMatches as $existingMatch) {
+            if ($existingMatch->match_time + (100 * 60) <= $currentTime) {
                 $existingMatch->delete();
             }
         }

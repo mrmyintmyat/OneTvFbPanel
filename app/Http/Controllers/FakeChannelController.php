@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\FakeChannel;
 use Illuminate\Http\Request;
 
-class ChannelController extends Controller
+class FakeChannelController extends Controller
 {
     public function __construct()
     {
@@ -14,13 +15,13 @@ class ChannelController extends Controller
 
     public function index()
     {
-        $channels = Channel::paginate(17);
-        return view('channel.index', compact('channels'));
+        $channels = FakeChannel::paginate(17);
+        return view('fakechannel.index', compact('channels'));
     }
 
     public function create()
     {
-        return view('channel.create');
+        return view('fakechannel.create');
     }
 
     public function store(Request $request)
@@ -34,7 +35,7 @@ class ChannelController extends Controller
             'server_type.*' => 'required',
         ]);
 
-        $channel = new Channel();
+        $channel = new FakeChannel();
         $channel->channel_name = $validated['channel_name'];
 
         if ($request->hasFile('channel_logo')) {
@@ -57,18 +58,18 @@ class ChannelController extends Controller
         $channel->servers = $servers;
         $channel->save();
 
-        return redirect()->route('channel.index')->with('success', 'channel created successfully.');
+        return redirect()->route('fakechannel.index')->with('success', 'channel created successfully.');
     }
 
     public function edit($id)
     {
-        $channel = Channel::findOrFail($id);
-        return view('channel.edit', compact('channel'));
+        $channel = FakeChannel::findOrFail($id);
+        return view('fakechannel.edit', compact('channel'));
     }
 
     public function update(Request $request, $id)
     {
-        $channel = Channel::findOrFail($id);
+        $channel = FakeChannel::findOrFail($id);
 
         $validated = $request->validate([
             'channel_name' => 'required|string|max:255',

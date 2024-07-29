@@ -24,7 +24,7 @@
                         method="post" enctype="multipart/form-data">
                         @csrf @method('PUT')
 
-                        <div class="col-lg-6 p-lg-3">
+                        <div class="px-lg-3">
                             <div>
                                 <h4 class="d-flex">sponsorGoogle
                                     <div class="form-check form-switch ms-3">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 p-lg-3">
+                        <div class="px-lg-3">
                             <div>
                                 <h4 class="d-flex">sponsorText
                                     <div class="form-check form-switch ms-3">
@@ -149,39 +149,76 @@
 
                                 </div>
                             </div>
-                            <div>
-                                <h4 class="d-flex">sponsorInter
-                                    <div class="form-check form-switch ms-3">
-                                        <input class="form-check-input" name="sponsorInter_status" type="checkbox"
-                                            role="switch" id="flexSwitchCheckChecked"
-                                            {{ $sponsorInter['status'] ? 'checked' : '' }}>
-                                    </div>
-                                </h4>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inter_adImage" class="form-label ">
-                                    Ad Image
-                                </label>
-
-                                <div class="">
-                                    <input id="inter_adImage" type="text" class="form-control " name="inter_adImage"
-                                        value="{{ $sponsorInter['adImage'] }}" required=""
-                                        autocomplete="inter_adImage" autofocus="">
-
+                        </div>
+                        <div class="px-lg-3 m-0">
+                            <h4 class="d-flex">sponsorInter
+                                <div class="form-check form-switch ms-3">
+                                    <input class="form-check-input" name="sponsorInter_status" type="checkbox"
+                                        role="switch" id="flexSwitchCheckChecked"
+                                        {{ $sponsorInter['status'] ? 'checked' : '' }}>
                                 </div>
+                            </h4>
+                            <div class="mb-2">
+                                <label for="duration" class="form-label">Duration:</label>
+                                <input type="number" name="inter_duration" id="duration" min="1"
+                                    class="form-control m-0" value="{{ $sponsorInter['duration'] }}" required>
                             </div>
+                            <div class="bg-white rounded-3 pt-3 px-0">
+                                <div id="img-url-inter-container" class="col-lg-12 px-3">
+                                    @foreach ($sponsorInter['data'] as $index => $imageUrl)
+                                        <div class="img-url-inter-group row mb-0">
+                                            <div class="d-flex team_logo_container">
+                                                <div class="custom-file">
+                                                    <input id="img_url_inter_{{ $index + 1 }}" type="url"
+                                                        class="form-control @error('img_url_inter') is-invalid @enderror m-0 custom-file-input"
+                                                        name="img_url_inter[]"
+                                                        value="{{ old('img_url_inter.' . $index, $imageUrl['img_url']) }}"
+                                                        autocomplete="img_url_inter_1" accept="image/*"
+                                                        placeholder="LOGO URL" required>
+                                                </div>
 
-                            <div class="row mb-3">
-                                <label for="inter_adUrl" class="form-label  d-flex align-items-center">
-                                    Ad URL
-                                </label>
-                                <div>
-                                    <input id="inter_adUrl" type="text" class="form-control " name="inter_adUrl"
-                                        value="{{ $sponsorInter['adUrl'] }}" autocomplete="inter_adUrl">
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item d-flex" role="presentation">
+                                                        <button
+                                                            onclick="Change_inter_input('{{ $index + 1 }}', 'file')"
+                                                            class="nav-link fw-normal" id="upload-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                                            type="button" role="tab" aria-controls="upload-tab-pane"
+                                                            aria-selected="{{ !filter_var($imageUrl['img_url'], FILTER_VALIDATE_URL) ? 'true' : 'false' }}">Upload</button>
+                                                        <button onclick="Change_inter_input('{{ $index + 1 }}', 'url')"
+                                                            class="nav-link fw-normal active" id="url-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#url-tab-pane"
+                                                            type="button" role="tab" aria-controls="url-tab-pane"
+                                                            aria-selected="{{ !filter_var($imageUrl['img_url'], FILTER_VALIDATE_URL) ? 'true' : 'false' }}">URL</button>
+                                                        <span class="remove-button d-flex align-items-center px-3"
+                                                            onclick="removeImageUrlField(this)"><i
+                                                                class="fa-solid fa-trash text-danger"></i></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-12 team_logo_container">
+                                                <input type="url" name="click_url_inter[]"
+                                                    id="click_url_inter_{{ $index + 1 }}" class="form-control"
+                                                    value="{{ $imageUrl['click_url'] }}" placeholder="click url"
+                                                    required>
+                                                @error('click_url_inter_{{ $index + 1 }}')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="col-12 d-flex justify-content-start m-0">
+                                    <button type="button"
+                                        class="btn btn-white text-black fw-semibold w-100 mb-2 border-top"
+                                        onclick="addImageInterUrlField()">Add Another
+                                        Image URL</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="p-lg-3 m-0">
+                        <div class="px-lg-3 m-0 mt-3">
                             <div>
                                 <h4 class="d-flex">sponsorBanner
                                     <div class="form-check form-switch ms-3">
@@ -210,14 +247,14 @@
                                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                             <li class="nav-item d-flex" role="presentation">
                                                                 <button
-                                                                    onclick="Change_input('img_url_{{ $index + 1 }}', 'file')"
+                                                                    onclick="Change_input('{{ $index + 1 }}', 'file')"
                                                                     class="nav-link fw-normal" id="upload-tab"
                                                                     data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
                                                                     type="button" role="tab"
                                                                     aria-controls="upload-tab-pane"
                                                                     aria-selected="{{ !filter_var($imageUrl->img_url, FILTER_VALIDATE_URL) ? 'true' : 'false' }}">Upload</button>
                                                                 <button
-                                                                    onclick="Change_input('img_url_{{ $index + 1 }}', 'url')"
+                                                                    onclick="Change_input('{{ $index + 1 }}', 'url')"
                                                                     class="nav-link fw-normal active" id="url-tab"
                                                                     data-bs-toggle="tab" data-bs-target="#url-tab-pane"
                                                                     type="button" role="tab"
@@ -291,12 +328,12 @@
 
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item d-flex" role="presentation">
-                                        <button onclick="Change_input('${id}', 'file')"
+                                        <button onclick="Change_input('${imgUrlCount}', 'file')"
                                             class="nav-link fw-normal active" id="upload-tab"
                                             data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
                                             type="button" role="tab" aria-controls="upload-tab-pane"
                                             aria-selected="true">Upload</button>
-                                        <button onclick="Change_input('${id}', 'url')"
+                                        <button onclick="Change_input('${imgUrlCount}', 'url')"
                                             class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
                                             data-bs-target="#url-tab-pane" type="button" role="tab"
                                             aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -306,7 +343,7 @@
                                 </ul>
                             </div>
                             <div class="col-12 team_logo_container">
-                                            <input type="url" name="click_url[]" id="click_url_${imgUrlCount}" class="form-control"
+                                            <input type="url" name="click_url_file[]" id="click_url_${imgUrlCount}" class="form-control"
                                                 value="{{ old('click_url_${imgUrlCount}') }}" placeholder="click url" required>
                                             @error('click_url_${imgUrlCount}')
                                                 <span class="invalid-feedback" role="alert">
@@ -334,30 +371,128 @@
         }
 
         function Change_input(id, type) {
-            const inputElement = document.getElementById(id);
-            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
+            const inputElement = document.getElementById('img_url_' + id);
+            const clickUrlInputElement = document.getElementById('click_url_' + id);
+            const labelElement = inputElement.nextElementSibling;
 
             if (type === 'file') {
                 inputElement.type = 'file';
                 if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
                     const newLabel = document.createElement('label');
                     newLabel.className = 'custom-file-label';
-                    newLabel.setAttribute('for', id);
+                    newLabel.setAttribute('for', 'img_url_'+id);
                     newLabel.textContent = 'Choose file';
+                    clickUrlInputElement.name = 'click_url_file[]';
                     inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
                 }
             } else if (type === 'url') {
                 inputElement.type = 'url';
+                clickUrlInputElement.name = 'click_url[]';
                 if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
                     labelElement.remove();
                 }
             }
         }
 
-        document.querySelector('#img_url_1').addEventListener('change', function(e) {
-            var fileName = document.getElementById("img_url_1").files[0].name;
-            var nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
+        const fileInputs = document.querySelectorAll('.custom-file-input');
+
+        // Loop through each file input element and add an event listener
+        fileInputs.forEach(function(fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                const fileName = e.target.files[0].name;
+                const nextSibling = e.target.nextElementSibling;
+
+                if (nextSibling && nextSibling.tagName.toLowerCase() === 'label') {
+                    nextSibling.innerText = fileName;
+                }
+            });
         });
+    </script>
+    <script>
+        let imgInterUrlCount = {{ count($sponsorInter['data']) + 1 }};
+
+        function addImageInterUrlField() {
+            const container = document.getElementById('img-url-inter-container');
+            const div = document.createElement('div');
+            div.classList.add('img-url-inter-group', 'row', 'mb-0');
+            const id = 'img_url_inter_' + imgInterUrlCount;
+            div.innerHTML = `
+<div class="d-flex team_logo_container">
+                        <div class="custom-file">
+                            <input id="${id}" type="file"
+                                class="form-control @error('img_url_inter') is-invalid @enderror m-0 custom-file-input"
+                                name="img_url_inter[]" value="{{ old('${id}') }}"
+                                autocomplete="${id}" accept="image/*" placeholder="LOGO URL"
+                                required>
+                            <label class="custom-file-label" for="${id}">Choose file</label>
+                        </div>
+
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item d-flex" role="presentation">
+                                <button onclick="Change_inter_input('${imgInterUrlCount}', 'file')"
+                                    class="nav-link fw-normal active" id="upload-tab"
+                                    data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
+                                    type="button" role="tab" aria-controls="upload-tab-pane"
+                                    aria-selected="true">Upload</button>
+                                <button onclick="Change_inter_input('${imgInterUrlCount}', 'url')"
+                                    class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
+                                    data-bs-target="#url-tab-pane" type="button" role="tab"
+                                    aria-controls="url-tab-pane" aria-selected="true">URL</button>
+                                    <span class="remove-button d-flex align-items-center px-3"
+                                    onclick="removeImageUrlField(this)"><i class="fa-solid fa-trash text-danger"></i></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-12 team_logo_container">
+                                    <input type="url" name="click_url_inter_file[]" id="click_url_inter_${imgInterUrlCount}" class="form-control"
+                                        value="{{ old('click_url_inter_${imgInterUrlCount}') }}" placeholder="click url" required>
+                                    @error('click_url_inter_${imgInterUrlCount}')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+`;
+            container.appendChild(div);
+            document.getElementById(id).addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : 'Choose file';
+                const nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
+            });
+            imgInterUrlCount++;
+        }
+
+        function removeImageUrlField(button) {
+            const container = document.getElementById('img-url-inter-container');
+            if (container.children.length > 1) {
+                button.parentElement.parentElement.parentElement.parentElement.remove();
+            } else {
+                alert("You must have at least one Image URL/File field.");
+            }
+        }
+
+        function Change_inter_input(id, type) {
+            const inputElement = document.getElementById('img_url_inter_' + id);
+            const clickUrlInputElement = document.getElementById('click_url_inter_' + id);
+            const labelElement = inputElement.nextElementSibling;
+
+            if (type === 'file') {
+                inputElement.type = 'file';
+                if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
+                    const newLabel = document.createElement('label');
+                    newLabel.className = 'custom-file-label';
+                    newLabel.setAttribute('for', 'img_url_inter_'+id);
+                    newLabel.textContent = 'Choose file';
+                    clickUrlInputElement.name = 'click_url_inter_file[]';
+                    inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
+                }
+            } else if (type === 'url') {
+                inputElement.type = 'url';
+                clickUrlInputElement.name = 'click_url_inter[]';
+                if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
+                    labelElement.remove();
+                }
+            }
+        }
     </script>
 @endsection

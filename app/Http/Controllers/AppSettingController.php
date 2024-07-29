@@ -42,13 +42,22 @@ class AppSettingController extends Controller
         //     ],
         //     'sponsorBanner' => [
         //         'status' => true,
-        //         "click_url" => "https://myintmyat.dev",
         //     ],
 
         //     'sponsorInter' => [
-        //         'status' => True,
-        //         'adImage' => 'barnyar',
-        //         'adUrl' => 'barnyar'
+        //         'status' => true,
+        //         'duration' => 5,
+        //         'data' => [
+        //             // Correctly format the data array
+        //             [
+        //                 'img_url' => 'https://yt3.ggpht.com/s5sSZJrP9SJ5qkGOTJCBFbfgz8IKnkB7mEAV0GaAWJiauzub0VPWFKFq2oDFzST_i06mMFe7qkA=s88-c-k-c0x00ffffff-no-rj',
+        //                 'click_url' => 'https://zynn.gameswww',
+        //             ],
+        //             [
+        //                 'img_url' => 'http://localhost:9000/storage/images/YXKhBDm7i6TkJ58dFvkbuBvChqp0MfuDVbZwvnCd.png',
+        //                 'click_url' => 'https://zynn.gamesrwrwr',
+        //             ],
+        //         ],
         //     ],
         // ]);
 
@@ -56,18 +65,10 @@ class AppSettingController extends Controller
         //     'appDetails' => [
         //         'key' => 'noti app key',
         //     ],
-        //     'sponsorGoogle' => [
-        //       null
-        //     ],
-        //     'sponsorText' => [
-        //        null
-        //     ],
-        //     'sponsorBanner' => [
-        //       null
-        //     ],
-        //     'sponsorInter' => [
-        //        null
-        //     ],
+        //     'sponsorGoogle' => [null],
+        //     'sponsorText' => [null],
+        //     'sponsorBanner' => [null],
+        //     'sponsorInter' => [null],
         // ]);
 
         $datas = AppSetting::first();
@@ -121,6 +122,31 @@ class AppSettingController extends Controller
 
         $datas = AppSetting::find($id);
 
+        $imgInterUrls = $request->input('img_url_inter', []);
+        $imgFiles = $request->file('img_url_inter', []);
+        $clickUrls = $request->input('click_url_inter', []);
+        $click_urls_inter_file = $request->input('click_url_inter_file', []);
+
+        // Update sponsorInter data
+        $sponsorInterData = [];
+        foreach ($imgInterUrls as $index => $imgUrl) {
+            $sponsorInterData[] = [
+                'img_url' => $imgUrl,
+                'click_url' => $clickUrls[$index] ?? '',
+            ];
+        }
+
+        // Process file uploads
+        foreach ($imgFiles as $index => $file) {
+            if ($file && $file->isValid()) {
+                $path = $file->store('images', 'public');
+                $sponsorInterData[] = [
+                    'img_url' => url(Storage::url($path)),
+                    'click_url' => $click_urls_inter_file[$index],
+                ];
+            }
+        }
+
         $datas->sponsorGoogle = [
             'status' => $this->status_check($sponsorGoogle_status),
             'android_banner' => $request->android_banner,
@@ -143,8 +169,8 @@ class AppSettingController extends Controller
 
         $datas->sponsorInter = [
             'status' => $this->status_check($sponsorInter_status),
-            'adImage' => $request->inter_adImage,
-            'adUrl' => $request->inter_adUrl,
+            'duration' => $request->inter_duration,
+            'data' => $sponsorInterData
         ];
 
         $datas->save();
@@ -155,6 +181,7 @@ class AppSettingController extends Controller
         $imgUrls = $request->input('img_url', []);
         $files = $request->file('img_url', []);
         $click_urls = $request->input('click_url', []);
+        $click_urls_file = $request->input('click_url_file', []);
 
         // Process image URLs
         foreach ($imgUrls as $index => $url) {
@@ -170,7 +197,7 @@ class AppSettingController extends Controller
                 $path = $file->store('images', 'public');
                 $imageDataArray[] = [
                     'img_url' => url(Storage::url($path)),
-                    'click_url' => $click_urls[$index],
+                    'click_url' => $click_urls_file[$index],
                 ];
             }
         }

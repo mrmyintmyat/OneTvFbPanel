@@ -7,6 +7,7 @@ use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\HighLightController;
 use App\Http\Controllers\AppSettingController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FakeChannelController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SliderSettingController;
 
@@ -44,6 +45,7 @@ Route::resource('/highlights', HighLightController::class)->except(['show', 'sto
 Route::post('/set-timezone', [LoginController::class, 'setTimezone']);
 
 Route::resource('channel', ChannelController::class);
+Route::resource('fakechannel', FakeChannelController::class);
 Route::resource('slider-setting',SliderSettingController::class);
 
 Auth::routes(['register' => false]);

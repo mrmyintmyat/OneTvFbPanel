@@ -84,13 +84,12 @@
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                     <li class="nav-item d-flex" role="presentation">
                                                         <button
-                                                            onclick="Change_input('img_url_{{ $index + 1 }}', 'file')"
+                                                            onclick="Change_input('{{ $index + 1 }}', 'file')"
                                                             class="nav-link fw-normal" id="upload-tab" data-bs-toggle="tab"
                                                             data-bs-target="#upload-tab-pane" type="button" role="tab"
                                                             aria-controls="upload-tab-pane"
                                                             aria-selected="{{ !filter_var($imageUrl->img_url, FILTER_VALIDATE_URL) ? 'true' : 'false' }}">Upload</button>
-                                                        <button
-                                                            onclick="Change_input('img_url_{{ $index + 1 }}', 'url')"
+                                                        <button onclick="Change_input('{{ $index + 1 }}', 'url')"
                                                             class="nav-link fw-normal active" id="url-tab"
                                                             data-bs-toggle="tab" data-bs-target="#url-tab-pane"
                                                             type="button" role="tab" aria-controls="url-tab-pane"
@@ -102,9 +101,10 @@
                                                 </ul>
                                             </div>
                                             <div class="col-12 team_logo_container">
-                                                <input type="url" name="click_url[]" id="click_url_{{$index + 1}}" class="form-control"
-                                                    value="{{ $imageUrl->click_url }}" placeholder="click url" required>
-                                                @error('click_url_{{$index + 1}}')
+                                                <input type="url" name="click_url[]" id="click_url_{{ $index + 1 }}"
+                                                    class="form-control" value="{{ $imageUrl->click_url }}"
+                                                    placeholder="click url" required>
+                                                @error('click_url_{{ $index + 1 }}')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -160,12 +160,12 @@
 
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item d-flex" role="presentation">
-                                                <button onclick="Change_input('${id}', 'file')"
+                                                <button onclick="Change_input('${imgUrlCount}', 'file')"
                                                     class="nav-link fw-normal active" id="upload-tab"
                                                     data-bs-toggle="tab" data-bs-target="#upload-tab-pane"
                                                     type="button" role="tab" aria-controls="upload-tab-pane"
                                                     aria-selected="true">Upload</button>
-                                                <button onclick="Change_input('${id}', 'url')"
+                                                <button onclick="Change_input('${imgUrlCount}', 'url')"
                                                     class="nav-link fw-normal" id="url-tab" data-bs-toggle="tab"
                                                     data-bs-target="#url-tab-pane" type="button" role="tab"
                                                     aria-controls="url-tab-pane" aria-selected="true">URL</button>
@@ -175,7 +175,7 @@
                                         </ul>
                                     </div>
                                     <div class="col-12 team_logo_container">
-                                            <input type="url" name="click_url[]" id="click_url_${imgUrlCount}" class="form-control"
+                                            <input type="url" name="click_url_file[]" id="click_url_${imgUrlCount}" class="form-control"
                                                 value="{{ old('click_url_${imgUrlCount}') }}" placeholder="click url" required>
                                             @error('click_url_${imgUrlCount}')
                                                 <span class="invalid-feedback" role="alert">
@@ -203,30 +203,41 @@
         }
 
         function Change_input(id, type) {
-            const inputElement = document.getElementById(id);
-            const labelElement = inputElement.nextElementSibling; // Assuming the label is immediately after the input
+            const inputElement = document.getElementById('img_url_' + id);
+            const clickUrlInputElement = document.getElementById('click_url_' + id);
+            const labelElement = inputElement.nextElementSibling;
 
             if (type === 'file') {
                 inputElement.type = 'file';
                 if (!labelElement || labelElement.tagName.toLowerCase() !== 'label') {
                     const newLabel = document.createElement('label');
                     newLabel.className = 'custom-file-label';
-                    newLabel.setAttribute('for', id);
+                    newLabel.setAttribute('for', 'img_url_'+id);
                     newLabel.textContent = 'Choose file';
+                    clickUrlInputElement.name = 'click_url_file[]';
                     inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
                 }
             } else if (type === 'url') {
                 inputElement.type = 'url';
+                clickUrlInputElement.name = 'click_url[]';
                 if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
                     labelElement.remove();
                 }
             }
         }
 
-        document.querySelector('#img_url_1').addEventListener('change', function(e) {
-            var fileName = document.getElementById("img_url_1").files[0].name;
-            var nextSibling = e.target.nextElementSibling;
-            nextSibling.innerText = fileName;
+        const fileInputs = document.querySelectorAll('.custom-file-input');
+
+        // Loop through each file input element and add an event listener
+        fileInputs.forEach(function(fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                const fileName = e.target.files[0].name;
+                const nextSibling = e.target.nextElementSibling;
+
+                if (nextSibling && nextSibling.tagName.toLowerCase() === 'label') {
+                    nextSibling.innerText = fileName;
+                }
+            });
         });
     </script>
 @endsection

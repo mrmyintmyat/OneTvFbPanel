@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="/css/style.css?v=<?php echo time(); ?>">
 </head>
 @yield('style')
-
+@php
+    use App\Models\AppSetting;
+@endphp
 <body class="overflow-auto">
     @if (session('success'))
         <div aria-live="polite" aria-atomic="true" class="position-relative">
@@ -77,7 +79,7 @@
                 class="col-lg-2 shadow navbar navbar-expand-lg menu bg-menu p-0 d-flex flex-column justify-content-start align-items-start">
                 <h1 class="text-white h4 text-center my-4 d-lg-block d-none w-100">
                     <i class="fa-solid fa-lock"></i>
-                    <span class=" ms-1 d-none d-lg-inline">OneTv Panel</span>
+                    <span class=" ms-1 d-none d-lg-inline">{{AppSetting::first()->appDetails['app_name']}}</span>
                 </h1>
 
                 <div class="offcanvas offcanvas-start bg-menu px-2" tabindex="-1" id="offcanvasNavbar"

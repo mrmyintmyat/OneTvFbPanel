@@ -32,9 +32,8 @@ let newtab = `<div class="tab-pane fade" id="server-${count}" role="tabpanel" ar
     <div class="">
         <select id="server_type" name="server_type[]" class="" aria-label="Default select example"
             autocomplete="server_type">
-            <option value="" disabled selected>Select Type</option>
             <optgroup class="ms-3 collapse show" id="collapseExample">
-                <option value="Direct Player">
+                <option value="Direct Player" selected>
                     Direct Player
                 </option>
                 <option value="Embed Player">

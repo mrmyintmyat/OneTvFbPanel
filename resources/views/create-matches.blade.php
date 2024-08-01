@@ -285,9 +285,8 @@
                                         <select id="server_type" name="server_type[]"
                                             class=" @error('server_type') is-invalid @enderror" aria-label="Default select example"
                                             autocomplete="server_type" required>
-                                            <option value="" disabled selected>Select Type</option>
                                             <optgroup class="ms-3 collapse show" id="collapseExample">
-                                                <option value="Direct Player" {{ old('server_type.0') == 'Direct Player' ? 'selected' : '' }}>
+                                                <option value="Direct Player" selected>
                                                     Direct Player
                                                 </option>
                                                 <option value="Embed Player" {{ old('server_type.0') == 'Embed Player' ? 'selected' : '' }}>

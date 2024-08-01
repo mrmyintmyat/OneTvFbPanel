@@ -40,7 +40,7 @@
                         <div class="col-lg-4 col-12 px-lg-3">
                             <label for="league" class="form-label fw-semibold">League </label>
                             <div>
-                                <select id="league" name="league" multiple="multiple">
+                                <select id="league" name="league" multiple="multiple" required>
                                     @foreach ($leagues as $league)
                                         <option value="{{ $league->id }}" data-logo="{{ $league->logo }}">
                                             {{ $league->name }}
@@ -61,7 +61,7 @@
                             <div class="">
                                 <select id="match_status" name="match_status"
                                     class=" @error('match_status') is-invalid @enderror" aria-label="Default select example"
-                                    autocomplete="match_status">
+                                    autocomplete="match_status" required>
                                     <option value="" disabled selected>Select Match Status</option>
                                     <optgroup class="ms-3 collapse show" id="collapseExample">
                                         <option value="Match" {{ old('match_status') == 'Match' ? 'selected' : '' }}>
@@ -247,7 +247,7 @@
                                     aria-labelledby="server-1-tab" tabindex="0">
                                     <div class="row">
                                         <div class="">
-                                            <input required id="server_name" type="text" class=""
+                                            <input id="server_name" type="text" class=""
                                                 name="server_name[]" value="" autocomplete="server_name"
                                                 placeholder="name">
                                         </div>
@@ -339,9 +339,9 @@
 
         $('#match_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
-                $('#away_team_score, #home_team_score, #server_url').prop('required', true);
+                $('#away_team_score, #home_team_score, #server_url, #server_name').prop('required', true);
             } else {
-                $('#away_team_score, #home_team_score, #server_url').prop('required', false);
+                $('#away_team_score, #home_team_score, #server_url, #server_name').prop('required', false);
             }
         });
 

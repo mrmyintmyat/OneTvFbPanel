@@ -12,7 +12,7 @@ let newtab = `<div class="tab-pane fade" id="server-${count}" role="tabpanel" ar
 
     <div class="row">
         <div class="">
-            <input required id="server_name" type="text" class="" name="server_name[]" value=""
+            <input id="server_name" type="text" class="" name="server_name[]" value=""
                 autocomplete="server_name" placeholder="name">
         </div>
     </div>

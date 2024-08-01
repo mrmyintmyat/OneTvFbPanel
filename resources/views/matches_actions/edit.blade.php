@@ -54,7 +54,7 @@
                         <div class="col-lg-4 col-12 px-lg-3">
                             <label for="league" class="form-label fw-semibold">League </label>
                             <div>
-                                <select id="league" name="league" multiple="multiple">
+                                <select id="league" name="league" multiple="multiple" required>
                                     @foreach ($leagues as $league)
                                         <option value="{{ $league->id }}" data-logo="{{ $league->logo }}" {{ $match->league->name == $league->name ? 'selected' : '' }}>
                                             {{ $league->name }}
@@ -75,7 +75,7 @@
                             <div class="">
                                 <select id="match_status" name="match_status"
                                     class="form-select  @error('match_status') is-invalid @enderror m-0 border-0"
-                                    aria-label="Default select example" autocomplete="match_status">
+                                    aria-label="Default select example" autocomplete="match_status" required>
                                     <option value="" disabled selected>Select Match Status</option>
                                     <optgroup class="ms-3 collapse show" id="collapseExample">
                                         <option value="Match" {{ $match->match_status == 'Match' ? 'selected' : '' }}>
@@ -268,7 +268,7 @@
                                         aria-labelledby="server-{{ $index + 1 }}-tab" tabindex="0">
                                         <div class="row ">
                                             <div class="">
-                                                <input required id="server_name" type="text"
+                                                <input id="server_name" type="text"
                                                     class=" @error('server_name') is-invalid @enderror "
                                                     name="server_name[]" value="{{ $server['name'] }}"
                                                     autocomplete="server_name" placeholder="name">
@@ -351,10 +351,10 @@
     <script src="/js/plus_server.js?v=<?php echo time(); ?>"></script>
     <script>
         $('#match_status').on('change', function() {
-            if ($(this).val() === 'Live') {
-                $('#server_url').prop('required', true);
+            if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {
+                $('#away_team_score, #home_team_score, #server_url, #server_name').prop('required', true);
             } else {
-                $('#server_url').prop('required', false);
+                $('#away_team_score, #home_team_score, #server_url, #server_name').prop('required', false);
             }
         });
 

@@ -37,14 +37,14 @@ class HomeController extends Controller
         // $gg = new AutoVnMatchesController();
         // $matches = $gg->scrapeMatches();
         // return $matches;
-        $matches = VnMatch::orderBy('match_time')->paginate(18);
+        $matches = VnMatch::orderBy('match_time')->paginate(19);
         $route_match = 'match';
         return view('index', compact('matches', 'route_match'));
     }
 
     public function vn_matches()
     {
-        $matches = VnMatch::orderBy('match_time')->paginate(18);
+        $matches = VnMatch::orderBy('match_time')->paginate(19);
         $route_match = 'vn_match';
         return view('index', compact('matches', 'route_match'));
     }

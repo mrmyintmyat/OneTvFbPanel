@@ -323,7 +323,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="/js/plus_server.js"></script>
+    <script src="/js/plus_server.js?v=<?php echo time(); ?>"></script>
     <script>
         $(document).ready(function() {
             // Add the beforeunload event listener inside the document ready function

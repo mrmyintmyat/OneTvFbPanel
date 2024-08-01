@@ -131,7 +131,7 @@
 @endsection
 
 @section('script')
-    <script src="/js/plus_server-slider_setting.js"></script>
+    <script src="/js/plus_server-slider_setting.js?v=<?php echo time(); ?>"></script>
     <script>
         let imgUrlCount = {{ $sliderSetting->imageUrls->count() + 1 }};
 

@@ -13,7 +13,7 @@
     </style>
 @endsection
 @section('page')
-    <div class="card text-start mt-lg-2 rounded-0 px-lg-0 px-2 mb-3">
+    <div class="card text-start border-0 px-lg-0 px-2 mb-3" style="background: #ffffff00;">
         <div class="card-body pe-0">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -33,11 +33,11 @@
                     <form method="post" action="/notification" class="w-100 row d-flex justify-content-around px-2 g-3"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="col-lg-5 shadow-sm p-3">
+                        <div class="col-lg-5 p-3">
                             <div class="row mb-3">
                                 <div class="">
                                     <input id="title" type="text"
-                                        class="form-control @error('title') is-invalid @enderror rounded-0" name="title"
+                                        class="form-control @error('title') is-invalid @enderror" name="title"
                                         value="{{ old('title') }}" required autocomplete="title" autofocus
                                         placeholder="Title">
 
@@ -62,7 +62,7 @@
                             <div class="row mb-3">
                                 <div class="">
                                     <input id="Url" type="url"
-                                        class="form-control @error('Url') is-invalid @enderror rounded-0" name="Url"
+                                        class="form-control @error('Url') is-invalid @enderror" name="Url"
                                         value="{{ old('Url') }}"  autocomplete="Url" autofocus placeholder="Url">
 
                                     @error('Url')
@@ -76,7 +76,7 @@
                             <div class="row mb-3">
                                 <div class="">
                                     <input id="img_url" type="url"
-                                        class="form-control @error('img_url') is-invalid @enderror rounded-0" name="img_url"
+                                        class="form-control @error('img_url') is-invalid @enderror" name="img_url"
                                         value="{{ old('img_url') }}"  autocomplete="img_url" autofocus placeholder="Image Url">
 
                                     @error('img_url')
@@ -101,11 +101,11 @@
                     <form method="post" action="/edit-key" class="w-100 row d-flex justify-content-around px-2 g-3"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="col-lg-5 shadow-sm p-3">
+                        <div class="col-lg-5 p-3">
                             <div class="row mb-3">
                                 <div class="">
                                     <input id="key" type="text"
-                                        class="form-control @error('key') is-invalid @enderror rounded-0" name="key"
+                                        class="form-control @error('key') is-invalid @enderror" name="key"
                                         value="{{ $key }}" required autocomplete="key" autofocus
                                         placeholder="LEAGUE NAME">
 

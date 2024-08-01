@@ -80,7 +80,7 @@
                     <span class=" ms-1 d-none d-lg-inline">OneTv Panel</span>
                 </h1>
 
-                <div class="offcanvas offcanvas-start bg-menu w-100" tabindex="-1" id="offcanvasNavbar"
+                <div class="offcanvas offcanvas-start bg-menu px-2" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header px-2">
                         <button type="button" class="btn-close float-end" data-bs-dismiss="offcanvas"
@@ -91,75 +91,75 @@
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-futbol"></i>
                                 </div>
-                                <span class="col-10 text-start">Matches</span>
+                                <span class="col-11 ms-2 text-start">Matches</span>
                             </div>
                         </a>
                         {{-- <a href="/vn_matches" id="focus_tag"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             aria-current="true">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                 <i class="fa-solid fa-baseball"></i>
                                                                 </div>
-                                <span class="col-10 text-start">VN MATCHES</span>
+                                <span class="col-11 ms-2 text-start">VN MATCHES</span>
                             </div>
                         </a> --}}
                         <a id="focus_tag" href="/highlights"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-clock-rotate-left"></i>
                                 </div>
-                                <span class="col-10 text-start">Highlights</span>
+                                <span class="col-11 ms-2 text-start">Highlights</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/channel"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-tv"></i>
                                 </div>
-                                <span class="col-10 text-start">Channels</span>
+                                <span class="col-11 ms-2 text-start">Channels</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/fakechannel"
                         class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                         <div class="d-flex align-items-center fw-semibold w-100">
-                            <div class="col-2">
+                            <div class="col-1">
                                 <i class="fa-solid fa-tv"></i>
                             </div>
-                            <span class="col-10 text-start">Fake Channels</span>
+                            <span class="col-11 ms-2 text-start">Fake Channels</span>
                         </div>
                     </a>
                         <a id="focus_tag" href="/league"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
-                                <span class="col-10 text-start">Manage league</span>
+                                <span class="col-11 ms-2 text-start">Manage league</span>
                             </div>
                         </a>
                         <a id="focus_tag" href="/notification"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-bell"></i>
                                 </div>
-                                <span class="col-10 text-start">Notification</span>
+                                <span class="col-11 ms-2 text-start">Notification</span>
                             </div>
                         </a>
                         <a class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu"
                             class="btn btn-primary" data-bs-toggle="collapse" href="#collapseSetting" role="button"
                             aria-expanded="false" aria-controls="collapseSetting">
                             <div class="d-flex align-items-center fw-semibold w-100">
-                                <div class="col-2">
+                                <div class="col-1">
                                     <i class="fa-solid fa-gears"></i>
                                 </div>
-                                <span class="col-10 text-start">Settings</span>
+                                <span class="col-11 ms-2 text-start">Settings</span>
                             </div>
                         </a>
                         <div class="collapse ms-2" id="collapseSetting">
@@ -193,11 +193,11 @@
                         </div>
                         <a id="focus_tag" href="/password-change"
                             class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
-                            <div class="d-flex align-items-center fw-semibold ">
-                                <div class="">
-                                    <i class="fa-solid fa-lock"></i>
+                            <div class="d-flex align-items-center fw-semibold w-100">
+                                <div class="col-1">
+                                    <i class="fa-solid fa-circle-user"></i>
                                 </div>
-                                <span class="ms-2">Change password</span>
+                                <span class="ms-2 col-11">User info</span>
                             </div>
                         </a>
                     </div>

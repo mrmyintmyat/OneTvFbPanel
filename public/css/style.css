@@ -9,7 +9,7 @@ height: 100vh;
 .row div button.bg-menu:hover{
 border-radius: 5px;
 color: white;
-background-color: #003a04f1;
+background-color: #d80202e2;
 }
 
 .box-shadow{
@@ -43,7 +43,12 @@ background-color: #0000007d;
 
 .bg-menu{
 background-color: #FF0000;
+color: white;
 /* background: linear-gradient(to right, rgba(189, 203, 190, 0.622) 0%, #00c1fb 100%); */
+}
+
+.navbar-expand-lg .offcanvas {
+    width: 100% !important;
 }
 
 .date-time .btn-success{
@@ -195,7 +200,7 @@ div select {
     margin-bottom: 8px;
 }
 
-.team_logo_container input[type="url"],input[type="file"]{
+.team_logo_container input[type="url"],.team_logo_container input[type="file"],.team_logo_container input[type="number"]{
     border: none;
     /* border-bottom: 1px solid#2626265e; */
     outline: none;

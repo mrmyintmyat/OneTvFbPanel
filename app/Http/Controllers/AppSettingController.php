@@ -46,15 +46,16 @@ class AppSettingController extends Controller
 
         //     'sponsorInter' => [
         //         'status' => true,
-        //         'duration' => 5,
         //         'data' => [
         //             [
         //                 'img_url' => 'https://yt3.ggpht.com/s5sSZJrP9SJ5qkGOTJCBFbfgz8IKnkB7mEAV0GaAWJiauzub0VPWFKFq2oDFzST_i06mMFe7qkA=s88-c-k-c0x00ffffff-no-rj',
         //                 'click_url' => 'https://zynn.gameswww',
+        //                 'duration' => 5,
         //             ],
         //             [
         //                 'img_url' => 'http://localhost:9000/storage/images/YXKhBDm7i6TkJ58dFvkbuBvChqp0MfuDVbZwvnCd.png',
         //                 'click_url' => 'https://zynn.gamesrwrwr',
+        //                 'duration' => 5,
         //             ],
         //         ],
         //     ],
@@ -124,7 +125,9 @@ class AppSettingController extends Controller
         $imgInterUrls = $request->input('img_url_inter', []);
         $imgFiles = $request->file('img_url_inter', []);
         $clickUrls = $request->input('click_url_inter', []);
+        $durations = $request->input('duration_inter', []);
         $click_urls_inter_file = $request->input('click_url_inter_file', []);
+        $durations_inter_file = $request->input('duration_inter_file', []);
 
         // Update sponsorInter data
         $sponsorInterData = [];
@@ -132,6 +135,7 @@ class AppSettingController extends Controller
             $sponsorInterData[] = [
                 'img_url' => $imgUrl,
                 'click_url' => $clickUrls[$index] ?? '',
+                'duration' => $durations[$index] ?? '',
             ];
         }
 
@@ -142,6 +146,7 @@ class AppSettingController extends Controller
                 $sponsorInterData[] = [
                     'img_url' => url(Storage::url($path)),
                     'click_url' => $click_urls_inter_file[$index],
+                    'duration' => $durations_inter_file[$index] ?? '',
                 ];
             }
         }
@@ -168,8 +173,7 @@ class AppSettingController extends Controller
 
         $datas->sponsorInter = [
             'status' => $this->status_check($sponsorInter_status),
-            'duration' => $request->inter_duration,
-            'data' => $sponsorInterData
+            'data' => $sponsorInterData,
         ];
 
         $datas->save();

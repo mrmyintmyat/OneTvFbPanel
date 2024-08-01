@@ -158,11 +158,6 @@
                                         {{ $sponsorInter['status'] ? 'checked' : '' }}>
                                 </div>
                             </h4>
-                            <div class="mb-2">
-                                <label for="duration" class="form-label">Duration:</label>
-                                <input type="number" name="inter_duration" id="duration" min="1"
-                                    class="form-control m-0" value="{{ $sponsorInter['duration'] }}" required>
-                            </div>
                             <div class="bg-white rounded-3 pt-3 px-0">
                                 <div id="img-url-inter-container" class="col-lg-12 px-3">
                                     @foreach ($sponsorInter['data'] as $index => $imageUrl)
@@ -198,10 +193,21 @@
                                             </div>
                                             <div class="col-12 team_logo_container">
                                                 <input type="url" name="click_url_inter[]"
-                                                    id="click_url_inter_{{ $index + 1 }}" class="form-control"
+                                                    id="click_url_inter_{{ $index + 1 }}" class="form-control mb-0"
                                                     value="{{ $imageUrl['click_url'] }}" placeholder="click url"
                                                     required>
                                                 @error('click_url_inter_{{ $index + 1 }}')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-12 team_logo_container">
+                                                <input type="number" name="duration_inter[]"
+                                                    id="duration_inter_{{ $index + 1 }}" class="form-control mb-0"
+                                                    value="{{ $imageUrl['duration'] }}" placeholder="duration"
+                                                    required>
+                                                @error('duration_inter_{{ $index + 1 }}')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -439,12 +445,12 @@
                                     data-bs-target="#url-tab-pane" type="button" role="tab"
                                     aria-controls="url-tab-pane" aria-selected="true">URL</button>
                                     <span class="remove-button d-flex align-items-center px-3"
-                                    onclick="removeImageUrlField(this)"><i class="fa-solid fa-trash text-danger"></i></span>
+                                    onclick="removeImageInterUrlField(this)"><i class="fa-solid fa-trash text-danger"></i></span>
                             </li>
                         </ul>
                     </div>
                     <div class="col-12 team_logo_container">
-                                    <input type="url" name="click_url_inter_file[]" id="click_url_inter_${imgInterUrlCount}" class="form-control"
+                                    <input type="url" name="click_url_inter_file[]" id="click_url_inter_${imgInterUrlCount}" class="form-control mb-0"
                                         value="{{ old('click_url_inter_${imgInterUrlCount}') }}" placeholder="click url" required>
                                     @error('click_url_inter_${imgInterUrlCount}')
                                         <span class="invalid-feedback" role="alert">
@@ -452,6 +458,17 @@
                                         </span>
                                     @enderror
                                 </div>
+                                 <div class="col-12 team_logo_container">
+                                                <input type="number" name="duration_inter_file[]"
+                                                    id="duration_inter_${imgInterUrlCount}" class="form-control mb-0"
+                                                    value="" placeholder="duration"
+                                                    required>
+                                                @error('duration_inter_${imgInterUrlCount}')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
 `;
             container.appendChild(div);
             document.getElementById(id).addEventListener('change', function(e) {
@@ -474,6 +491,7 @@
         function Change_inter_input(id, type) {
             const inputElement = document.getElementById('img_url_inter_' + id);
             const clickUrlInputElement = document.getElementById('click_url_inter_' + id);
+            const DurationInputElement = document.getElementById('duration_inter_' + id);
             const labelElement = inputElement.nextElementSibling;
 
             if (type === 'file') {
@@ -484,11 +502,13 @@
                     newLabel.setAttribute('for', 'img_url_inter_'+id);
                     newLabel.textContent = 'Choose file';
                     clickUrlInputElement.name = 'click_url_inter_file[]';
+                    DurationInputElement.name = 'duration_inter_file[]';
                     inputElement.parentNode.insertBefore(newLabel, inputElement.nextSibling);
                 }
             } else if (type === 'url') {
                 inputElement.type = 'url';
                 clickUrlInputElement.name = 'click_url_inter[]';
+                DurationInputElement.name = 'duration_inter_[]';
                 if (labelElement && labelElement.tagName.toLowerCase() === 'label') {
                     labelElement.remove();
                 }

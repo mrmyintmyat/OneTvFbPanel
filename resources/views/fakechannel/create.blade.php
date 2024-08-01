@@ -171,7 +171,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="/js/plus_server-channel.js"></script>
+    <script src="/js/plus_server-channel.js?v=<?php echo time(); ?>"></script>
     <script>
        $('#match_status').on('change', function() {
             if ($(this).val() === 'Live' || $(this).val() === 'Highlight') {

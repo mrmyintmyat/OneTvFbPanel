@@ -11,26 +11,28 @@ let newtab = `<div class="tab-pane fade" id="server-${count}" role="tabpanel" ar
     tabindex="0">
     <div class="row ">
         <div class="">
-            <input id="server_name" type="text" class="" name="server_name[]" value=""
-                autocomplete="server_name" placeholder="name" required>
+            <input id="server_name" type="text" class=""
+                name="server_name[]" value="" autocomplete="server_name" placeholder="name"
+                required>
         </div>
     </div>
     <div class="row ">
         <div class="">
-            <input id="server_url" type="url" class="" name="server_url[]" value=""
-                autocomplete="server_url" placeholder="url" required>
+            <input id="server_url" type="url" class=" " name="server_url[]"
+                value="" autocomplete="server_url" placeholder="url" required>
         </div>
     </div>
 
     <div class="row ">
         <div class="">
-            <input id="server_referer" type="text" class="" name="server_referer[]" value=""
-                autocomplete="server_referer" placeholder="referer" required>
+            <input id="server_referer" type="text" class=""
+                name="server_referer[]" value="" autocomplete="server_referer"
+                placeholder="referer">
         </div>
     </div>
     <div class="">
-        <select id="server_type" name="server_type[]" class=" @error('server_type') is-invalid @enderror"
-            aria-label="Default select example" autocomplete="server_type">
+        <select id="server_type" name="server_type[]" class=""
+            aria-label="Default select example" autocomplete="server_type" required>
             <option value="" disabled selected>Select Type</option>
             <optgroup class="ms-3 collapse show" id="collapseExample">
                 <option value="Direct Player">

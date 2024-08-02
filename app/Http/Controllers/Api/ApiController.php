@@ -32,7 +32,7 @@ class ApiController extends Controller
 
             $iv_base64 = base64_encode($iv);
             $encrypted_data_base64 = base64_encode($padded_data);
-            return $data;
+            return $encrypted_data_base64;
             // return json_encode([
             //     $iv_base64 => $encrypted_data_base64,
             // ]);
@@ -172,6 +172,7 @@ class ApiController extends Controller
                 'data' => $imageUrlsData,
             ],
             'sponsorInter' => $settings->sponsorInter,
+            'updateInfo' => $settings->updateInfo,
         ];
 
         $encryptedData = $this->encryptAES($response, 'woww');

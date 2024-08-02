@@ -26,11 +26,14 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::resource('/league', LeagueController::class);
 
-Route::get('/app_setting', [AppSettingController::class, 'index']);
-Route::put('/app_setting/{id}', [AppSettingController::class, 'updateAppSetting']);
+Route::get('/app-setting', [AppSettingController::class, 'index']);
+Route::put('/app-setting/{id}', [AppSettingController::class, 'updateAppSetting']);
 
-Route::get('/ads_setting', [AppSettingController::class, 'ads_setting']);
-Route::put('/ads_setting/{id}', [AppSettingController::class, 'update']);
+Route::get('/ads-setting', [AppSettingController::class, 'ads_setting']);
+Route::put('/ads-setting/{id}', [AppSettingController::class, 'update']);
+
+Route::get('/update-setting', [AppSettingController::class, 'update_setting']);
+Route::put('/update-setting/{id}', [AppSettingController::class, 'updateInfo']);
 
 Route::get('/notification', [NotificationController::class, 'index']);
 Route::post('/notification', [NotificationController::class, 'sendNotification']);

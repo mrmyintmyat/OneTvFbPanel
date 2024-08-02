@@ -165,22 +165,22 @@
                             </div>
                         </a>
                         <div class="collapse ms-2" id="collapseSetting">
-                            <a id="focus_tag" href="/app_setting?setting=true"
+                            <a id="focus_tag" href="/app-setting?setting=true"
                                 class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                                 <div class="d-flex align-items-center fw-semibold w-100">
                                     <div class="col-1">
                                         -
                                     </div>
-                                    <span class="col-11 text-start fs-6">App settings</span>
+                                    <span class="col-11 text-start fs-6">App setting</span>
                                 </div>
                             </a>
-                            <a id="focus_tag" href="/ads_setting?setting=true"
+                            <a id="focus_tag" href="/ads-setting?setting=true"
                                 class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
                                 <div class="d-flex align-items-center fw-semibold w-100">
                                     <div class="col-1">
                                         -
                                     </div>
-                                    <span class="col-11 text-start fs-6">Ads settings</span>
+                                    <span class="col-11 text-start fs-6">Ads setting</span>
                                 </div>
                             </a>
                             <a id="focus_tag" href="/slider-setting?setting=true"
@@ -190,6 +190,15 @@
                                         -
                                     </div>
                                     <span class="col-11 text-start fs-6">Slider setting</span>
+                                </div>
+                            </a>
+                            <a id="focus_tag" href="/update-setting?setting=true"
+                                class="list-group-item list-group-item-action text-center p-2 px-3 d-flex  align-items-center text-white text-lg-start bg-menu">
+                                <div class="d-flex align-items-center fw-semibold w-100">
+                                    <div class="col-1">
+                                        -
+                                    </div>
+                                    <span class="col-11 text-start fs-6">Update setting</span>
                                 </div>
                             </a>
                         </div>

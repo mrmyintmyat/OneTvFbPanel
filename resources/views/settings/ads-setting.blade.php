@@ -20,7 +20,7 @@
         <div class="card text-start mt-lg-2 px-lg-0 px-2 mb-3" style="background: #ffffff00;">
             <div class="card-body pe-0">
                 <div class="d-flex mt-3 w-100">
-                    <form action="/ads_setting/{{ $id }}" class="w-100 row d-flex justify-content-around px-2 g-3"
+                    <form action="/ads-setting/{{ $id }}" class="w-100 row d-flex justify-content-around px-2 g-3"
                         method="post" enctype="multipart/form-data">
                         @csrf @method('PUT')
 

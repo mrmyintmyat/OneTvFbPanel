@@ -13,13 +13,7 @@ class AppSetting extends Model
     protected $table = 'app_settings';
 
     // The attributes that are mass assignable
-    protected $fillable = [
-        'appDetails',
-        'sponsorGoogle',
-        'sponsorText',
-        'sponsorBanner',
-        'sponsorInter',
-    ];
+    protected $fillable = ['appDetails', 'sponsorGoogle', 'sponsorText', 'sponsorBanner', 'sponsorInter', 'updateInfo'];
 
     protected $casts = [
         'appDetails' => 'json',
@@ -27,6 +21,7 @@ class AppSetting extends Model
         'sponsorText' => 'json',
         'sponsorBanner' => 'json',
         'sponsorInter' => 'json',
+        'updateInfo' => 'json',
     ];
 
     public function imageUrls()

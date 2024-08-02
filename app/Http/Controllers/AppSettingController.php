@@ -59,6 +59,13 @@ class AppSettingController extends Controller
         //             ],
         //         ],
         //     ],
+        //     'updateInfo' => [
+        //         'version_code' => 1,
+        //         'force' => true,
+        //         'title' => 'We found a latest version',
+        //         'message' => 'Please update app',
+        //         'update_url' => 'https://',
+        //     ],
         // ]);
 
         // AppSetting::create([
@@ -69,12 +76,21 @@ class AppSettingController extends Controller
         //     'sponsorText' => [null],
         //     'sponsorBanner' => [null],
         //     'sponsorInter' => [null],
+        //     'updateInfo' => [null],
         // ]);
 
         $datas = AppSetting::first();
         $id = $datas->id;
         $appDetails = $datas->appDetails;
         return view('settings.app-setting', compact('id', 'appDetails'));
+    }
+
+    public function update_setting()
+    {
+        $datas = AppSetting::first();
+        $id = $datas->id;
+        $updateInfos = $datas->updateInfo;
+        return view('settings.update-setting', compact('id', 'updateInfos'));
     }
 
     public function ads_setting()
@@ -111,6 +127,27 @@ class AppSettingController extends Controller
         $appSetting->save();
 
         return redirect()->back()->with('success', 'App settings updated successfully.');
+    }
+
+    public function updateInfo(Request $request, $id)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'updateInfos' => 'required|array',
+            'updateInfos.version_code' => 'required|integer',
+            'updateInfos.force' => 'required|boolean',
+            'updateInfos.title' => 'required|string',
+            'updateInfos.message' => 'required|string',
+            'updateInfos.update_url' => 'required|url',
+        ]);
+
+        $appSetting = AppSetting::findOrFail($id);
+
+        $appSetting->updateInfo = $validatedData['updateInfos'];
+
+        $appSetting->save();
+
+        return redirect()->back()->with('success', 'UpdateInfo updated successfully.');
     }
 
     public function update(Request $request, $id)

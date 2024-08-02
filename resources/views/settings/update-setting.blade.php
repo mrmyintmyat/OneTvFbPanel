@@ -20,13 +20,13 @@
         <div class="card text-start mt-lg-2 rounded-0 px-lg-0 px-lg-2 mb-3" style="background: #ffffff00;">
             <div class="card-body pe-0">
                 <div class="d-flex mt-3 w-100">
-                    <form action="/app-setting/{{ $id }}"
+                    <form action="/update-setting/{{ $id }}"
                         class="w-100 row d-flex justify-content-around px-lg-2 g-3" method="post">
                         @csrf @method('PUT')
 
                         <div class="row p-lg-3">
                             <div>
-                                <h4>App Details</h4>
+                                <h4>Update Info</h4>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
@@ -38,19 +38,18 @@
                                 </div>
                             @endif
 
-                            @foreach ($appDetails as $key => $value)
+                            @foreach ($updateInfos as $key => $value)
                                 <div class="col-lg-6 mb-3">
                                     <label for="{{ $key }}"
                                         class="form-label">{{ ucfirst(str_replace('_', ' ', $key)) }}</label>
                                     <div>
                                         <input id="{{ $key }}" type="text" class="form-control"
-                                            name="appDetails[{{ $key }}]"
-                                            value="{{ old('appDetails.' . $key, $value) }}" required
+                                            name="updateInfos[{{ $key }}]"
+                                            value="{{ old('updateInfos.' . $key, $value) }}" required
                                             autocomplete="{{ $key }}" autofocus>
                                     </div>
                                 </div>
                             @endforeach
-
                             <div class="col-12 mt-3">
                                 <div class="w-100 p-0">
                                     <button type="submit"

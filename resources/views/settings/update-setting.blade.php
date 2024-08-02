@@ -4,7 +4,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        #collapseSetting a:nth-child(1) {
+        #collapseSetting a:nth-child(4) {
             /* border-left: 3px solid #ff0505 !important; */
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);

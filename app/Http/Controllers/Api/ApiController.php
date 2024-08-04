@@ -32,10 +32,10 @@ class ApiController extends Controller
 
             $iv_base64 = base64_encode($iv);
             $encrypted_data_base64 = base64_encode($padded_data);
-            return $encrypted_data_base64;
-            // return json_encode([
-            //     $iv_base64 => $encrypted_data_base64,
-            // ]);
+            // return $encrypted_data_base64;
+            return json_encode([
+                $iv_base64 => $encrypted_data_base64,
+            ]);
         } catch (Exception $e) {
             echo $e->getMessage();
             return null;

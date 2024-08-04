@@ -177,7 +177,7 @@ class ApiController extends Controller
 
         $encryptedData = $this->encryptAES($response, 'woww');
 
-        return $encryptedData;
+        return $response;
     }
 
     public function slider_setting(Request $request)

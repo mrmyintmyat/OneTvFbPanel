@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\AppSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Http\Services\FirebaseService;
 
 class NotificationController extends Controller
 {
-    public function __construct()
+    protected $firebaseService;
+
+    public function __construct(FirebaseService $firebaseService)
     {
         $this->middleware('auth');
+        $this->firebaseService = $firebaseService;
     }
-    
+
     public function index()
     {
         $appsetting = AppSetting::where('sponsorGoogle', 'LIKE', '%null%')->first();
@@ -36,33 +40,21 @@ class NotificationController extends Controller
 
     public function sendNotification(Request $request)
     {
-        $appsetting = AppSetting::where('sponsorGoogle', 'LIKE', '%null%')->first();
-        $key = $appsetting->appDetails['key'];
-        $notificationData = [
-            'to' => '/topics/all_users',
-            'notification' => [
-                'title' => $request->title,
-                'body' => $request->body,
-                'image' => $request->img_url,
-            ],
-            'data' => [
-                'url' => $request->url,
-            ],
-        ];
+        $response = $this->firebaseService->sendNotification(
+            $request->title,
+            $request->body,
+            $request->img_url,
+            $request->url
+        );
 
-        $response = Http::withHeaders([
-            'Authorization' => 'key=' . $key,
-            'Content-Type' => 'application/json',
-        ])->post('https://fcm.googleapis.com/fcm/send', $notificationData);
-
-        if ($response->successful()) {
+        if ($response) {
             return redirect()
-            ->back()
-            ->with('success', 'Success');
+                ->back()
+                ->with('success', 'Notification sent successfully.');
         } else {
             return redirect()
                 ->back()
-                ->with('error', 'Error');
+                ->with('error', 'Error sending notification.');
         }
     }
 }

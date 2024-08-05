@@ -39,23 +39,29 @@
                             @endif
 
                             @foreach ($updateInfos as $key => $value)
-                            <div class="col-lg-6 mb-3">
-                                <label for="{{ $key }}" class="form-label">{{ ucfirst(str_replace('_', ' ', $key)) }}</label>
-                                <div>
-                                    @if($key === 'force')
-                                        <select id="{{ $key }}" class="form-control" name="updateInfos[{{ $key }}]" required>
-                                            <option value="true" {{ old('updateInfos.' . $key, $value) == 'true' ? 'selected' : '' }}>true</option>
-                                            <option value="false" {{ old('updateInfos.' . $key, $value) == 'false' ? 'selected' : '' }}>false</option>
-                                        </select>
-                                    @else
-                                        <input id="{{ $key }}" type="text" class="form-control"
-                                            name="updateInfos[{{ $key }}]"
-                                            value="{{ old('updateInfos.' . $key, $value) }}" required
-                                            autocomplete="{{ $key }}" autofocus>
-                                    @endif
+                                <div class="col-lg-6 mb-3">
+                                    <label for="{{ $key }}"
+                                        class="form-label">{{ ucfirst(str_replace('_', ' ', $key)) }}</label>
+                                    <div>
+                                        @if ($key === 'force')
+                                            <select id="{{ $key }}" class="form-control"
+                                                name="updateInfos[{{ $key }}]" required>
+                                                <option value="on"
+                                                    {{ old('updateInfos.' . $key, $value) == 'true' ? 'selected' : '' }}>
+                                                    true</option>
+                                                <option value="false"
+                                                    {{ old('updateInfos.' . $key, $value) == 'false' ? 'selected' : '' }}>
+                                                    false</option>
+                                            </select>
+                                        @else
+                                            <input id="{{ $key }}" type="text" class="form-control"
+                                                name="updateInfos[{{ $key }}]"
+                                                value="{{ old('updateInfos.' . $key, $value) }}" required
+                                                autocomplete="{{ $key }}" autofocus>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
                             <div class="col-12 mt-3">
                                 <div class="w-100 p-0">
                                     <button type="submit"

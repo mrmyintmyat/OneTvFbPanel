@@ -143,8 +143,9 @@ class AppSettingController extends Controller
 
         $appSetting = AppSetting::findOrFail($id);
 
-        $appSetting->updateInfo = $validatedData['updateInfos'];
+        $validatedData['updateInfos']['force'] = $this->status_check($validatedData['updateInfos']['force']);
 
+        $appSetting->updateInfo = $validatedData['updateInfos'];
         $appSetting->save();
 
         return redirect()->back()->with('success', 'UpdateInfo updated successfully.');

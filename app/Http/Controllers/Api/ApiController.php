@@ -32,7 +32,7 @@ class ApiController extends Controller
 
             $iv_base64 = base64_encode($iv);
             $encrypted_data_base64 = base64_encode($padded_data);
-            // return $encrypted_data_base64;
+            // return $data;
             return json_encode([
                 $iv_base64 => $encrypted_data_base64,
             ]);
@@ -67,7 +67,7 @@ class ApiController extends Controller
                     'name' => $server['name'],
                     'url' => $server['url'],
                     'referer' => $server['referer'] ?? '',
-                    'type' => $server['type'],
+                    'type' => $server['type'] === 'Embed Player' ? 'embed' : ($server['type'] === 'Direct Player' ? 'direct' : ''),
                 ];
             }
 
@@ -286,7 +286,7 @@ class ApiController extends Controller
                     'name' => $server['name'],
                     'url' => $server['url'],
                     'referer' => $server['referer'] ?? '',
-                    'type' => $server['type'],
+                    'type' => $server['type'] === 'Embedded Player' ? 'embed' : ($server['type'] === 'Direct Player' ? 'direct' : ''),
                 ];
             }
 

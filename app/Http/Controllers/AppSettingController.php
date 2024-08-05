@@ -135,7 +135,7 @@ class AppSettingController extends Controller
         $validatedData = $request->validate([
             'updateInfos' => 'required|array',
             'updateInfos.version_code' => 'required|integer',
-            'updateInfos.force' => 'required|boolean',
+            'updateInfos.force' => 'required',
             'updateInfos.title' => 'required|string',
             'updateInfos.message' => 'required|string',
             'updateInfos.update_url' => 'required|url',

@@ -2,8 +2,8 @@
 @section('style')
     <style>
         .hover_menu_tag a:nth-child(6) {
-              /* border-left: 3px solid #ff0505 !important; */
-              border-radius: 5px;
+            /* border-left: 3px solid #ff0505 !important; */
+            border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
         }
 
@@ -50,8 +50,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <textarea class="form-control @error('body') is-invalid @enderror" id="validationTextarea"
-                                    placeholder="Body" name="body" required></textarea>
+                                <textarea class="form-control @error('body') is-invalid @enderror" id="validationTextarea" placeholder="Body"
+                                    name="body" required></textarea>
                                 @error('body')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -63,7 +63,7 @@
                                 <div class="">
                                     <input id="Url" type="url"
                                         class="form-control @error('Url') is-invalid @enderror" name="Url"
-                                        value="{{ old('Url') }}"  autocomplete="Url" autofocus placeholder="Url">
+                                        value="{{ old('Url') }}" autocomplete="Url" autofocus placeholder="Url">
 
                                     @error('Url')
                                         <span class="invalid-feedback" role="alert">
@@ -77,7 +77,8 @@
                                 <div class="">
                                     <input id="img_url" type="url"
                                         class="form-control @error('img_url') is-invalid @enderror" name="img_url"
-                                        value="{{ old('img_url') }}"  autocomplete="img_url" autofocus placeholder="Image Url">
+                                        value="{{ old('img_url') }}" autocomplete="img_url" autofocus
+                                        placeholder="Image Url">
 
                                     @error('img_url')
                                         <span class="invalid-feedback" role="alert">
@@ -101,8 +102,8 @@
                     <form method="post" action="/edit-key" class="w-100 row d-flex justify-content-around px-2 g-3"
                         enctype="multipart/form-data">
                         @csrf
-                        <div class="col-lg-5 p-3">
-                            <div class="row mb-3">
+                        <div class="w-100 p-3">
+                            {{-- <div class="row mb-3">
                                 <div class="">
                                     <input id="key" type="text"
                                         class="form-control @error('key') is-invalid @enderror" name="key"
@@ -115,11 +116,27 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
+                            <div class="row">
+                            @foreach ($firebaseDatas as $attribute => $value)
+                                <div class="form-group {{$attribute === 'private_key' ? 'col-lg-12' : 'col-lg-6';}}  col-12">
+                                    <label
+                                        for="{{ $attribute }}">{{ ucfirst(str_replace('_', ' ', $attribute)) }}</label>
+                                    @if ($attribute === 'private_key')
+                                        <!-- Special handling for multi-line text -->
+                                        <textarea id="{{ $attribute }}" name="{{ $attribute }}" class="form-control" rows="5">{{ old($attribute, $value) }}</textarea>
+                                    @else
+                                        <input type="{{ $attribute === 'client_email' ? 'email' : 'text' }}"
+                                            id="{{ $attribute }}" name="{{ $attribute }}" class="form-control"
+                                            value="{{ old($attribute, $value) }}" required>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
                             <div class="row mb-0 col-12 mt-3 ms-1 p-0">
                                 <div class="w-100 p-0">
                                     <button type="submit" class="btn py-2 bg-menu  w-100 text-white">
-                                        {{ __('EDIT') }}
+                                        {{ __('UPDATE') }}
                                     </button>
                                 </div>
                             </div>

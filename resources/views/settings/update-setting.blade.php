@@ -47,7 +47,7 @@
                                             <select id="{{ $key }}" class="form-control"
                                                 name="updateInfos[{{ $key }}]" required>
                                                 <option value="on"
-                                                    {{ old('updateInfos.' . $key, $value) == 'true' ? 'selected' : '' }}>
+                                                    {{ old('updateInfos.' . $key, $value) == 'on' ? 'selected' : '' }}>
                                                     true</option>
                                                 <option value="false"
                                                     {{ old('updateInfos.' . $key, $value) == 'false' ? 'selected' : '' }}>

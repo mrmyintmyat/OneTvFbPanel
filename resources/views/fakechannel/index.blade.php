@@ -5,7 +5,7 @@
 @extends('layouts.home')
 @section('style')
     <style>
-        .hover_menu_tag a:nth-child(4) {
+        .hover_menu_tag a:nth-child(3) {
             /* border-left: 3px solid #ff0505 !important; */
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.251);
@@ -18,7 +18,7 @@
 @endsection
 @section('page')
     <div class="row matchs_container g-2 my-2 px-4">
-        <a href="/fakechannel/create" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none ">
+        <a href="/channel/create" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none ">
             <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100 d-flex align-items-center justify-content-center">
                 <div class="p-4">
                     <div class="team-pair d-flex justify-content-around">
@@ -30,11 +30,14 @@
             </div>
         </a>
         @foreach ($channels as $channel)
-            <a href="/fakechannel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
+            <a href="/channel/{{ $channel->id }}/edit" class="col-lg-2 col-sm-6 col-12 col-desktop text-dark text-decoration-none">
                 <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
 
                     <div class="p-4">
-                        <div class="team-pair d-flex justify-content-around">
+                        <div class="team-pair d-flex flex-column justify-content-around align-items-center">
+                            <div class="w-100 text-end">
+                                <i class="fa-solid fa-trash text-danger delete-channel" data-id="{{ $channel->id }}"></i>
+                            </div>
                             <div style="width: 3.8rem;" class="home d-flex flex-column align-items-center">
                                 <img class="w-100 h-100" src="{{ $channel->channel_logo }}"
                                     alt="{{ $channel->channel_name }} Logo">
@@ -154,4 +157,41 @@
                 });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteIcons = document.querySelectorAll('.delete-channel');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const channelId = this.getAttribute('data-id');
+
+                    if (confirm('Are you sure you want to delete this channel?')) {
+                        // Perform the deletion (AJAX or form submission)
+                        // Example using AJAX
+                        fetch(`/fakechannel/${channelId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include the CSRF token for security
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Optionally remove the channel from the DOM
+                                this.closest('a').remove();
+                            } else {
+                                alert('Failed to delete the channel.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

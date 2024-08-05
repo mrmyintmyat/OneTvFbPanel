@@ -40,7 +40,7 @@ class ChannelController extends Controller
         if ($request->hasFile('channel_logo')) {
             $path = $request->file('channel_logo')->store('logos', 'public');
             $channel->channel_logo = url('storage/' . $path);
-        }else{
+        } else {
             $channel->channel_logo = $request->channel_logo;
         }
 
@@ -84,7 +84,7 @@ class ChannelController extends Controller
         if ($request->hasFile('channel_logo')) {
             $path = $request->file('channel_logo')->store('logos', 'public');
             $channel->channel_logo = url('storage/' . $path);
-        } else{
+        } else {
             $channel->channel_logo = $request->channel_logo;
         }
 
@@ -102,5 +102,16 @@ class ChannelController extends Controller
         $channel->save();
 
         return redirect()->back()->with('success', 'channel updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $channel = Channel::findOrFail($id);
+
+        // Perform any additional checks or logic if necessary
+
+        $channel->delete();
+
+        return response()->json(['success' => true]);
     }
 }

@@ -34,7 +34,10 @@
                 <div class="shadow-sm p-0 border bg_ani rounded-4 bg-white h-100">
 
                     <div class="p-4">
-                        <div class="team-pair d-flex justify-content-around">
+                        <div class="team-pair d-flex flex-column justify-content-around align-items-center">
+                            <div class="w-100 text-end">
+                                <i class="fa-solid fa-trash text-danger delete-channel" data-id="{{ $channel->id }}"></i>
+                            </div>
                             <div style="width: 3.8rem;" class="home d-flex flex-column align-items-center">
                                 <img class="w-100 h-100" src="{{ $channel->channel_logo }}"
                                     alt="{{ $channel->channel_name }} Logo">
@@ -154,4 +157,41 @@
                 });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteIcons = document.querySelectorAll('.delete-channel');
+
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const channelId = this.getAttribute('data-id');
+
+                    if (confirm('Are you sure you want to delete this channel?')) {
+                        // Perform the deletion (AJAX or form submission)
+                        // Example using AJAX
+                        fetch(`/channel/${channelId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include the CSRF token for security
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Optionally remove the channel from the DOM
+                                this.closest('a').remove();
+                            } else {
+                                alert('Failed to delete the channel.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

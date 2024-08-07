@@ -72,8 +72,7 @@
                                         class="date-time d-flex flex-column text-center justify-content-center text-center fw-semibold">
                                         @php
                                             $match_time = Carbon::createFromTimestamp(
-                                                $match->match_time,
-                                                Session::get('timezone'),
+                                                $match->match_time
                                             );
                                         @endphp
                                          <span class="date-font_size">
